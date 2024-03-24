@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import GuestHeader from '../components/GuestHeader';
+import RoomDisplay from '../components/RoomDisplay';
+import './reservationPage.css'
 
 function ReservationPage() {
     const [date, setDate] = useState('');
@@ -11,12 +14,9 @@ function ReservationPage() {
 
     return (
         <div>
-            <h1>Reservation Page</h1>
-            <form onSubmit={handleSubmit}>
-                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-                <input type="number" value={roomId} onChange={(e) => setRoomId(e.target.value)} placeholder="Room ID" />
-                <button type="submit">Reserve</button>
-            </form>
+            <GuestHeader />
+            <h1 className="content-start">Available rooms</h1>
+            <RoomDisplay />
         </div>
     );
 }

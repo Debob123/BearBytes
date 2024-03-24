@@ -9,6 +9,7 @@ function HomePage() {
             <Link to="/login">Login</Link>
             <Link to="/rooms">View Rooms</Link>
             <Link to="/shop">Shop Now</Link>
+            <Link to="/reservation">Make a Reservation</Link>
         </div>
     );
 }

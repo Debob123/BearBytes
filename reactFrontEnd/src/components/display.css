@@ -1,0 +1,21 @@
+.display {
+    display: grid;
+    gap: 5vw;
+    aspect-ratio: 1 / .5;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.box-display {
+    display: grid;
+    aspect-ratio: 1 / 1.5;
+    width: 15vw;
+    background-color: gray;
+    height: 100%;
+    justify-self: center;
+    padding: 10px;
+}
+
+img {
+    width: 100%;
+}
