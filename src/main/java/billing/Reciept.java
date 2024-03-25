@@ -37,4 +37,16 @@ public void setBillingAddress(String s){ billingAddress = s;}
 public void setCancellationPolicy(String s){cancellationPolicy = s;}
 public void setLoyaltyPointsEarned(int n){loyaltyPointsEarned = n;}
 public void setPromotionalOffers(String s){promotionalOffers = s;}
+public String getConfirmationNumber(){return confirmationNumber;}
+public String getCheckInDate(){return checkInDate;}
+public String getCheckOutDate(){return checkOutDate;}
+public String getRoomType(){return roomType;}
+public int getNumberOfRooms(){return numberOfRooms;}
+public String getGuestName(){return guestName;}
+public String getContactInformation(){return contactInformation;}
+public double getTotalAmount(){return totalAmount;}
+public String getPaymentMethod(){return paymentMethod;}
+public String getBillingAddress(){return billingAddress;}
+public int getLoyaltyPointsEarned(){return loyaltyPointsEarned;}
+public String getPromotionalOffers(){return promotionalOffers;}
 }
