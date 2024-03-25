@@ -12,7 +12,7 @@ function ConfirmReservationPage() {
             <GuestHeader className="header"/>
             <h2 className="content-begin center-text">Reserve Room</h2>
             <div className="container">
-                <BoxDisplay imgLink={singleRoom} title="Single" cost="$130" btn={null}/>
+                <BoxDisplay imgLink={singleRoom} title="Single" cost="$130" btnAct={null}/>
                 <form class="confirm-input">
                     <GuestPaymentInfo />
                     <RulesAndPolicies />
