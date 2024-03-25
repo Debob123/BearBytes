@@ -6,6 +6,7 @@ import RoomPage from './pages/RoomPage';
 import ReservationPage from './pages/ReservationPage';
 import ShoppingPage from './pages/ShoppingPage';
 import ProfilePage from './pages/ProfilePage';
+import ConfirmReservationPage from './pages/ConfirmReservationPage'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/rooms" element={<RoomPage />} />
         <Route path="/reservation" element={<ReservationPage />} />
+        <Route path="/confirmReservationPage" element ={<ConfirmReservationPage />} />
         <Route path="/shop" element={<ShoppingPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>

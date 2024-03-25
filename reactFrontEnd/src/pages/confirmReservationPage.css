@@ -1,0 +1,44 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.content-begin {
+    margin-top: 12vh;
+    margin-bottom: 4vh;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.box {
+    border: 1px solid black;
+}
+
+.confirm-input {
+    width: 70%;
+    justify-self: center;
+    display: grid;
+    gap: 30px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5px 5%;
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+.box-display {
+    align-self: center;
+    justify-self: center;
+}
+
+.cnf-btn {
+    width: 40%;
+    height: 5vh;
+    justify-self: center;
+}

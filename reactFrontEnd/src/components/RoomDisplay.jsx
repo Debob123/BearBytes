@@ -43,6 +43,18 @@ const rooms = [
         rate: "$200",
         id: uuidv4()
     },
+    {
+        imgLink: doubleRoom,
+        roomType: "Double",
+        rate: "$300",
+        id: uuidv4()
+    },
+    {
+        imgLink: doubleRoom,
+        roomType: "Double",
+        rate: "$280",
+        id: uuidv4()
+    },
 ]
 
 
