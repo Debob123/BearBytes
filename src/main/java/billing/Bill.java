@@ -9,7 +9,7 @@ public class Bill {
     private Double amount;
     private Date date;
     // List of items/services
-    // private List<Item> items;
+    private List<Object> items;
     private String status;
 
     public Bill(int billId, int customerId, Double amount, Date date, String status) {
@@ -58,6 +58,18 @@ public class Bill {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Object> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Object> items) {
+        this.items = items;
+    }
+
+    public void addItem(Object item) {
+        this.items.add(item);
     }
 
 }
