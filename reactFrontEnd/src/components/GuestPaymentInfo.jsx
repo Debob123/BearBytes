@@ -1,19 +1,19 @@
 function GuestPayment() {
     return (
-        <div class="box">
-                <div class="row">
+        <div className="box">
+                <div className="row">
                     <p>Start night: 12/03/2023</p>
                     <p>End night: 12/06/2023</p>
                 </div>
-                <div class="row">
+                <div className="row">
                     <label for="name">Name: </label>
                     <input id="name" type="text" />
                 </div>
-                <div class="row">
+                <div className="row">
                     <label for="address">Address: </label>
                     <input id="address" type="text" />
                 </div>
-                <div class="row">
+                <div className="row">
                     <p>Payment Method: </p>
                     <div>
                         <label for="credit">credit</label>

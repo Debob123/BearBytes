@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './loginPage.css'
 
 function LoginPage() {
     const [username, setUsername] = useState('');
@@ -10,12 +12,34 @@ function LoginPage() {
     };
 
     return (
-        <div>
-            <h1>Login Page</h1>
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-                <button type="submit">Login</button>
+        <div className="login-container">
+            <h1 className="center-text main-title">Stay and Shop</h1>
+            <form className="login-form" onSubmit={handleSubmit}>
+                <p className="center-text">login</p>
+                <div className="login-row">
+                    <div>
+                        <input type="radio" id="guest" name="account_type" value="guest" checked/>
+                        <label for="guest">Guest</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="staff" name="account_type" value="staff" />
+                        <label for="staff">Staff</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="admin" name="account_type" value="admin" />
+                        <label for="admin">Admin</label>
+                    </div>
+                </div>
+                <div className="login-row">
+                    <label htmlFor="username">Username:</label>
+                    <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
+                </div>
+                <div className="login-row">
+                    <label htmlFor="pwd">Password:</label>
+                    <input type="password" id="pwd" name="pwd" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+                </div>
+                <button className="login-submit" type="submit">Login</button>
+                <p>New Guest? <Link>Create Account</Link></p>
             </form>
         </div>
     );
