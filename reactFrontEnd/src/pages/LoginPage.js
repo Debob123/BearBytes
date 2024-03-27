@@ -18,16 +18,16 @@ function LoginPage() {
                 <p className="center-text">login</p>
                 <div className="login-row">
                     <div>
-                        <input type="radio" id="guest" name="account_type" value="guest" checked/>
-                        <label for="guest">Guest</label>
+                        <input type="radio" id="guest" name="account_type" value="guest" defaultChecked/>
+                        <label htmlFor="guest">Guest</label>
                     </div>
                     <div>
                         <input type="radio" id="staff" name="account_type" value="staff" />
-                        <label for="staff">Staff</label>
+                        <label htmlFor="staff">Staff</label>
                     </div>
                     <div>
                         <input type="radio" id="admin" name="account_type" value="admin" />
-                        <label for="admin">Admin</label>
+                        <label htmlFor="admin">Admin</label>
                     </div>
                 </div>
                 <div className="login-row">

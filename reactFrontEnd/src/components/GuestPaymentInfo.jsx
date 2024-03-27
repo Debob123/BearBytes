@@ -6,20 +6,20 @@ function GuestPayment() {
                     <p>End night: 12/06/2023</p>
                 </div>
                 <div className="row">
-                    <label for="name">Name: </label>
+                    <label htmlFor="name">Name: </label>
                     <input id="name" type="text" />
                 </div>
                 <div className="row">
-                    <label for="address">Address: </label>
+                    <label htmlFor="address">Address: </label>
                     <input id="address" type="text" />
                 </div>
                 <div className="row">
                     <p>Payment Method: </p>
                     <div>
-                        <label for="credit">credit</label>
+                        <label htmlFor="credit">credit</label>
                         <input id="credit" type="radio" name="payment_method" value="credit"/>
                     
-                        <label for="debit">debit</label>
+                        <label htmlFor="debit">debit</label>
                         <input id="debit" type="radio" name="payment_method" value="debit"/>
                     </div>
                 </div>
