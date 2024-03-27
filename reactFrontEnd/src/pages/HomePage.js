@@ -11,6 +11,7 @@ function HomePage() {
             <Link to="/shop"> Shop Now </Link>
             <Link to="/confirmReservationPage"> Confirm Reservation </Link>
             <Link to="/reservation"> Make Reservation </Link>
+            <Link to="/clerkRooms"> Clerk Rooms </Link>
         </div>
     );
 }

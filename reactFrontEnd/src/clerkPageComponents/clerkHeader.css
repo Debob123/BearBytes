@@ -1,0 +1,18 @@
+.clerk-header {
+    background-color: gray;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5vw;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+}
+
+.c-header-btn {
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 10px;
+}
