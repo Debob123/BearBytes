@@ -1,0 +1,33 @@
+.container-shop-header  {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: 70px;
+
+}
+
+.container-shop-header ul  {
+  padding: 10px;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  padding: 0 1rem;
+  gap: 2rem;
+}
+
+
+.container-shop-header .cart-button  {
+  height: 60px;
+  width: 65px;
+}
+
+.container-shop-header .search-bar  {
+  height: 30px;
+  width: 150px;
+}
+
+.container-shop-header .cart-icon  {
+  height: 50px;
+  width: 50px;
+}
