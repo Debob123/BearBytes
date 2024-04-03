@@ -156,7 +156,7 @@ function ClerkRoomPage() {
                     <label>Smoking Allowed: </label>
                     <input type="checkbox"
                            value={smokingAllowed} 
-                           onChange={(e) => setSmokingAllowed(e.target.value)}/>
+                           onChange={(e) => setSmokingAllowed(e.target.checked)}/>
                     <button className="center-button" 
                             onClick={handleSubmit}
                             disabled={!number || !floor || !numBeds || !rate || !bedSize || !type || !quality}
