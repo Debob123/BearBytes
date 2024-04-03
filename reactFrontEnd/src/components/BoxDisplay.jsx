@@ -1,73 +1,42 @@
-import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-
-// Define custom styles for the modal
-const customStyles = {
-    content: {
-        width: '30%', // make the modal 3 times smaller
-        height: '30%',
-        margin: 'auto',
-    },
-};
 
 Modal.setAppElement('#root'); // This line is needed for accessibility reasons
 
-function BoxDisplay({ imgLink, title, cost, availability, btnAct="y"}) {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [isAvailable, setIsAvailable] = useState(true);
+function BoxDisplay({ imgLink, type, cost, numBeds, bedSize, smokingAllowed, addedRooms, setAddedRooms, currRooms, setCurrRooms, roomNum, quality, btnAct="y"}) {
 
-    function openModal() {
-        setModalIsOpen(true);
-    }
-
-    function closeModal() {
-        setModalIsOpen(false);
-    }
-
-    function addToCart() {
-        // Add your logic to add the room to the cart
-    }
-
-    function checkAvailability() {
-        // Check if availability is an array before calling includes on it
-        if (Array.isArray(availability)) {
-            setIsAvailable(availability.includes(startDate) && availability.includes(endDate));
-        } else {
-            setIsAvailable(false);
+    function handleClick() {
+        let room = {
+            "number": roomNum,
+            "bedSize": bedSize,
+            "dailyRate": cost,
+            "numBeds": numBeds,
+            "quality": quality,
+            "smokingAllowed": smokingAllowed,
+            "type": type,
         }
+        const newAddedRooms = [...addedRooms]
+        newAddedRooms.push(room);
+        setAddedRooms(newAddedRooms);
+        sessionStorage.setItem('rooms', JSON.stringify(addedRooms));
+        let index = currRooms.findIndex(r => r.number === room.number);
+        console.log(index);
+        const newRooms = [
+            ...currRooms.slice(0, index), // Elements before the one to delete
+            ...currRooms.slice(index + 1) // Elements after the one to delete
+        ];
+        setCurrRooms(newRooms);
     }
-
-    // Call checkAvailability whenever startDate or endDate changes
-    useEffect(() => {
-        checkAvailability();
-    }, [startDate, endDate]);
 
     return (
         <div className="box-display">
-            <img src={imgLink} alt={title} />
-            <h2>{title}</h2>
-            <p>{cost}</p>
-            {btnAct !== null && <button onClick={openModal}>Reserve</button> }
-            <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                contentLabel="Reservation Modal"
-                style={customStyles}
-            >
-                <h2>Reserve {title} Room</h2>
-                <label>
-                    Start Date:
-                    <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
-                </label>
-                <label>
-                    End Date:
-                    <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} />
-                </label>
-                {isAvailable ? <button onClick={addToCart}>Add to Cart</button> : <p>Room is not available on these dates.</p>}
-                <button onClick={closeModal}>Close</button>
-            </Modal> 
+            <img src={imgLink} alt={type} />
+            <p>Room number: {roomNum}</p>
+            <p>Room type: {type}</p>
+            <p>Bed size: {bedSize}</p>
+            <p>Beds: {numBeds}</p>
+            <p>Daily rate: {cost}</p>
+            <p>Smoking allowed: {smokingAllowed ? "Yes" : "No"}</p>
+            {btnAct !== null && <button onClick={handleClick}>Reserve</button> }
         </div>
     );
 }
