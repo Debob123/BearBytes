@@ -10,3 +10,9 @@
     position: fixed;
     top: 0;
 }
+
+.profile {
+    justify-self: right;
+    padding-right: 10px;
+    margin: 0;
+}

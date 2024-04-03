@@ -1,13 +1,36 @@
+import getSessionStorage from '../authentication/GetSessionStorage';
+import { useNavigate } from 'react-router-dom';
 import Button from "./Button"
 import "./header.css"
 
+
 function GuestHeader() {
+    const user = getSessionStorage('user', null);
+    const navigate = useNavigate();
+
+    const shopRedirect = () => {
+        navigate("/shop")
+    }
+
+    const reservationRedirect = () => {
+        navigate("/roomSearch")
+    }
+
+    const myReservationsRedirect = () => {
+        navigate("/guestReservations")
+    }
+
+    const myBillRedirect = () => {
+        navigate("/bill")
+    }
+
     return (
         <div className="header">
-            <Button text="Shop"/>
-            <Button text="Reserve Room"/>
-            <Button text="My Reservations"/>
-            <Button text="My Bill"/>
+            <Button text="Shop" onClick={shopRedirect}/>
+            <Button text="Reserve Room" onClick={reservationRedirect}/>
+            <Button text="My Reservations" onClick={myReservationsRedirect}/>
+            <Button text="My Bill" onClick={myBillRedirect}/>
+            <p className="profile">{user ? "Welcome " + user.username : "Error loading profile"}!</p>
         </div>
     )
 }

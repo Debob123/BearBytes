@@ -1,0 +1,41 @@
+.result-container {
+    display: grid;
+    justify-content: center;
+    padding: 10px;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.flex-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.success-text {
+    text-align:center;
+}
+
+.continue-login {
+    border-radius: 50px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: green;
+    color: white;
+    width: 50%;
+}
+
+.retry-registration {
+    border-radius: 50px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: red;
+    color: white;
+    width: 50%;
+}

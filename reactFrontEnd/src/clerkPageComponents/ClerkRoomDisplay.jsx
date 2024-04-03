@@ -1,66 +1,50 @@
-import { v4 as uuidv4 } from 'uuid';
 import RoomModifyAndStatus from './RoomModifyAndStatus.jsx';
 import singleRoom from '../images/hotelRoom1.jpg'
-import doubleRoom from '../images/doubleRoom1.jpg'
+import { useState, useEffect } from 'react'
 
-const rooms = [
-    {
-        imgLink: singleRoom,
-        roomType: "Single",
-        rate: "$150",
-        id: uuidv4()
-    },
-    {
-        imgLink: doubleRoom,
-        roomType: "Double",
-        rate: "$220",
-        id: uuidv4()
-    },
-    {
-        imgLink: singleRoom,
-        roomType: "Single",
-        rate: "$170",
-        id: uuidv4()
-    },
-    {
-        imgLink: singleRoom,
-        roomType: "Single",
-        rate: "$120",
-        id: uuidv4()
-    },
-    {
-        imgLink: singleRoom,
-        roomType: "Single",
-        rate: "$140",
-        id: uuidv4()
-    },
-    {
-        imgLink: doubleRoom,
-        roomType: "Double",
-        rate: "$200",
-        id: uuidv4()
-    },
-    {
-        imgLink: doubleRoom,
-        roomType: "Double",
-        rate: "$300",
-        id: uuidv4()
-    },
-    {
-        imgLink: doubleRoom,
-        roomType: "Double",
-        rate: "$280",
-        id: uuidv4()
-    },
-]
 
 
 function ClerkRoomDisplay() {
+    useEffect(() => {
+        renderRooms();
+    }, []);
+
+    const [rooms, setRooms] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+    // Fetch all of the available rooms
+    function renderRooms() {
+        fetch('http://localhost:8080/room/getRooms', {
+        mode: 'cors',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        })
+        .then(response => response.json())
+        .then(data => {
+        // Set the array of room objects
+        setRooms(data);
+        setLoading(false);
+        })
+        .catch(error => console.error('Error creating room array:', error));
+    }
+
+    if(isLoading) {
+        return <div>Loading...</div>
+    }
     return (
         <div className="display">
-            {rooms.map((room) =>(
-                <RoomModifyAndStatus className="room-display" key={room.id} imgLink={room.imgLink} title={room.roomType} cost={room.rate}/>
-            ))}
+            {rooms.length !== 0 ? rooms.map((room) =>(
+                <RoomModifyAndStatus className="room-display" key={room.number} 
+                imgLink={singleRoom} 
+                type={room.type} 
+                cost={room.dailyRate} 
+                numBeds={room.numBeds}
+                bedSize={room.bedSize}
+                smokingAllowed={room.smokingAllowed}
+                roomNum={room.number}
+                quality={room.quality}/>
+            )): <div>No rooms available</div>}
         </div>
     );
 }
