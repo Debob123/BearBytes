@@ -9,10 +9,24 @@ const customStyles = {
     },
 };
 
-function CartBoxDisplay({ imgLink, title, cost, availability, btnAct="y"}) {
+function CartBoxDisplay({ imgLink, title, cost, btnAct="y"}) {
 
     function removeFromCart() {
-        // Add your logic to add the product to the cart
+        let product = {
+            "imgLink": imgLink,
+            "name": title,
+            "price": cost,
+        }
+
+        let cart = JSON.parse(sessionStorage.getItem('cart'));
+        var ndx = cart.findIndex(x => x.name === product.name);
+        //var ndx = cart.indexOf(product);
+        if(ndx !== -1)  {
+            cart.splice(ndx, 1);
+        }
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        document.location.reload();
+        
     }
 
     return (

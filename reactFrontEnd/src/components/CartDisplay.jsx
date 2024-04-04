@@ -13,7 +13,7 @@ import umbrella from '../images/beach-umbrella.jpg'
 import Button from './Button';
 const button = <Button text="Remove from Cart"/>
 
-const cart = [
+const test = [
   {
       imgLink: tropicalShirt,
       name: "Tropical Shirt",
@@ -32,6 +32,7 @@ const cart = [
       price: "$50",
       id: uuidv4()
   }]
+  
 
   
 
@@ -53,13 +54,14 @@ function CartDisplay() {
   const cartTax = getTax();
   const cartTotal = getTotal();
   const roomNum = getRoomNum();
+  const cart = JSON.parse(sessionStorage.getItem('cart'));
 
   return(
     <div className="container-cart">
       <div className="cart-products">
         {cart.map((product) =>(
           <CartBoxDisplay key={product.id} imgLink={product.imgLink} title={product.name} cost={product.price} btn={button}/>
-        ))}
+          ))}
       </div>
       <div className="order-summary">
         <p>Subtotal:    ${cartSubTotal}</p>

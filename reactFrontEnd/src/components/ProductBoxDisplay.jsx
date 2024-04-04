@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
 
 // Define custom styles for the modal
 const customStyles = {
@@ -10,13 +9,25 @@ const customStyles = {
     },
 };
 
-Modal.setAppElement('#root'); // This line is needed for accessibility reasons
 
-function ProductBoxDisplay({ imgLink, title, cost, availability, btnAct="y"}) {
-    const [isAvailable, setIsAvailable] = useState(true);
-    const inStock = true;
+function ProductBoxDisplay({ imgLink, title, cost, btnAct="y"}) {
 
     function addToCart() {
+        const product = {
+            "imgLink": imgLink,
+            "name": title,
+            "price": cost,
+        }
+
+        if(sessionStorage.getItem('cart') !== null)  {
+            let cart = JSON.parse(sessionStorage.getItem('cart'));
+            cart.push(product);
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+        }
+        else  {
+            let cart = [product];
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+        }
         
     }
 
@@ -26,7 +37,7 @@ function ProductBoxDisplay({ imgLink, title, cost, availability, btnAct="y"}) {
             <img src={imgLink} alt={title} />
             <h2>{title}</h2>
             <p>{cost}</p>
-            {isAvailable ? <button onClick={addToCart}>Add to Cart</button> : <p>Product is out of stock.</p>}
+            <button onClick={addToCart}>Add to Cart</button>
         </div>
     );
 }

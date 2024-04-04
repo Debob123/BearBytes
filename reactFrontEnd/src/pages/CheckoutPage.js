@@ -11,11 +11,10 @@ function CheckoutPage() {
 
     return (
         <div>
-            <GuestHeader />
+            <GuestHeader/>
             <h1>Your Cart</h1>
             <h1 className="content-start"></h1>
             <CartDisplay/>
-            
         </div>
     );
 }
