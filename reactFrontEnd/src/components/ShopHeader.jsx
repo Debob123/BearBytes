@@ -1,21 +1,23 @@
 import './ShopHeader.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping} from '@fortawesome/free-solid-svg-icons';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function ShopHeader()  {
   return(
 
     <div className="container-shop-header">
-      <p>Shop</p>
+      <p className="shop-text">Shop</p>
       <ul>
         <li>
           <form action="#" >
-          <input type="text" placeholder="Search Products" name="search" className="search-bar" ></input>
+            <input type="text" placeholder="Search Products" name="search" className="search-bar"></input>
           </form>
         </li>
         <li>
-          <button className="cart-button"><FontAwesomeIcon className="cart-icon" icon={faCartShopping} /></button>
+          <Link to="/cart">
+            <FontAwesomeIcon className="cart-icon" icon={faCartShopping} />
+          </Link>
         </li>
       </ul>
     </div>

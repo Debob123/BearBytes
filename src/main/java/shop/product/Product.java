@@ -1,4 +1,4 @@
-package shop;
+package shop.product;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -7,16 +7,15 @@ public class Product {
     private UUID id;
     private String name;
     private BigDecimal price;
-    private String description;
 
-    public Product(String name, BigDecimal price, String description)  {
+    public Product(String name, BigDecimal price)  {
         this.name = name;
         this.price = price;
-        this.description = description;
+        generateSerialNumber();
     }
 
-    public void generateSerialNumber() {
-        id = UUID.fromString(getName() + getDescription());
+    private void generateSerialNumber() {
+        id = UUID.fromString(name);
     }
 
     public String getName()  {
@@ -36,12 +35,6 @@ public class Product {
     }
     public void setPrice(BigDecimal price)  {
         this.price = price;
-    }
-    public String getDescription()  {
-        return description;
-    }
-    public void setDescription(String description)  {
-        this.description = description;
     }
 
 }

@@ -17,21 +17,9 @@ function ProductBoxDisplay({ imgLink, title, cost, availability, btnAct="y"}) {
     const inStock = true;
 
     function addToCart() {
-        // Add your logic to add the product to the cart
+        
     }
 
-    function checkAvailability() {
-        // Check if product is in stock
-        if (inStock) {
-            setIsAvailable(true);
-        } else {
-            setIsAvailable(false);
-        }
-    }
-
-    useEffect(() => {
-        checkAvailability();
-    },);
 
     return (
         <div className="box-display">
