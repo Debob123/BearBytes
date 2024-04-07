@@ -1,14 +1,15 @@
 package shop.product;
 
-import interfaces.BasicDAO;
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
-public class ProductDAO implements BasicDAO {
+public class ProductDAO  {
     private Properties p;
     private Connection c;
+
+    static final String dbClassName = "com.mysql.cj.jdbc.Driver";
+    static final String CONNECTION = "jdbc:mysql://127.0.0.1/mysql";
 
     public ProductDAO() {
         // Properties for user and password. Here the user

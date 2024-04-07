@@ -20,7 +20,7 @@ public class ProductController {
         try {
             return products.getProducts();
         } catch(Exception e) {
-            System.out.println("Woops");
+            System.out.println("API fail");
         }
         return new ArrayList<>();
     }

@@ -20,7 +20,6 @@ function CartBoxDisplay({ imgLink, title, cost, btnAct="y"}) {
 
         let cart = JSON.parse(sessionStorage.getItem('cart'));
         var ndx = cart.findIndex(x => x.name === product.name);
-        //var ndx = cart.indexOf(product);
         if(ndx !== -1)  {
             cart.splice(ndx, 1);
         }

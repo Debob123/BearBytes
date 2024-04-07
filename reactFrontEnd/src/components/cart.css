@@ -13,3 +13,9 @@
   border-color: black;
   height: 50%;
 }
+
+.cart-title  {
+  text-align: center;
+  padding: 20px;
+  font-size:large;
+}

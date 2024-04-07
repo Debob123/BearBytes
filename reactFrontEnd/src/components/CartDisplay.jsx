@@ -59,9 +59,9 @@ function CartDisplay() {
   return(
     <div className="container-cart">
       <div className="cart-products">
-        {cart.map((product) =>(
+        {cart !== null ? cart.map((product) =>(
           <CartBoxDisplay key={product.id} imgLink={product.imgLink} title={product.name} cost={product.price} btn={button}/>
-          ))}
+          )) : true}
       </div>
       <div className="order-summary">
         <p>Subtotal:    ${cartSubTotal}</p>
