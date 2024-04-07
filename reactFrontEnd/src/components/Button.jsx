@@ -1,4 +1,4 @@
-function Button({text="Button", color="black", fontSize=12}) {
+function Button({text="Button", color="black", fontSize=12, onClick=null}) {
     const buttonStyle = {
         color: color,
         fontSize: fontSize + "px",
@@ -6,7 +6,7 @@ function Button({text="Button", color="black", fontSize=12}) {
     };
 
     return (
-        <button style={buttonStyle}>
+        <button style={buttonStyle} onClick={onClick}>
             {text}
         </button>
     )
