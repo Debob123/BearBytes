@@ -52,3 +52,15 @@ ul.center-list{
     margin-right: auto;
     list-style-position: inside;
   }
+
+  .hidden {
+    display: none;
+  }
+
+  .green {
+    color: green;
+  }
+
+  .red {
+    color: red;
+  }

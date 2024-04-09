@@ -2,3 +2,21 @@
     display:flex;
     gap: 5%
 }
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1 / 3;
+}
+
+.hidden {
+    display: none;
+}
+
+.error-msg {
+    color: red;
+    overflow-wrap: break-word;
+    max-width: 30ch;
+    text-align: center;
+}

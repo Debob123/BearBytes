@@ -1,15 +1,13 @@
 package bearbytes.dev.hotel.floor;
 
-import bearbytes.dev.hotel.interfaces.GenericDAO;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
-import bearbytes.dev.hotel.floor.Room;
+import bearbytes.dev.hotel.interfaces.IRoomDAO;
 
-public class RoomDAO implements GenericDAO {
+public class RoomDAO implements IRoomDAO {
 
     private Properties p;
     private Connection c;
@@ -23,7 +21,7 @@ public class RoomDAO implements GenericDAO {
         c = null;
     }
 
-    public Boolean add(Room room) throws ClassNotFoundException, SQLException {
+    public boolean add(Room room) throws ClassNotFoundException, SQLException {
 
         Class.forName(dbClassName);
 
@@ -66,7 +64,70 @@ public class RoomDAO implements GenericDAO {
         return true;
     }
 
-    public Collection<Room> getRooms() throws ClassNotFoundException, SQLException {
+    public boolean modify(Room[] rooms) throws ClassNotFoundException, SQLException{
+        // Class.forName(xxx) loads the jdbc classes and
+        // creates a drivermanager class factory
+        Class.forName(dbClassName);
+        PreparedStatement ps = null;
+
+        // Now try to connect
+        try {
+
+            Collection<Room> r = getAll();
+
+            // Check if the room to change is valid
+            if(!r.contains(rooms[0])) {
+                System.out.println(rooms[0]);
+                System.out.println("Room not present in database");
+                return false;
+            }
+
+            // Check if the room number is available to change to
+            if(rooms[0].getNumber() != rooms[1].getNumber()) {
+                for (Room room : r) {
+                    if (room.getNumber() == rooms[1].getNumber()) {
+                        System.out.println("This room number is already taken");
+                        return false;
+                    }
+                }
+            }
+
+            c = DriverManager.getConnection(CONNECTION, p);
+
+            // Query for the rooms
+            String query = "UPDATE myDB.Rooms SET roomNumber = ?, floor = ?," +
+                    " numBeds = ?, dailyRate = ?, smokingAllowed = ?, bedSize = ?," +
+                    " type = ?, quality = ? WHERE roomNumber = ?";
+            ps = c.prepareStatement(query);
+            ps.setInt(1, rooms[1].getNumber());
+            ps.setInt(2, rooms[1].getFloor());
+            ps.setInt(3, rooms[1].getNumBeds());
+            ps.setDouble(4, rooms[1].getDailyRate());
+            ps.setBoolean(5, rooms[1].getSmokingAllowed());
+            ps.setString(6, Room.BedType.toString(rooms[1].getBedSize()));
+            ps.setString(7, Room.RoomType.toString(rooms[1].getType()));
+            ps.setString(8, Room.QualityLevel.toString(rooms[1].getQuality()));
+            ps.setInt(9, rooms[0].getNumber());
+            ps.executeUpdate();
+        } catch( SQLException e) {
+            e.printStackTrace();
+        } finally{
+            if(ps != null) {
+                ps.close();
+            }
+            if(c != null) {
+                c.close();
+            }
+        }
+
+        return true;
+    }
+
+    public boolean remove(Room r) {
+        return true;
+    }
+
+    public Collection<Room> getAll() throws ClassNotFoundException, SQLException {
         List<Room> rooms = new ArrayList<>();
 
         // Class.forName(xxx) loads the jdbc classes and
@@ -97,7 +158,7 @@ public class RoomDAO implements GenericDAO {
         return rooms;
     }
 
-    public Collection<Room> getAvailableRooms(String[] dates) throws ClassNotFoundException, SQLException {
+    public Collection<Room> getAvailable(String[] dates) throws ClassNotFoundException, SQLException {
         List<Room> rooms = new ArrayList<>();
 
         // Class.forName(xxx) loads the jdbc classes and

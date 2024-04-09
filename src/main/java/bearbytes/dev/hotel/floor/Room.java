@@ -23,9 +23,6 @@ public class Room {
 
     public Room(int roomNumber, int numBeds, int floor, double dailyRate, boolean smokingAllowed,
                 BedType bedSize, RoomType type, QualityLevel quality) {
-        System.out.println("Invoking Room constructor");
-        System.out.println(roomNumber + " " + numBeds + " " + floor + " " + dailyRate + " " + smokingAllowed + " " +
-                           bedSize + " "  + type + " " + quality);
         this.number = roomNumber;
         this.numBeds = numBeds;
         this.floor = floor;
@@ -98,6 +95,12 @@ public class Room {
 
     public void setSmokingAllowed(boolean smokingAllowed) {
         this.smokingAllowed = smokingAllowed;
+    }
+
+    public String toString() {
+        return number + ", " + floor + ", " + numBeds + ", " + dailyRate + ", " +
+                smokingAllowed + ", " + bedSize.toString() + ", " + type.toString() +
+                ", " + quality.toString();
     }
 
     public boolean equals(Object o) {

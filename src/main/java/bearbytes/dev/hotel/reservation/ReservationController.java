@@ -18,7 +18,7 @@ public class ReservationController {
     @PostMapping("/add")
     public Boolean add(@RequestBody Reservation reservation) throws ClassNotFoundException, SQLException {
         try {
-            resDAO.add(reservation);
+            return resDAO.add(reservation);
         } catch(Exception e) {
             System.out.println("Woops");
         }

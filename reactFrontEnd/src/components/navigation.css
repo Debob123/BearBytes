@@ -1,0 +1,28 @@
+.nav {
+    min-height: 100vh;
+    width: 10vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: gray;
+    position: fixed;
+    left: 0;
+}
+
+.profile {
+    padding-right: 10px;
+    margin: 0;
+}
+
+.nav-btn {
+    min-height: 10vh;
+}
+
+.reservations-display {
+    height: 100vh;
+    display: grid;
+    margin-left: 10vw;
+    grid-template-rows: 1fr 9fr;
+}

@@ -19,7 +19,6 @@ function BoxDisplay({ imgLink, type, cost, numBeds, bedSize, smokingAllowed, add
         setAddedRooms(newAddedRooms);
         sessionStorage.setItem('rooms', JSON.stringify(addedRooms));
         let index = currRooms.findIndex(r => r.number === room.number);
-        console.log(index);
         const newRooms = [
             ...currRooms.slice(0, index), // Elements before the one to delete
             ...currRooms.slice(index + 1) // Elements after the one to delete

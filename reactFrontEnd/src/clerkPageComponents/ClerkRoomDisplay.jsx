@@ -4,12 +4,11 @@ import { useState, useEffect } from 'react'
 
 
 
-function ClerkRoomDisplay() {
+function ClerkRoomDisplay({rooms, setRooms}) {
     useEffect(() => {
         renderRooms();
     }, []);
 
-    const [rooms, setRooms] = useState([]);
     const [isLoading, setLoading] = useState(true);
     // Fetch all of the available rooms
     function renderRooms() {
@@ -36,6 +35,8 @@ function ClerkRoomDisplay() {
         <div className="display">
             {rooms.length !== 0 ? rooms.map((room) =>(
                 <RoomModifyAndStatus className="room-display" key={room.number} 
+                rooms = {rooms}
+                setRooms = {setRooms}
                 imgLink={singleRoom} 
                 type={room.type} 
                 cost={room.dailyRate} 
@@ -43,7 +44,8 @@ function ClerkRoomDisplay() {
                 bedSize={room.bedSize}
                 smokingAllowed={room.smokingAllowed}
                 roomNum={room.number}
-                quality={room.quality}/>
+                quality={room.quality}
+                floorNum={room.floor}/>
             )): <div>No rooms available</div>}
         </div>
     );

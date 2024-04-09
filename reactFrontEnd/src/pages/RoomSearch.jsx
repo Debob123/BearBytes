@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GuestHeader from "../components/GuestHeader";
+import './styles/roomSearch.css'
 
 
 function RoomSearch() {
@@ -21,26 +22,30 @@ function RoomSearch() {
         <div>
             <GuestHeader/>
             <h1 className="content-start">Choose dates for your stay</h1>
-            <form>
-                <label htmlFor="start_date">Start date:</label>
-                <input 
-                    type="text" 
-                    id="start_date" 
-                    name="startDate"
-                    placeholder="YYYY-MM-DD" 
-                    pattern="(?:19|20)(?:(?:[13579][26]|[02468][048])-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))|(?:[0-9]{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:29|30))|(?:(?:0[13578]|1[02])-31)))"
-                    onChange={(e) => setStart(e.target.value)}
-                    required/>
-                <label htmlFor="end_date">End date:</label>
-                <input 
-                    type="text" 
-                    id="end_date" 
-                    name="endDate" 
-                    placeholder="YYYY-MM-DD" 
-                    pattern="(?:19|20)(?:(?:[13579][26]|[02468][048])-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))|(?:[0-9]{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:29|30))|(?:(?:0[13578]|1[02])-31)))"
-                    onChange={(e) => setEnd(e.target.value)}
-                    required/>
-                <button onClick={handleDateConfirm}>Confirm Dates</button>
+            <form className="form-grid">
+                <div className="grid-element">
+                    <label htmlFor="start_date">Start date:</label>
+                    <input 
+                        type="text" 
+                        id="start_date" 
+                        name="startDate"
+                        placeholder="YYYY-MM-DD" 
+                        pattern="(?:19|20)(?:(?:[13579][26]|[02468][048])-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))|(?:[0-9]{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:29|30))|(?:(?:0[13578]|1[02])-31)))"
+                        onChange={(e) => setStart(e.target.value)}
+                        required/>
+                </div>
+                <div className="grid-element">
+                    <label htmlFor="end_date">End date:</label>
+                    <input 
+                        type="text" 
+                        id="end_date" 
+                        name="endDate" 
+                        placeholder="YYYY-MM-DD" 
+                        pattern="(?:19|20)(?:(?:[13579][26]|[02468][048])-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))|(?:[0-9]{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:29|30))|(?:(?:0[13578]|1[02])-31)))"
+                        onChange={(e) => setEnd(e.target.value)}
+                        required/>
+                </div>
+                <button className="grid-element grid-btn" onClick={handleDateConfirm}>Confirm Dates</button>
             </form>
         </div>
     );

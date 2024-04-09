@@ -13,10 +13,10 @@ const customStyles = {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
     },
-  };
+};
   
-  // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-  Modal.setAppElement('#root');
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement('#root');
 
 function ClerkRoomPage() {
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -28,6 +28,7 @@ function ClerkRoomPage() {
     const [type, setType] = useState('SINGLE');
     const [quality, setQuality] = useState('ECONOMY');
     const [smokingAllowed, setSmokingAllowed] = useState(false);
+    const [rooms, setRooms] = useState([]);
 
     function openModal() {
         setIsOpen(true);
@@ -51,13 +52,7 @@ function ClerkRoomPage() {
         setFloor(parseInt(floor));
         setNumBeds(parseInt(numBeds));
         setRate(parseFloat(rate));
-        fetch('http://localhost:8080/room/add', {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+        let room = {
             "number": number,
             "numBeds": numBeds,
             "floor": floor,
@@ -66,15 +61,26 @@ function ClerkRoomPage() {
             "bedSize": bedSize,
             "type": type,
             "quality": quality
-        })
+        }
+        fetch('http://localhost:8080/room/add', {
+        mode: 'cors',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(room)
         })
         .then(response => response.json())
         .then(data => {
         if(data) {
-            console.log("success");
+            let newRooms = [...rooms]
+            newRooms.push(room);
+            newRooms.sort((a,b) => a.number - b.number);
+            setRooms(newRooms);
         } else {
             console.log("Woops");
         }
+        {closeModal()}
         })
         .catch(error => console.error('Error creating room array:', error));
     }
@@ -83,7 +89,7 @@ function ClerkRoomPage() {
         <div>
             <ClerkHeader/>
             <h1 className='text-center clerk-label'>Room Management</h1>
-            <h2 className='text-center'>Room missing? <button onClick={openModal}>Add a room</button></h2>
+            <h2 className='text-center'>Room missing? <button onClick={openModal} className="room-button">Add a room</button></h2>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -164,7 +170,10 @@ function ClerkRoomPage() {
                             submit</button>
                 </form>
             </Modal>
-            <ClerkRoomDisplay/>
+            <ClerkRoomDisplay 
+                rooms={rooms}
+                setRooms={setRooms}
+                />
         </div>
     )
 } 

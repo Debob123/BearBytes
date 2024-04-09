@@ -1,5 +1,6 @@
 package bearbytes.dev.hotel.accounts;
 
+import bearbytes.dev.hotel.interfaces.IAccountDAO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.regex.Pattern;
 @RequestMapping("/accounts")
 public class AccountController {
     private AccountAuthenticator auth;
-    private AccountDAO aDAO;
+    private IAccountDAO aDAO;
 
     public AccountController()  {
         auth = new AccountAuthenticator();

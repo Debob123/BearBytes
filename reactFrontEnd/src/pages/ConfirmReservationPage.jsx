@@ -7,6 +7,8 @@ import './styles/confirmReservationPage.css';
 
 function ConfirmReservationPage() {
     const [checkbox, setCheckbox] = useState(false);
+    const [isHidden, setIsHidden] = useState("hidden");
+    const [content, setContent] = useState("");
     
     const dates = getSessionStorage('dates', null);
     const rooms = getSessionStorage('rooms', null);
@@ -59,11 +61,15 @@ function ConfirmReservationPage() {
       )
       .then(response => response.json())
       .then(data => {
-        // Check if the guest was authenticated
+        // Check if the room was added
         if(data) {
-            // If the guest was authenticated, save the username to the session info
-            // so it is accessible on other pages (this will be needed for associating
-            // reservations and similar items)
+            setIsHidden('green');
+            setContent("Reservation created");
+            console.log("success");
+        } else {
+            setIsHidden('red');
+            setContent("Error creating reservation, please do not try to confirm the same reservation twice");
+            console.log("oh no");
         }
       })
       .catch(error => console.error('Error creating booking:', error));
@@ -135,6 +141,7 @@ function ConfirmReservationPage() {
                             <p>${nightlyCost * nightsStayed}</p>
                         </div>
                     </div>
+                    <div className={isHidden + " center-text"}>{content}</div>
                     <input type="submit" 
                            value="Confirm" 
                            className="cnf-btn" 

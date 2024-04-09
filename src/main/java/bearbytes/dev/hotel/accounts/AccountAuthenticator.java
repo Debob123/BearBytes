@@ -1,17 +1,19 @@
 package bearbytes.dev.hotel.accounts;
 
+import bearbytes.dev.hotel.interfaces.InterfaceDAO;
 import org.mindrot.jbcrypt.BCrypt;
 
-import bearbytes.dev.hotel.interfaces.GenericDAO;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.*;
 import java.util.Properties;
 
-public class AccountAuthenticator implements GenericDAO {
+public class AccountAuthenticator {
 
     private Properties p;
     private Connection c;
+    static final String dbClassName = "com.mysql.cj.jdbc.Driver";
+    static final String CONNECTION = "jdbc:mysql://127.0.0.1/mysql";
 
     public AccountAuthenticator() {
         p = new Properties();

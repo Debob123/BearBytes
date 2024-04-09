@@ -1,11 +1,13 @@
 package bearbytes.dev.hotel.accounts;
 
-import bearbytes.dev.hotel.interfaces.GenericDAO;
+import bearbytes.dev.hotel.interfaces.IAccountDAO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 
-public class AccountDAO implements GenericDAO {
+public class AccountDAO implements IAccountDAO {
     private Properties p;
     private Connection c;
     AccountAuthenticator auth;
@@ -72,7 +74,31 @@ public class AccountDAO implements GenericDAO {
         return false;
     }
 
-    public Boolean add(Clerk c) {
+    public boolean remove(Guest g) {
+        return true;
+    }
+
+    public boolean add(Clerk c) {
+        return false;
+    }
+
+    public Collection<Account> getAll() {
+        return new ArrayList<Account>();
+    }
+
+    public boolean verify() {
+        return false;
+    }
+
+    public boolean checkAvailability() {
+        return false;
+    }
+
+    public boolean add(Account a) {
+        return false;
+    }
+
+    public boolean remove(Account a) {
         return false;
     }
 }

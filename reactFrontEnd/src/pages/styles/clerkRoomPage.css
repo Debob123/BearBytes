@@ -20,6 +20,13 @@
     justify-self: center;
     grid-column: 1/3;
 }
+.room-button {
+    width: auto;
+    padding: 5px;
+    border-radius: 10px;
+    justify-self: center;
+    grid-column: 1/3;
+}
 
 .close-btn {
     position: absolute;

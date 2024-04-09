@@ -11,6 +11,7 @@ import RoomSearch from './pages/RoomSearch'
 import RegisterGuest from './pages/RegisterGuest';
 import RegistrationSuccess from './pages/RegistrationSuccess';
 import RegistrationFailed from './pages/RegistrationFailed';
+import GuestReservations from './pages/GuestReservations';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/registerGuest" element={<RegisterGuest />} />
         <Route path="/registrationSuccess" element={<RegistrationSuccess />} />
         <Route path="/registrationFailed" element={<RegistrationFailed/>}/>
+        <Route path="/guestReservations" element={<GuestReservations />}/>
       </Routes>
     </Router>
   );

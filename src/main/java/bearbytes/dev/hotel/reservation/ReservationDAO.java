@@ -1,16 +1,18 @@
 package bearbytes.dev.hotel.reservation;
 
-import bearbytes.dev.hotel.interfaces.GenericDAO;
+import bearbytes.dev.hotel.interfaces.InterfaceDAO;
 
 import java.io.*;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Properties;
 
-public class ReservationDAO implements GenericDAO {
+public class ReservationDAO implements InterfaceDAO<Reservation> {
     private SimpleDateFormat simpleDateFormat;
 
     public ReservationDAO() {
@@ -50,7 +52,8 @@ public class ReservationDAO implements GenericDAO {
         return true;
     }
 
-    public void add(Reservation reservation) throws SQLException, ClassNotFoundException, ParseException {
+    
+    public boolean add(Reservation reservation) throws SQLException, ClassNotFoundException, ParseException {
         // Class.forName(xxx) loads the jdbc classes and
         // creates a drivermanager class factory
         Class.forName(dbClassName);
@@ -87,6 +90,7 @@ public class ReservationDAO implements GenericDAO {
                 ps2.setInt(3, reservation.getRooms().get(i).getNumber());
                 ps2.executeUpdate();
             }
+            return true;
         } catch( SQLException e) {
             e.printStackTrace();
         } finally{
@@ -94,5 +98,14 @@ public class ReservationDAO implements GenericDAO {
                 c.close();
             }
         }
+        return false;
+    }
+
+    public boolean remove(Reservation r) {
+        return true;
+    }
+
+    public Collection<Reservation> getAll() {
+        return new ArrayList<Reservation>();
     }
 }

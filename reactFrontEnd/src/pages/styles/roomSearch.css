@@ -1,0 +1,14 @@
+.form-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.grid-element {
+    justify-self: center;
+}
+
+.grid-btn {
+    width: auto;
+    border-radius: 10px;
+    padding: 5px;
+}
