@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GuestHeader from '../components/GuestHeader';
-import ProductDisplay from '../components/ProductDisplay';
-import ShopHeader from '../components/ShopHeader';
+import ProductDisplay from '../shopComponents/ProductDisplay';
+import ShopHeader from '../shopComponents/ShopHeader';
 
 function ShoppingPage() {
     const [products, setProducts] = useState([]);
