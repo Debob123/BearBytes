@@ -8,18 +8,16 @@ import java.util.*;
 
 public class Reservation {
 
-    private SimpleDateFormat simpleDateFormat;
 
-    public Reservation(int reservationID, Collection<Room> rooms, String start, String end, String username) throws ParseException {
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public Reservation(Collection<Room> rooms, String startDate, String endDate, String username) {
         this.rate = 0;
         this.rooms = new ArrayList<>(rooms);
         for(Room room : rooms) {
             rate += room.getDailyRate();
         }
         this.cancellationFee = rate * .8;
-        this.startDate = start;
-        this.endDate = end;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.status = ReservationStatus.CONFIRMED;
         this.reservationID = hashCode();
         this.username = username;
@@ -49,12 +47,12 @@ public class Reservation {
         return rooms;
     }
 
-    public Date getStartDate() throws ParseException {
-        return simpleDateFormat.parse(startDate);
+    public String getStartDate() {
+        return startDate;
     }
 
-    public Date getEndDate() throws ParseException {
-        return simpleDateFormat.parse(endDate);
+    public String getEndDate()  {
+        return endDate;
     }
 
     public String getUsername() {
@@ -63,6 +61,14 @@ public class Reservation {
 
     public ReservationStatus getReservationStatus() {
         return status;
+    }
+
+    public void setRooms(Collection<Room> rooms) {
+        this.rooms = new ArrayList<>(rooms);
+        for(Room room : rooms) {
+            rate += room.getDailyRate();
+        }
+        this.cancellationFee = rate * .8;
     }
 
     public enum ReservationStatus {

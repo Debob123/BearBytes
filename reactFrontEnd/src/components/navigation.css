@@ -19,10 +19,3 @@
 .nav-btn {
     min-height: 10vh;
 }
-
-.reservations-display {
-    height: 100vh;
-    display: grid;
-    margin-left: 10vw;
-    grid-template-rows: 1fr 9fr;
-}

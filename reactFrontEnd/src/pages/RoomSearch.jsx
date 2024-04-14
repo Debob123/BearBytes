@@ -11,7 +11,9 @@ function RoomSearch() {
 
     const handleDateConfirm = (e) => {
         e.preventDefault();
-        if(end > start) {
+        let currDate = new Date();
+        let startingDate = new Date(start + "T00:00-0500")
+        if(!isNaN(startingDate) && end > start && startingDate > currDate ) {
             let dateRange = [start, end]
             sessionStorage.setItem('dates', JSON.stringify(dateRange));
             navigate('/reservation')

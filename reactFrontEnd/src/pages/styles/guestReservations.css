@@ -1,0 +1,29 @@
+.reservations-display {
+    height: 100vh;
+    display: grid;
+    margin-left: 10vw;
+    grid-template-rows: 1fr 9fr;
+}
+
+.res-display {
+    display: grid;
+    aspect-ratio: 1 / 1.5;
+    width: 15vw;
+    background-color: gray;
+    justify-self: center;
+    padding: 10px;
+}
+
+.res-btns {
+    display: flex;
+    gap: 5%;
+}
+
+.hidden { 
+    display: none;
+}
+
+.red {
+    color: red;
+    text-align: center;
+}
