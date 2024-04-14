@@ -9,8 +9,7 @@ public interface InterfaceDAO<T> {
     final String CONNECTION = "jdbc:mysql://127.0.0.1/mysql";
 
     boolean add(T value) throws SQLException, ClassNotFoundException, ParseException;
-    boolean remove(T value);
+    boolean remove(T value) throws SQLException;
 
-    Collection<T> getAll() throws ClassNotFoundException, SQLException;
 
 }

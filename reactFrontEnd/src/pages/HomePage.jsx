@@ -9,7 +9,7 @@ function HomePage() {
             <p><Link to="/login">Login </Link></p>
             <p><Link to="/clerkRooms"> Clerk Rooms </Link></p>
             <p><Link to="/registerGuest"> Create Guest Account</Link></p>
-            <p><Link to="/roomSearch">Guest page</Link></p>
+            <p><Link to="/guestReservations">Guest page</Link></p>
         </div>
     );
 }
