@@ -14,52 +14,54 @@ const button = <Button text="Add to Cart"/>
 
 const product = [
     {
+        id: 1,
         imgLink: tropicalShirt,
         name: "Tropical Shirt",
-        price: 25.00,
-        id: 1
+        price: 25.00
+        
     },
     {
+        id: 2,
         imgLink: sharkNecklace,
         name: "Shark Necklace",
-        price: 15.00,
-        id: 2
+        price: 15.00
+        
     },
     {
+        id: 3,
         imgLink: vase,
         name: "Locally Made Vases",
-        price: 50.00,
-        id: 3
+        price: 50.00
     },
     {
+        id: 4,
         imgLink: beachHat,
         name: "Beach Hat",
-        price: 20.00,
-        id: 4
+        price: 20.00
     },
     {
+        id: 5,
         imgLink: sunglasses,
         name: "Sunglasses",
-        price: 10.00,
-        id: 5
+        price: 10.00
     },
     {
+        id: 6,
         imgLink: beachTowels,
         name: "Beach Towels",
-        price: 30.00,
-        id: 6
+        price: 30.00
     },
     {
+        id: 7,
         imgLink: shellBracelet,
         name: "Locally Crafted Seashell Bracelet",
-        price: 15.00,
-        id: 7
+        price: 15.00
     },
     {
+        id: 8,
         imgLink: umbrella,
         name: "Beach Umbrella",
-        price: 25.00,
-        id: 8
+        price: 25.00
     },
 
 ]
@@ -67,7 +69,6 @@ const product = [
 
 function ProductDisplay() {
     
-
     return (
         <div className="display">
             {product.map((product) =>(

@@ -9,13 +9,14 @@ const customStyles = {
     },
 };
 
-function CartBoxDisplay({ imgLink, title, cost, btnAct="y"}) {
+function CartBoxDisplay({ id, imgLink, title, cost, btnAct="y"}) {
 
     function removeFromCart() {
         let product = {
-            "imgLink": imgLink,
+            "id" : id,
             "name": title,
             "price": cost,
+            "image": imgLink
         }
 
         let cart = JSON.parse(sessionStorage.getItem('cart'));

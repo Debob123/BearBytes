@@ -10,13 +10,14 @@ const customStyles = {
 };
 
 
-function ProductBoxDisplay({ imgLink, title, cost, btnAct="y"}) {
+function ProductBoxDisplay({ id, imgLink, title, cost, btnAct="y"}) {
 
     function addToCart() {
         const product = {
-            "imgLink": imgLink,
+            "id": id,
             "name": title,
             "price": cost,
+            "imgLink": imgLink
         }
 
         if(sessionStorage.getItem('cart') !== null)  {

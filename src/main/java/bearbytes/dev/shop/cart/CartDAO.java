@@ -1,6 +1,6 @@
 package bearbytes.dev.shop.cart;
 
-import bearbytes.dev.shop.product.Product;
+import bearbytes.dev.hotel.product.Product;
 
 import java.sql.*;
 

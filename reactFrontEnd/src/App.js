@@ -9,6 +9,7 @@ import ConfirmReservationPage from './pages/ConfirmReservationPage'
 import ClerkRooms from './pages/ClerkRoomPage'
 import Checkout from './pages/CheckoutPage'
 import RoomSearch from './pages/RoomSearch'
+import PurchaseConfirmationPage from './pages/PurchaseConfirmationPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/clerkRooms" element={<ClerkRooms />} />
         <Route path="/cart" element={<Checkout/>} />
+        <Route path="/purchaseConfirmation" element={<PurchaseConfirmationPage/>} />
       </Routes>
     </Router>
   );
