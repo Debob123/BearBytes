@@ -1,12 +1,12 @@
-package bearbytes.dev.hotel.floor;
+package bearbytes.dev.hotel.controllers;
 
+import bearbytes.dev.hotel.database.RoomDAO;
+import bearbytes.dev.hotel.floor.Room;
 import bearbytes.dev.hotel.interfaces.IRoomDAO;
-import bearbytes.dev.hotel.interfaces.InterfaceDAO;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/room")

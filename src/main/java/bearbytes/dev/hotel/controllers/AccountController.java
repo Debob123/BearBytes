@@ -1,7 +1,10 @@
-package bearbytes.dev.hotel.accounts;
+package bearbytes.dev.hotel.controllers;
 
+import bearbytes.dev.hotel.accounts.Account;
+import bearbytes.dev.hotel.accounts.Guest;
+import bearbytes.dev.hotel.database.AccountAuthenticator;
+import bearbytes.dev.hotel.database.AccountDAO;
 import bearbytes.dev.hotel.interfaces.IAccountDAO;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.regex.Matcher;

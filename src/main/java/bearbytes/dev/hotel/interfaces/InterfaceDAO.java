@@ -5,10 +5,12 @@ import java.text.ParseException;
 import java.util.Collection;
 
 public interface InterfaceDAO<T> {
-    final String dbClassName = "com.mysql.cj.jdbc.Driver";
-    final String CONNECTION = "jdbc:mysql://127.0.0.1/mysql";
+    static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+    static final String DB_CONNECTION = "jdbc:derby:myDB";
+    static final String DB_USER = "";
+    static final String DB_PASSWORD = "";
 
-    boolean add(T value) throws SQLException, ClassNotFoundException, ParseException;
+    boolean add(T value) throws SQLException,  ParseException;
     boolean remove(T value) throws SQLException;
 
 

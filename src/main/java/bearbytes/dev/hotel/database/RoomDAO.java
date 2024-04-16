@@ -1,34 +1,28 @@
-package bearbytes.dev.hotel.floor;
+package bearbytes.dev.hotel.database;
+
+import bearbytes.dev.hotel.floor.Room;
+import bearbytes.dev.hotel.interfaces.IRoomDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
-import bearbytes.dev.hotel.interfaces.IRoomDAO;
 
 public class RoomDAO implements IRoomDAO {
 
-    private Properties p;
-    private Connection c;
 
     public RoomDAO() {
-        // Properties for user and password. Here the user
-        // is root and the password is password
-        p = new Properties();
-        p.put("user", "root");
-        p.put("password", "password");
-        c = null;
     }
 
-    public boolean add(Room room) throws ClassNotFoundException, SQLException {
+    public boolean add(Room room) throws SQLException {
 
-        Class.forName(dbClassName);
+        Connection c = null;
 
         try {
-            c = DriverManager.getConnection(CONNECTION, p);
+            c = getDBConnection();
             // Retrieve rooms from the database
-            String query = "SELECT roomNumber FROM myDB.Rooms";
+            String query = "SELECT roomNumber FROM Rooms";
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
@@ -40,7 +34,7 @@ public class RoomDAO implements IRoomDAO {
             }
 
             // Add the room to the database
-            String query2 = "INSERT INTO myDB.Rooms(roomNumber, floor, numBeds, dailyRate, " +
+            String query2 = "INSERT INTO Rooms(roomNumber, floor, numBeds, dailyRate, " +
                            "smokingAllowed, bedSize, type, quality) values(?,?,?,?,?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(query2);
 
@@ -65,10 +59,8 @@ public class RoomDAO implements IRoomDAO {
     }
 
     public boolean modify(Room[] rooms) throws ClassNotFoundException, SQLException{
-        // Class.forName(xxx) loads the jdbc classes and
-        // creates a drivermanager class factory
-        Class.forName(dbClassName);
         PreparedStatement ps = null;
+        Connection c = null;
 
         // Now try to connect
         try {
@@ -92,10 +84,10 @@ public class RoomDAO implements IRoomDAO {
                 }
             }
 
-            c = DriverManager.getConnection(CONNECTION, p);
+            c = getDBConnection();
 
             // Query for the rooms
-            String query = "UPDATE myDB.Rooms SET roomNumber = ?, floor = ?," +
+            String query = "UPDATE APP.Rooms SET roomNumber = ?, floor = ?," +
                     " numBeds = ?, dailyRate = ?, smokingAllowed = ?, bedSize = ?," +
                     " type = ?, quality = ? WHERE roomNumber = ?";
             ps = c.prepareStatement(query);
@@ -130,16 +122,12 @@ public class RoomDAO implements IRoomDAO {
     public Collection<Room> getAll() throws ClassNotFoundException, SQLException {
         List<Room> rooms = new ArrayList<>();
 
-        // Class.forName(xxx) loads the jdbc classes and
-        // creates a drivermanager class factory
-        Class.forName(dbClassName);
-
-        // Now try to connect
+        Connection c = null;
         try {
-            c = DriverManager.getConnection(CONNECTION, p);
+            c = getDBConnection();
             // Query for the rooms
             Statement stmt = c.createStatement();
-            String query = "SELECT * FROM myDB.Rooms";
+            String query = "SELECT * FROM APP.Rooms";
             ResultSet rs = stmt.executeQuery(query);
             // Iterate over the returned rooms
 
@@ -161,16 +149,12 @@ public class RoomDAO implements IRoomDAO {
     public Collection<Room> getAvailable(String[] dates) throws ClassNotFoundException, SQLException {
         List<Room> rooms = new ArrayList<>();
 
-        // Class.forName(xxx) loads the jdbc classes and
-        // creates a drivermanager class factory
-        Class.forName(dbClassName);
-
-        // Now try to connect
+        Connection c = null;
         try {
-            c = DriverManager.getConnection(CONNECTION, p);
+            c = getDBConnection();
             // Query for the rooms
             Statement stmt = c.createStatement();
-            String query = "SELECT * FROM myDB.Rooms";
+            String query = "SELECT * FROM APP.Rooms";
             ResultSet rs = stmt.executeQuery(query);
             // Iterate over the returned rooms
 
@@ -193,21 +177,21 @@ public class RoomDAO implements IRoomDAO {
     }
 
     public void checkAvailability(List<Room> rooms, String[] dates) throws SQLException {
-        // Now try to connect
+        Connection c = null;
         try {
             String wantedStart = dates[0];
             String wantedEnd = dates[1];
-            c = DriverManager.getConnection(CONNECTION, p);
+            c = getDBConnection();
             // Query for the rooms
             Statement stmt = c.createStatement();
-            String query = "SELECT * FROM myDB.Rooms JOIN myDB.Bookings ON myDB.Bookings.roomNumber = myDB.Rooms.roomNumber" +
-                    " JOIN myDB.Reservations ON myDB.Bookings.reservationID = myDB.Reservations.reservationID";
+            String query = "SELECT * FROM APP.Rooms JOIN APP.Bookings ON APP.Bookings.roomNumber = APP.Rooms.roomNumber" +
+                    " JOIN APP.Reservations ON APP.Bookings.reservationID = APP.Reservations.reservationID";
             ResultSet rs = stmt.executeQuery(query);
             // Iterate over the returned rooms
 
             while(rs.next()) {
-                String startDate = rs.getString("start");
-                String endDate = rs.getString("end");
+                String startDate = rs.getString("startDate");
+                String endDate = rs.getString("endDate");
                 // Compare whether the start comes after the end of the end comes before the start
                 if( !((wantedStart.compareTo(endDate) > 0) || (wantedEnd.compareTo(startDate) < 0)) ) {
                     Room r = extractRoom(rs);
@@ -234,5 +218,21 @@ public class RoomDAO implements IRoomDAO {
         Room.RoomType roomType = Room.RoomType.valueOf(rs.getString("type"));
         Room.QualityLevel quality = Room.QualityLevel.valueOf(rs.getString("quality"));
         return new Room(roomNum, numBeds, floor, dailyRate, smokingAllowed, bedSize, roomType, quality);
+    }
+
+    private static Connection getDBConnection() {
+        Connection dbConnection = null;
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+            return dbConnection;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return dbConnection;
     }
 }

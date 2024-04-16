@@ -1,4 +1,4 @@
-package bearbytes.dev.hotel.accounts;
+package bearbytes.dev.hotel.database;
 
 
 import org.junit.jupiter.params.ParameterizedTest;

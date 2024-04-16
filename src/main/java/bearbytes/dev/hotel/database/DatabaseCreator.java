@@ -1,0 +1,161 @@
+package bearbytes.dev.hotel.database;
+
+import bearbytes.dev.hotel.floor.Room;
+
+import java.sql.*;
+
+public class DatabaseCreator {
+    private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+    private static final String DB_CONNECTION = "jdbc:derby:myDB";
+    private static final String DB_USER = "";
+    private static final String DB_PASSWORD = "";
+
+    public static void main(String[] args) {
+        deleteTables();
+        createTables();
+    }
+
+    private static Connection getDBConnection() {
+        Connection dbConnection = null;
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+            return dbConnection;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return dbConnection;
+    }
+
+    public static void addDefaultRooms(Connection c) throws SQLException {
+        int[] roomNums = {101,102,103,104,105,106};
+        int[] floors = {1,1,1,1,1,1};
+        int[] numBeds = {1,2,1,2,4,1};
+        double[] rates = {175.25, 200.00, 150.00, 200.00, 400.00, 100.00};
+        boolean[] smokingAllowed = {true,true,false,false,false,true};
+        String[] bedSizes = {"TWIN","FULL","QUEEN","FULL","KING","QUEEN"};
+        String[] roomTypes = {"SINGLE","DOUBLE", "SINGLE", "DOUBLE","FAMILY","SINGLE"};
+        String[] qualities = {"ECONOMY","ECONOMY","BUSINESS","ECONOMY","COMFORT","EXECUTIVE"};
+        String room = "INSERT INTO APP.Rooms(roomNumber,floor,numBeds,dailyRate,smokingAllowed,bedSize,type,quality) values(?,?,?,?,?,?,?,?)";
+
+        for(int i = 0; i < roomNums.length; i++) {
+            PreparedStatement ps = c.prepareStatement(room);
+
+            ps.setInt(1, roomNums[i]);
+            ps.setInt(2, floors[i]);
+            ps.setInt(3, numBeds[i]);
+            ps.setDouble(4, rates[i]);
+            ps.setBoolean(5, smokingAllowed[i]);
+            ps.setString(6, bedSizes[i]);
+            ps.setString(7, roomTypes[i]);
+            ps.setString(8, qualities[i]);
+            ps.executeUpdate();
+        }
+
+    }
+
+    public static void deleteTables() {
+        String[] deleteTables = {
+                "DROP TABLE APP.Reservations",
+                "DROP TABLE APP.GuestAccounts",
+                "DROP TABLE APP.GuestInfo",
+                "DROP TABLE APP.Bookings",
+                "DROP TABLE APP.Floors",
+                "DROP TABLE APP.Rooms"
+        };
+        Connection dbConnection = null;
+        Statement statement = null;
+        try {
+            dbConnection = getDBConnection();
+            statement = dbConnection.createStatement();
+            // execute the SQL stetement
+            for(String delete : deleteTables) {
+                statement.execute(delete);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (dbConnection != null) {
+                    dbConnection.close();
+                }
+            } catch( Exception e) {
+
+            }
+        }
+    }
+
+    public static void createTables() {
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = getDBConnection();
+            statement = connection.createStatement();
+
+            System.out.println("You made it, take control your database now!");
+            String createReservationsTableSQL = "CREATE TABLE APP.Reservations(" + "reservationID INTEGER NOT NULL, "
+                    + "username VARCHAR(225) NOT NULL, " + "startDate VARCHAR(225) NOT NULL, "
+                    + "endDate VARCHAR(225) NOT NULL, " + "PRIMARY KEY (reservationID) " + ")";
+
+            String createGuestAccountsTableSQL = "CREATE TABLE APP.GuestAccounts(" + "username VARCHAR(225) NOT NULL, "
+                    + "password VARCHAR(225) NOT NULL, " + "PRIMARY KEY (username) " + ")";
+
+            String createGuestInfoTableSQL = "CREATE TABLE APP.GuestInfo(" + "name VARCHAR(225) NOT NULL, "
+                    + "address VARCHAR(225) NOT NULL, " + "username VARCHAR(225) NOT NULL, "
+                    + "cardNum VARCHAR(225), " + "cardExp VARCHAR(225), "
+                    + "PRIMARY KEY (username) " + ")";
+
+            String createBookingsTableSQL = "CREATE TABLE APP.Bookings(" + "bookingID INTEGER NOT NULL, "
+                    + "reservationID INTEGER NOT NULL, " + "roomNumber INTEGER NOT NULL, "
+                    + "PRIMARY KEY (bookingID) " + ")";
+
+            String createFloorsTableSQL = "CREATE TABLE APP.Floors(" + "floorID INTEGER NOT NULL, "
+                    + "theme VARCHAR(225) NOT NULL, " + "PRIMARY KEY (floorID) " + ")";
+
+            String createRoomsTableSQL = "CREATE TABLE APP.Rooms(" + "roomNumber INTEGER NOT NULL, "
+                    + "floor INTEGER NOT NULL, " + "numBeds INTEGER NOT NULL, "
+                    + "dailyRate FLOAT NOT NULL, " + "smokingAllowed SMALLINT NOT NULL, "
+                    + "bedSize VARCHAR(225) NOT NULL, " + "type VARCHAR(225) NOT NULL, "
+                    + "quality VARCHAR(225) NOT NULL, " + "PRIMARY KEY (roomNumber) " + ")";
+
+            statement.execute(createReservationsTableSQL);
+            statement.execute(createGuestAccountsTableSQL);
+            statement.execute(createGuestInfoTableSQL);
+            statement.execute(createBookingsTableSQL);
+            statement.execute(createFloorsTableSQL);
+            statement.execute(createRoomsTableSQL);
+
+            addDefaultRooms(connection);
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    if (!connection.isClosed()) {
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+}

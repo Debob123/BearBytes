@@ -1,43 +1,41 @@
-package bearbytes.dev.hotel.accounts;
+package bearbytes.dev.hotel.database;
 
+import bearbytes.dev.hotel.accounts.Account;
+import bearbytes.dev.hotel.database.AccountAuthenticator;
+import bearbytes.dev.hotel.accounts.Clerk;
+import bearbytes.dev.hotel.accounts.Guest;
 import bearbytes.dev.hotel.interfaces.IAccountDAO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Properties;
 
 public class AccountDAO implements IAccountDAO {
-    private Properties p;
-    private Connection c;
     AccountAuthenticator auth;
     public AccountDAO() {
-        // Properties for user and password. Here the user
-        // is root and the password is password
-        p = new Properties();
-        p.put("user", "root");
-        p.put("password", "password");
-        c = null;
         auth = new AccountAuthenticator();
     }
 
-    public Boolean add( Guest g) throws SQLException, ClassNotFoundException {
-        Class.forName(dbClassName);
+    public boolean add( Guest g) throws SQLException {
+        Connection c = null;
         PreparedStatement ps = null;
         PreparedStatement ps2 = null;
 
         // Now try to connect
         try {
-            c = DriverManager.getConnection(CONNECTION, p);
+            c = getDBConnection();
 
             // Check if the username is already in use
             Boolean usernameTaken = auth.validateGuestUsername(g);
 
             // if the username is available, add the guest account
             if(!usernameTaken) {
-                String query = "INSERT INTO myDB.GuestAccounts(username, password) values(?,?)";
+                String query = "INSERT INTO APP.GuestAccounts(username, password) values(?,?)";
                 ps = c.prepareStatement(query);
-                query = "INSERT INTO myDB.GuestInfo(name, address, username) values(?, ?, ?)";
+                query = "INSERT INTO APP.GuestInfo(name, address, username) values(?, ?, ?)";
                 ps2 = c.prepareStatement(query);
 
                 // Execute GuestAccounts table
@@ -94,11 +92,19 @@ public class AccountDAO implements IAccountDAO {
         return false;
     }
 
-    public boolean add(Account a) {
-        return false;
-    }
-
-    public boolean remove(Account a) {
-        return false;
+    private static Connection getDBConnection() {
+        Connection dbConnection = null;
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+            return dbConnection;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return dbConnection;
     }
 }

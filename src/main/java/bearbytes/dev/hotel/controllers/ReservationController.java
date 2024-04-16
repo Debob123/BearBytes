@@ -1,9 +1,9 @@
-package bearbytes.dev.hotel.reservation;
+package bearbytes.dev.hotel.controllers;
 
-import bearbytes.dev.hotel.accounts.Account;
+import bearbytes.dev.hotel.database.ReservationDAO;
+import bearbytes.dev.hotel.reservation.Reservation;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;

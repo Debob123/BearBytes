@@ -1,5 +1,6 @@
-package bearbytes.dev.hotel.accounts;
+package bearbytes.dev.hotel.database;
 
+import bearbytes.dev.hotel.controllers.AccountController;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

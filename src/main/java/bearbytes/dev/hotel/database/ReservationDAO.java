@@ -1,13 +1,11 @@
-package bearbytes.dev.hotel.reservation;
+package bearbytes.dev.hotel.database;
 
 import bearbytes.dev.hotel.floor.Room;
 import bearbytes.dev.hotel.interfaces.IReservationDAO;
-import bearbytes.dev.hotel.accounts.Account;
+import bearbytes.dev.hotel.reservation.Reservation;
 
 import java.sql.*;
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ReservationDAO implements IReservationDAO {
@@ -15,22 +13,12 @@ public class ReservationDAO implements IReservationDAO {
     public ReservationDAO() {}
 
     public boolean checkAvailability(int roomNumber, String start, String end) throws ClassNotFoundException, SQLException {
-        // Class.forName(xxx) loads the jdbc classes and
-        // creates a drivermanager class factory
-        Class.forName(dbClassName);
-
-        // Properties for user and password. Here the user
-        // is root and the password is password
-        Properties p = new Properties();
-        p.put("user", "root");
-        p.put("password", "password");
-
         // Now try to connect
         Connection c = null;
         try {
-            c = DriverManager.getConnection(CONNECTION, p);
+            c = getDBConnection();
             Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM myDB.Reservations");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Reservations");
             while (rs.next()) {
                 int id = rs.getInt("reservationID");
                 String name = rs.getString("username");
@@ -47,25 +35,15 @@ public class ReservationDAO implements IReservationDAO {
     }
 
     
-    public boolean add(Reservation reservation) throws SQLException, ClassNotFoundException, ParseException {
-        // Class.forName(xxx) loads the jdbc classes and
-        // creates a drivermanager class factory
-        Class.forName(dbClassName);
-
-        // Properties for user and password. Here the user
-        // is root and the password is password
-        Properties p = new Properties();
-        p.put("user", "root");
-        p.put("password", "password");
-
+    public boolean add(Reservation reservation) throws SQLException,  ParseException {
         // Now try to connect
         Connection c = null;
         try {
-            c = DriverManager.getConnection(CONNECTION, p);
+            c = getDBConnection();
             // Prepare the query's
-            String query = "INSERT INTO myDB.Reservations(reservationID, username, start, end) values(?,?,?,?)";
+            String query = "INSERT INTO Reservations(reservationID, username, startDate, endDate) values(?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(query);
-            query = "INSERT INTO myDB.Bookings(bookingID, reservationID, roomNumber) values(?,?,?)";
+            query = "INSERT INTO Bookings(bookingID, reservationID, roomNumber) values(?,?,?)";
             PreparedStatement ps2 = c.prepareStatement(query);
             String dbStart = reservation.getStartDate();
             String dbEnd = reservation.getEndDate();
@@ -100,8 +78,14 @@ public class ReservationDAO implements IReservationDAO {
         PreparedStatement ps = null;
 
         try {
-            String query = "DELETE r, b FROM myDB.Reservations r JOIN myDB.Bookings b " +
-                           "ON r.reservationID = b.reservationID WHERE r.reservationID = ?";
+            // Apache Derby does not support deleting from multiple tables, so must use two statements
+            // Delete from reservations table
+            String query = "DELETE FROM APP.Reservations r WHERE r.reservationID = ?";
+            ps = c.prepareStatement(query);
+            ps.setInt(1, r.getReservationID());
+            ps.executeUpdate();
+            // Delete from Bookings table
+            query = "DELETE FROM APP.Bookings b WHERE b.reservationID = ?";
             ps = c.prepareStatement(query);
             ps.setInt(1, r.getReservationID());
             ps.executeUpdate();
@@ -128,8 +112,8 @@ public class ReservationDAO implements IReservationDAO {
 
         try {
             // Prepare the query's
-            String query = "SELECT * FROM myDB.Reservations r JOIN myDB.Bookings b ON r.reservationID = b.reservationID " +
-                    "JOIN myDB.Rooms rm ON rm.roomNumber = b.roomNumber WHERE r.username = ?";
+            String query = "SELECT * FROM Reservations r JOIN Bookings b ON r.reservationID = b.reservationID " +
+                    "JOIN Rooms rm ON rm.roomNumber = b.roomNumber WHERE r.username = ?";
             ps = c.prepareStatement(query);
 
             // Retrieve the reservations
@@ -149,8 +133,8 @@ public class ReservationDAO implements IReservationDAO {
                     prevResID = reservationID;
                     hasReservations = true;
                 }
-                start = rs.getString("start");
-                end = rs.getString("end");
+                start = rs.getString("startDate");
+                end = rs.getString("endDate");
                 // Get room information
                 Integer roomNumber = rs.getInt("roomNumber");
                 Integer floor = rs.getInt("floor");
@@ -190,15 +174,12 @@ public class ReservationDAO implements IReservationDAO {
     private static Connection getDBConnection() {
         Connection dbConnection = null;
         try {
-            Class.forName(dbClassName);
+            Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
         try {
-            Properties p = new Properties();
-            p.put("user", "root");
-            p.put("password", "password");
-            dbConnection = DriverManager.getConnection(CONNECTION, p);
+            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
             return dbConnection;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
