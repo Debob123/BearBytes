@@ -57,6 +57,8 @@ function CartDisplay() {
     }
   })
   .catch(error => console.error('Error adding order:', error));
+
+  sessionStorage.setItem('cart', JSON.stringify([]));
   confirmationRedirect();
 }
 
@@ -65,7 +67,7 @@ function CartDisplay() {
     <div className="container-cart">
       <div className="cart-products">
         {cart !== null ? cart.map((product) =>(
-          <CartBoxDisplay key={product.id} imgLink={product.imgLink} title={product.name} cost={product.price} btn={button}/>
+          <CartBoxDisplay key={product.id} id={product.id} image={product.image} title={product.name} cost={product.price} btn={button}/>
           )) : true}
       </div>
       <div className="order-summary">

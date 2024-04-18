@@ -10,14 +10,14 @@ const customStyles = {
 };
 
 
-function ProductBoxDisplay({ id, imgLink, title, cost, btnAct="y"}) {
+function ProductBoxDisplay({ id, image, title, cost, btnAct="y"}) {
 
     function addToCart() {
         const product = {
             "id": id,
             "name": title,
             "price": cost,
-            "imgLink": imgLink
+            "image": image
         }
 
         if(sessionStorage.getItem('cart') !== null)  {
@@ -35,7 +35,7 @@ function ProductBoxDisplay({ id, imgLink, title, cost, btnAct="y"}) {
 
     return (
         <div className="box-display">
-            <img src={imgLink} alt={title} />
+            <img src={image} alt={title} />
             <h2>{title}</h2>
             <p>${cost}</p>
             <button onClick={addToCart}>Add to Cart</button>

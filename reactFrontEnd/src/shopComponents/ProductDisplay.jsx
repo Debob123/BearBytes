@@ -15,51 +15,51 @@ const button = <Button text="Add to Cart"/>
 const product = [
     {
         id: 1,
-        imgLink: tropicalShirt,
+        image: tropicalShirt,
         name: "Tropical Shirt",
         price: 25.00
         
     },
     {
         id: 2,
-        imgLink: sharkNecklace,
+        image: sharkNecklace,
         name: "Shark Necklace",
         price: 15.00
         
     },
     {
         id: 3,
-        imgLink: vase,
+        image: vase,
         name: "Locally Made Vases",
         price: 50.00
     },
     {
         id: 4,
-        imgLink: beachHat,
+        image: beachHat,
         name: "Beach Hat",
         price: 20.00
     },
     {
         id: 5,
-        imgLink: sunglasses,
+        image: sunglasses,
         name: "Sunglasses",
         price: 10.00
     },
     {
         id: 6,
-        imgLink: beachTowels,
+        image: beachTowels,
         name: "Beach Towels",
         price: 30.00
     },
     {
         id: 7,
-        imgLink: shellBracelet,
+        image: shellBracelet,
         name: "Locally Crafted Seashell Bracelet",
         price: 15.00
     },
     {
         id: 8,
-        imgLink: umbrella,
+        image: umbrella,
         name: "Beach Umbrella",
         price: 25.00
     },
@@ -72,7 +72,7 @@ function ProductDisplay() {
     return (
         <div className="display">
             {product.map((product) =>(
-                <ProductBoxDisplay className="box-display" key={product.id} imgLink={product.imgLink} title={product.name} cost={product.price} btn={button}/>
+                <ProductBoxDisplay className="box-display" key={product.id} id={product.id} image={product.image} title={product.name} cost={product.price} btn={button}/>
             ))}
         </div>
     );

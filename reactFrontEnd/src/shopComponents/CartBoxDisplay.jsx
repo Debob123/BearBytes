@@ -9,18 +9,12 @@ const customStyles = {
     },
 };
 
-function CartBoxDisplay({ id, imgLink, title, cost, btnAct="y"}) {
+function CartBoxDisplay({ id, image, title, cost, btnAct="y"}) {
 
     function removeFromCart() {
-        let product = {
-            "id" : id,
-            "name": title,
-            "price": cost,
-            "image": imgLink
-        }
 
         let cart = JSON.parse(sessionStorage.getItem('cart'));
-        var ndx = cart.findIndex(x => x.name === product.name);
+        var ndx = cart.findIndex(x => x.id === id);
         if(ndx !== -1)  {
             cart.splice(ndx, 1);
         }
@@ -31,7 +25,7 @@ function CartBoxDisplay({ id, imgLink, title, cost, btnAct="y"}) {
 
     return (
         <div className="box-display">
-            <img src={imgLink} alt={title} />
+            <img src={image} alt={title} />
             <h2>{title}</h2>
             <p>${cost}</p>
             <button onClick={removeFromCart}>Remove</button>

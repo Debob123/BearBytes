@@ -27,7 +27,7 @@ public class OrderDAO {
             for(Product p : order.getPurchasedProducts())  {
                 String insertOrderItemSQL = "INSERT INTO OrderItems (order_id, product_id, name, price, image) " +
                         "VALUES(" + order.getOrderId() + ", " + p.getId() + ", '" + p.getName() + "', " + p.getPrice() +
-                        ", '" + p.getImage() + "')";
+                        ", '" + "removeLater" + "')";
                 System.out.println(insertOrderItemSQL);
                 statement.executeUpdate(insertOrderItemSQL);
             }

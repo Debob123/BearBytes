@@ -15,7 +15,7 @@ public class Order {
         this.orderId = orderId;
         this.purchaseDate = purchaseDate;
         this.purchasedProducts = purchasedProducts;
-        for(Product p : purchasedProducts)  {
+        for(Product p : this.purchasedProducts)  {
             subtotal += p.getPrice();
         }
     }
