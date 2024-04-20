@@ -1,15 +1,17 @@
 package bearbytes.dev.hotel.checkout;
 
 import bearbytes.dev.hotel.product.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import java.beans.ConstructorProperties;
 import java.util.List;
-
 public class Order {
     private Integer orderId;
     private String purchaseDate = null;
     private List<Product> purchasedProducts = null;
     private Double subtotal = 0.0;
-
 
     public Order(Integer orderId, String purchaseDate, List<Product> purchasedProducts)  {
         this.orderId = orderId;
@@ -19,6 +21,7 @@ public class Order {
             subtotal += p.getPrice();
         }
     }
+
 
     public Integer getOrderId() {
         return orderId;

@@ -13,7 +13,7 @@ public class OrderController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/addOrder")
+    @PostMapping("/add")
     public Boolean add(@RequestBody Order order) throws ClassNotFoundException, SQLException {
         try {
             orderDAO.addOrder(order);

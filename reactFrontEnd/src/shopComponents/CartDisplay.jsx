@@ -31,12 +31,13 @@ function CartDisplay() {
   const handleSubmit = (e) => {
     let body = JSON.stringify({
             orderId: 1111,
-            purchaseDate: "2012-04-05",
+            purchaseDate: "",
             purchasedProducts: cart,
     })
+    console.log(body);
     e.preventDefault();
     // Request validation of the guest account through API
-    fetch('http://localhost:8080/shop/addOrder', {
+    fetch('http://localhost:8080/shop/add', {
     mode: 'cors',
     method: 'POST',
     headers: {
@@ -56,6 +57,7 @@ function CartDisplay() {
   })
   .catch(error => console.error('Error adding order:', error));
 
+  
   sessionStorage.setItem('cart', JSON.stringify([]));
   confirmationRedirect();
 }
@@ -80,7 +82,7 @@ function CartDisplay() {
         <p>Tax:         ${cartTax.toFixed(2)}</p>
         <p>Order Total: ${cartTotal.toFixed(2)}</p>
         <p>Purchase will be added to your bill and delivered to your room</p>
-        { (cart.length !== 0) && (cart !== null) ?
+        { (cart !== null) && (cart.length !== 0) ?
           <button onClick={toggleModal} className="btn-modal">Checkout</button> :
          <button className="btn-modal-unavailable">Checkout</button>}
       </div>

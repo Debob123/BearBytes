@@ -91,7 +91,7 @@ public class OrderDAO {
                 }
                 Order order = new Order(
                         rs.getInt("orderID"),
-                        rs.getString("date"),
+                        rs.getString("purchaseDate"),
                         purchasedProducts
                 );
                 orders.add(order);
