@@ -1,0 +1,67 @@
+.btn-modal {
+  padding: 10px 20px;
+  display: block;
+  margin: 100px auto 0;
+  font-size: 18px;
+  border-color: black;
+  border-radius: 15px;
+  background-color: black;
+  color: white;
+}
+
+.btn-modal-unavailable {
+  padding: 10px 20px;
+  display: block;
+  margin: 100px auto 0;
+  font-size: 18px;
+  background-color: grey;
+  color: rgb(59, 59, 59);
+  pointer-events: none;
+  font-weight: 1;
+}
+
+.modal, .overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(49,49,49,0.8);
+}
+.modal-content {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #f1f1f1;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 300px;
+}
+
+.buttons  {
+  margin: 0 auto;
+  display: inline-block;
+  align-items: center;
+}
+
+.close-modal-button {
+  margin: 0 auto;
+  width: auto;
+  display: inline-block;
+  justify-content: center;
+}
+
+.confirm-button {
+  margin: 0 auto;
+  width: auto;
+  display: inline-block;
+  justify-content: center;
+}

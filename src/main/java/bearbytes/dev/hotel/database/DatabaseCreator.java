@@ -58,6 +58,28 @@ public class DatabaseCreator {
 
     }
 
+    public static void addDefaultProducts(Connection dbConnection) throws SQLException  {
+        String[] names = {"Tropical Shirt", "Shark Necklace", "Locally Made Vases", "Beach Hat",
+                "Sunglasses", "Beach Towels", "Locally Crafted Seashell Bracelet", "Beach Umbrella"};
+        double[] prices = {25.00, 15.00, 50.00, 20.00, 10.00, 30.00, 15.00, 25.00};
+        //String[] images = {"tropicalShirt","sharkNecklace","vase","beachHat","sunglasses","beachTowels","shellBracelet","umbrella"};
+
+        String[] images = {"tropical-shirt.jpg","shark-necklace.jpg","vase.jpg",
+                            "beach-hat.jpg","sunglasses.jpg","beach-towels.jpg",
+                            "seashell-bracelet.jpg","beach-umbrella.jpg",};
+        String room = "INSERT INTO APP.Products(name,price,image) values(?,?,?)";
+
+        for(int i = 0; i < names.length; i++) {
+            PreparedStatement ps = dbConnection.prepareStatement(room);
+
+            ps.setString(1, names[i]);
+            ps.setDouble(2, prices[i]);
+            ps.setString(3, images[i]);
+
+            ps.executeUpdate();
+        }
+    }
+
     public static void deleteTables() {
         String[] deleteTables = {
                 "DROP TABLE APP.Reservations",
@@ -65,7 +87,10 @@ public class DatabaseCreator {
                 "DROP TABLE APP.GuestInfo",
                 "DROP TABLE APP.Bookings",
                 "DROP TABLE APP.Floors",
-                "DROP TABLE APP.Rooms"
+                "DROP TABLE APP.Rooms",
+                "DROP TABLE APP.Products",
+                "DROP TABLE APP.Orders",
+                "DROP TABLE APP.OrderItems"
         };
         Connection dbConnection = null;
         Statement statement = null;
@@ -126,14 +151,35 @@ public class DatabaseCreator {
                     + "bedSize VARCHAR(225) NOT NULL, " + "type VARCHAR(225) NOT NULL, "
                     + "quality VARCHAR(225) NOT NULL, " + "PRIMARY KEY (roomNumber) " + ")";
 
+
+            String createProductsTableSQL = "CREATE TABLE APP.Products("
+                    + "productID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
+                    + "name VARCHAR(225) NOT NULL, " + "price INTEGER NOT NULL, "
+                    + "image VARCHAR(225) NOT NULL, " + "PRIMARY KEY (productID) " + ")";
+
+
+            String createOrdersTableSQL = "CREATE TABLE APP.Orders("
+                    + "orderID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
+                    + "purchaseDate VARCHAR(225) NOT NULL, " + "subtotal DOUBLE NOT NULL, "
+                    + "PRIMARY KEY (orderID) " + ")";
+
+
+            String createOrderItemsTableSQL = "CREATE TABLE APP.OrderItems("
+                    + "orderID INTEGER NOT NULL, "  + "productID INTEGER NOT NULL" + ")";
+
+
             statement.execute(createReservationsTableSQL);
             statement.execute(createGuestAccountsTableSQL);
             statement.execute(createGuestInfoTableSQL);
             statement.execute(createBookingsTableSQL);
             statement.execute(createFloorsTableSQL);
             statement.execute(createRoomsTableSQL);
+            statement.execute(createProductsTableSQL);
+            statement.execute(createOrdersTableSQL);
+            statement.execute(createOrderItemsTableSQL);
 
             addDefaultRooms(connection);
+            addDefaultProducts(connection);
 
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
