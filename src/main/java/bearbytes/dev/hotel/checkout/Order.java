@@ -1,11 +1,7 @@
 package bearbytes.dev.hotel.checkout;
 
 import bearbytes.dev.hotel.product.Product;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-import java.beans.ConstructorProperties;
 import java.util.List;
 public class Order {
     private Integer orderId;
