@@ -7,6 +7,7 @@
   border-radius: 15px;
   background-color: black;
   color: white;
+  cursor:pointer;
 }
 
 .btn-modal-unavailable {
@@ -46,22 +47,30 @@
   min-width: 300px;
 }
 
+.modal-title  {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+}
+
 .buttons  {
-  margin: 0 auto;
-  display: inline-block;
-  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  gap: 10px;
 }
 
 .close-modal-button {
-  margin: 0 auto;
-  width: auto;
-  display: inline-block;
-  justify-content: center;
+  width: 100px;
+  padding: 5px;
+  border-color: red;
+  border-style: solid;
 }
 
 .confirm-button {
-  margin: 0 auto;
-  width: auto;
-  display: inline-block;
-  justify-content: center;
+  width: 100px;
+  padding: 5px;
+  border-color: green;
+  border-style: solid;
 }

@@ -78,9 +78,9 @@ function CartDisplay() {
           )) : true}
       </div>
       <div className="order-summary">
-        <p>Subtotal:    ${cartSubtotal.toFixed(2)}</p>
-        <p>Tax:         ${cartTax.toFixed(2)}</p>
-        <p>Order Total: ${cartTotal.toFixed(2)}</p>
+        <p className="subtotal-text">Subtotal:       ${cartSubtotal.toFixed(2)}</p>
+        <p className="tax-test">+ Tax:               ${cartTax.toFixed(2)}</p>
+        <p className="order-total-text">Order Total: ${cartTotal.toFixed(2)}</p>
         <p>Purchase will be added to your bill and delivered to your room</p>
         { (cart !== null) && (cart.length !== 0) ?
           <button onClick={toggleModal} className="btn-modal">Checkout</button> :
@@ -93,8 +93,8 @@ function CartDisplay() {
         <div onClick={toggleModal} className="overlay"></div>
         <div className="modal-content">
           <div className="modal-title">Purchase Confirmation</div>
-          <div className="modal-body">Purchase will be added to your bill, confirm?</div>
-          <div buttons>
+          <div className="modal-body">Purchase will be added to your bill to be payed after your stay, confirm?</div>
+          <div className="buttons">
             <button onClick={toggleModal} className="close-modal-button">cancel</button>
             <button className="confirm-button" onClick={handleSubmit}>confirm</button>
           </div>
@@ -105,18 +105,5 @@ function CartDisplay() {
   );
 }
 
-/*
-
-<div id="modal" className="modal">
-        <div className="modal-header">
-          <div className="modal-title">Purchase Confirmation</div>
-        </div>
-        <div className="modal-body">Purchase will be added to your bill, confirm?</div>
-        <button data-close-button className="cancel-button">cancel</button>
-        <button className="confirm-button">confirm</button>
-      </div>
-      <div className="overlay"></div>
-
-*/
 
 export default CartDisplay;

@@ -19,3 +19,11 @@
   padding: 20px;
   font-size:large;
 }
+
+.subtotal-text  {
+  font-size: 25px;
+}
+
+.order-total-text  {
+  font-size: 30px;
+}

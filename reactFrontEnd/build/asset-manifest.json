@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.300548ea.css",
+    "main.js": "/static/js/main.c3e47564.js",
+    "static/js/592.77751a5b.chunk.js": "/static/js/592.77751a5b.chunk.js",
+    "static/media/doubleRoom1.jpg": "/static/media/doubleRoom1.fe2f2e537ace619c0e02.jpg",
+    "static/media/hotelRoom1.jpg": "/static/media/hotelRoom1.61b0a1cd338bba0e215c.jpg",
+    "static/media/beach-hat.jpg": "/static/media/beach-hat.f9f115e9839b52b38823.jpg",
+    "static/media/shark-necklace.jpg": "/static/media/shark-necklace.24945f1faa6081c71526.jpg",
+    "static/media/tropical-shirt.jpg": "/static/media/tropical-shirt.0fe43425c6d4ca16660e.jpg",
+    "static/media/seashell-bracelet.jpg": "/static/media/seashell-bracelet.7997a4dc13a9d2ca8b93.jpg",
+    "static/media/vase.jpg": "/static/media/vase.64a93b95d38ef58af765.jpg",
+    "static/media/beach-umbrella.jpg": "/static/media/beach-umbrella.785c9c8ddfc92227a375.jpg",
+    "static/media/beach-towels.jpg": "/static/media/beach-towels.16112602ae846b9f4775.jpg",
+    "index.html": "/index.html",
+    "main.300548ea.css.map": "/static/css/main.300548ea.css.map",
+    "main.c3e47564.js.map": "/static/js/main.c3e47564.js.map",
+    "592.77751a5b.chunk.js.map": "/static/js/592.77751a5b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.300548ea.css",
+    "static/js/main.c3e47564.js"
+  ]
+}
