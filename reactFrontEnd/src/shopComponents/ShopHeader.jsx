@@ -2,17 +2,32 @@ import './ShopHeader.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useState } from 'react'
 
 function ShopHeader()  {
+
+  const [inputValue, setInputValue] = useState('');
+
+  const handleEnterChange = (e) =>  {
+    if(e.key === 'Enter')  {
+      sessionStorage.setItem('searchBarString', inputValue);
+      window.location.reload();
+    }
+  }
+
+  const handleInputChange = (e) =>  {
+    setInputValue(e.target.value);
+  }
+
   return(
 
     <div className="container-shop-header">
       <p className="shop-text">Shop</p>
       <ul>
         <li>
-          <form action="#" >
-            <input type="text" placeholder="Search Products" name="search" className="search-bar" ></input>
-          </form>
+          
+            <input type="text" placeholder="Search Products" className="search-bar" value={inputValue} onKeyDown={handleEnterChange} onChange={handleInputChange}></input>
+          
         </li>
         <li>
           <Link to="/cart">
@@ -21,8 +36,6 @@ function ShopHeader()  {
         </li>
       </ul>
     </div>
-
-    
   );
 }
 

@@ -2,6 +2,7 @@ package bearbytes.dev.hotel.controllers;
 
 import bearbytes.dev.hotel.checkout.Order;
 import bearbytes.dev.hotel.database.OrderDAO;
+import bearbytes.dev.hotel.product.Product;
 import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 

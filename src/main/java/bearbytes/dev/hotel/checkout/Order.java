@@ -1,6 +1,7 @@
 package bearbytes.dev.hotel.checkout;
 
 import bearbytes.dev.hotel.product.Product;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.util.List;
 public class Order {
@@ -9,6 +10,7 @@ public class Order {
     private List<Product> purchasedProducts = null;
     private Double subtotal = 0.0;
 
+    @JsonCreator
     public Order(Integer orderId, String purchaseDate, List<Product> purchasedProducts)  {
         this.orderId = orderId;
         this.purchaseDate = purchaseDate;
@@ -17,7 +19,6 @@ public class Order {
             subtotal += p.getPrice();
         }
     }
-
 
     public Integer getOrderId() {
         return orderId;
