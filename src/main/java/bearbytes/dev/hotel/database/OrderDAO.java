@@ -1,5 +1,6 @@
-package bearbytes.dev.hotel.checkout;
+package bearbytes.dev.hotel.database;
 
+import bearbytes.dev.hotel.checkout.Order;
 import bearbytes.dev.hotel.product.Product;
 
 import java.sql.*;
