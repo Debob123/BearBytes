@@ -43,10 +43,10 @@ function ConfirmReservationPage() {
 
     const handleSubmit = (e) => {
         let body = JSON.stringify({
-                username: user.username,
                 rooms: rooms,
                 startDate: dates[0],
-                endDate: dates[1]
+                endDate: dates[1],
+                username: user.username
         })
         e.preventDefault();
         // Request validation of the guest account through API

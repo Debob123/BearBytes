@@ -13,7 +13,7 @@ function RoomSearch() {
         e.preventDefault();
         let currDate = new Date();
         let startingDate = new Date(start + "T00:00-0500")
-        if(!isNaN(startingDate) && end > start && startingDate > currDate ) {
+        if(!isNaN(startingDate) && end > start && startingDate > currDate) {
             let dateRange = [start, end]
             sessionStorage.setItem('dates', JSON.stringify(dateRange));
             navigate('/reservation')
@@ -32,7 +32,7 @@ function RoomSearch() {
                         id="start_date" 
                         name="startDate"
                         placeholder="YYYY-MM-DD" 
-                        pattern="(?:19|20)(?:(?:[13579][26]|[02468][048])-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))|(?:[0-9]{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:29|30))|(?:(?:0[13578]|1[02])-31)))"
+                        pattern="\d{4}-\d{2}-\d{2}"
                         onChange={(e) => setStart(e.target.value)}
                         required/>
                 </div>
@@ -43,7 +43,7 @@ function RoomSearch() {
                         id="end_date" 
                         name="endDate" 
                         placeholder="YYYY-MM-DD" 
-                        pattern="(?:19|20)(?:(?:[13579][26]|[02468][048])-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))|(?:[0-9]{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:29|30))|(?:(?:0[13578]|1[02])-31)))"
+                        pattern="\d{4}-\d{2}-\d{2}"
                         onChange={(e) => setEnd(e.target.value)}
                         required/>
                 </div>

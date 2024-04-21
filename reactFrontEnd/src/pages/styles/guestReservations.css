@@ -1,8 +1,14 @@
 .reservations-display {
-    height: 100vh;
+    max-height: 90vh;
     display: grid;
     margin-left: 10vw;
     grid-template-rows: 1fr 9fr;
+}
+
+.display {
+    overflow-y: scroll;
+    min-height: 84vh;
+    max-height: 84vh;
 }
 
 .res-display {
@@ -26,4 +32,47 @@
 .red {
     color: red;
     text-align: center;
+}
+
+.room-btn, .room-add {
+    display: inline;
+    width: auto;
+    height: auto;
+}
+
+.center {
+    justify-self: center;
+}
+
+.flex-row, .room-line {
+    display: flex;
+    align-items: center;
+}
+
+.flex-row {
+    gap: 2.5%;
+    justify-content: center;
+}
+
+.room-line {
+    justify-content: space-around;
+}
+
+.conf-modify {
+    height: 5%;
+    width: auto;
+}
+
+.top-margin {
+    margin-top: 2%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+}
+
+.grid-item {
+    display: flex;
+    justify-content: center;
 }
