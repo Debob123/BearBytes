@@ -1,6 +1,7 @@
 package bearbytes.dev.hotel.reservation;
 
 import bearbytes.dev.hotel.floor.Room;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,8 +9,7 @@ import java.util.*;
 
 public class Reservation {
 
-
-    public Reservation(Collection<Room> rooms, String startDate, String endDate, String username) {
+    public Reservation(@JsonProperty("reservationID") int reservationID, @JsonProperty("rooms") Collection<Room> rooms, @JsonProperty("startDate") String startDate, @JsonProperty("endDate") String endDate, @JsonProperty("username") String username) {
         this.rate = 0;
         this.rooms = new ArrayList<>(rooms);
         for(Room room : rooms) {
@@ -19,7 +19,11 @@ public class Reservation {
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = ReservationStatus.CONFIRMED;
-        this.reservationID = hashCode();
+        if(reservationID == 0) {
+            this.reservationID = hashCode();
+        } else {
+            this.reservationID = reservationID;
+        }
         this.username = username;
     }
     private double cancellationFee;
@@ -113,5 +117,15 @@ public class Reservation {
         result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 
         return result;
+    }
+
+    public String toString() {
+        StringBuilder result = new StringBuilder(reservationID + " " + startDate + " " + endDate + " " + username + " " + rate + " " + cancellationFee +
+                " " + ReservationStatus.toString(status) + " ");
+        for(Room room : rooms) {
+            result.append(room.toString()).append(" ");
+        }
+
+        return result.toString();
     }
 }

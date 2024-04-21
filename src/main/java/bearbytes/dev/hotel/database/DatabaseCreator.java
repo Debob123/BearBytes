@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class DatabaseCreator {
     private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-    private static final String DB_CONNECTION = "jdbc:derby:myDB";
+    private static final String DB_CONNECTION = "jdbc:derby:myDB;create=true";
     private static final String DB_USER = "";
     private static final String DB_PASSWORD = "";
 
@@ -24,7 +24,6 @@ public class DatabaseCreator {
         }
         try {
             dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
-            return dbConnection;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

@@ -146,7 +146,7 @@ public class RoomDAO implements IRoomDAO {
         return rooms;
     }
 
-    public Collection<Room> getAvailable(String[] dates) throws ClassNotFoundException, SQLException {
+    public Collection<Room> getAvailable(String[] dates) throws SQLException {
         List<Room> rooms = new ArrayList<>();
 
         Connection c = null;
@@ -193,7 +193,7 @@ public class RoomDAO implements IRoomDAO {
                 String startDate = rs.getString("startDate");
                 String endDate = rs.getString("endDate");
                 // Compare whether the start comes after the end of the end comes before the start
-                if( !((wantedStart.compareTo(endDate) > 0) || (wantedEnd.compareTo(startDate) < 0)) ) {
+                if( !((wantedStart.compareTo(endDate) >= 0) || (wantedEnd.compareTo(startDate) <= 0)) ) {
                     Room r = extractRoom(rs);
                     rooms.remove(r);
                 }

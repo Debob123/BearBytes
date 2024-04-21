@@ -13,16 +13,26 @@ public class ReservationDAO implements IReservationDAO {
 
     public ReservationDAO() {}
 
-    public boolean checkAvailability(int roomNumber, String start, String end) throws ClassNotFoundException, SQLException {
+    public Collection<Integer> checkAvailability(Reservation r) throws SQLException {
         // Now try to connect
+        List<Integer> rooms = new ArrayList<>();
         Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             c = getDBConnection();
-            Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Reservations");
-            while (rs.next()) {
-                int id = rs.getInt("reservationID");
-                String name = rs.getString("username");
+            String query = "SELECT * FROM Reservations JOIN BOOKINGS ON " +
+                    "Reservations.ReservationID = Bookings.ReservationID WHERE Bookings.roomNumber = ? " +
+                    "AND Reservations.STARTDATE < ? AND Reservations.ENDDATE > ?";
+            ps = c.prepareStatement(query);
+            ps.setString(2, r.getEndDate());
+            ps.setString(3, r.getStartDate());
+            for(Room room : r.getRooms()) {
+                ps.setInt(1, room.getNumber());
+                rs = ps.executeQuery();
+                if(rs.next() && rs.getInt("reservationID") != r.getReservationID()) {
+                    rooms.add(room.getNumber());
+                }
             }
         } catch( SQLException e) {
             e.printStackTrace();
@@ -32,16 +42,25 @@ public class ReservationDAO implements IReservationDAO {
             }
         }
 
-        return true;
+        return rooms;
     }
 
     
-    public boolean add(Reservation reservation) throws SQLException,  ParseException {
+    public boolean add(Reservation reservation) throws SQLException {
         // Now try to connect
         Connection c = null;
         try {
+            System.out.println(reservation.getReservationID());
             c = getDBConnection();
             // Prepare the query's
+            String checkQuery = "SELECT * FROM Reservations WHERE ReservationID = ?";
+            PreparedStatement stmt = c.prepareStatement(checkQuery);
+            // Check if the reservation has already been added, if yes, stop execution
+            stmt.setInt(1, reservation.getReservationID());
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                return false;
+            }
             String query = "INSERT INTO Reservations(reservationID, username, startDate, endDate) values(?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(query);
             query = "INSERT INTO Bookings(bookingID, reservationID, roomNumber) values(?,?,?)";
@@ -74,11 +93,22 @@ public class ReservationDAO implements IReservationDAO {
         return false;
     }
 
+    public Collection<Integer> modify(Reservation[] reservations) throws SQLException {
+        List<Integer> rooms = (ArrayList)checkAvailability(reservations[1]);
+        if(rooms.isEmpty()) {
+            remove(reservations[0]);
+            add(reservations[1]);
+        }
+
+        return rooms;
+    }
+
     public boolean remove(Reservation r) throws SQLException {
         Connection c = getDBConnection();
         PreparedStatement ps = null;
 
         try {
+            System.out.println(r.getReservationID());
             // Apache Derby does not support deleting from multiple tables, so must use two statements
             // Delete from reservations table
             String query = "DELETE FROM APP.Reservations r WHERE r.reservationID = ?";
@@ -114,7 +144,7 @@ public class ReservationDAO implements IReservationDAO {
         try {
             // Prepare the query's
             String query = "SELECT * FROM Reservations r JOIN Bookings b ON r.reservationID = b.reservationID " +
-                    "JOIN Rooms rm ON rm.roomNumber = b.roomNumber WHERE r.username = ?";
+                    "JOIN Rooms rm ON rm.roomNumber = b.roomNumber WHERE r.username = ? ORDER BY b.reservationID DESC";
             ps = c.prepareStatement(query);
 
             // Retrieve the reservations
@@ -125,17 +155,23 @@ public class ReservationDAO implements IReservationDAO {
             Map<Integer, List<Room>> resRooms = new HashMap<>();
             Integer prevResID;
             Integer reservationID = null;
+            String prevStart;
+            String prevEnd;
             boolean hasReservations = false;
             String start = null, end = null;
             while (rs.next()) {
                 prevResID = reservationID;
+                prevStart = start;
+                prevEnd = end;
                 reservationID = rs.getInt("reservationID");
-                if(prevResID == null) {
-                    prevResID = reservationID;
-                    hasReservations = true;
-                }
                 start = rs.getString("startDate");
                 end = rs.getString("endDate");
+                if(prevResID == null && prevStart == null && prevEnd == null) {
+                    prevResID = reservationID;
+                    prevStart = start;
+                    prevEnd = end;
+                    hasReservations = true;
+                }
                 // Get room information
                 Integer roomNumber = rs.getInt("roomNumber");
                 Integer floor = rs.getInt("floor");
@@ -152,11 +188,11 @@ public class ReservationDAO implements IReservationDAO {
                 resRooms.put(reservationID, rooms);
 
                 if(!prevResID.equals(reservationID)) {
-                    reservations.add(new Reservation(resRooms.get(prevResID), start, end, username));
+                    reservations.add(new Reservation(prevResID, resRooms.get(prevResID), prevStart, prevEnd, username));
                 }
             }
             if(hasReservations) {
-                reservations.add(new Reservation(resRooms.get(reservationID), start, end, username));
+                reservations.add(new Reservation(reservationID, resRooms.get(reservationID), start, end, username));
             }
         } catch( SQLException e) {
             e.printStackTrace();
