@@ -22,6 +22,7 @@ function ClerkRoomDisplay({rooms, setRooms}) {
         .then(response => response.json())
         .then(data => {
         // Set the array of room objects
+        data.sort((a,b) => a.number - b.number);
         setRooms(data);
         setLoading(false);
         })
