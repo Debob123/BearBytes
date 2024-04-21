@@ -201,7 +201,6 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                 <button type="button" onClick={closeModal} className="close-btn">X</button>
                 <h1>Cancel Reservation?</h1>
                 <p className={hidden + " red"}>Error removing reservation</p>
-                <p className={hidden + " red"}>Please try again or contact hotel staff</p>
                 <p>Start date: {reservation.startDate}</p>
                 <p>End date:   {reservation.endDate}</p>
                 <p>Nights staying: {numDays}</p>
@@ -230,7 +229,10 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                 contentLabel="Modify Reservation"
             >
                 <button type="button" onClick={closeModify} className="close-btn">X</button>
-                {
+                {timeUntilReservation < 0  ? 
+                <div>
+                    <p>You cannot modify a reservation within 2 days of its start</p>
+                </div> :
                 <div>
                     <h1>Modify Reservation</h1>
                     <p className={hidden + " red"}>Error modifying reservation</p>
@@ -283,8 +285,8 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                     <div className="flex-row"><p>Done?</p> <button className="conf-modify"onClick={confirmModifications}>Confirm Modifications</button> </div>
                     <div className={"red " + roomErrHidden}>Unable to confirm modifications because these</div>
                     <div className={"red " + roomErrHidden}>rooms are unavailable on selected dates: </div>
-                    <div className={"red " + unknownErrHidden}>Unknown error occurred, please contact staff</div>
-                    {unavailableRooms.length !== 0 && unavailableRooms[0] !== -1 && unavailableRooms.map((room) => (<span className="red">{room} </span>))}
+                    <div className={"red " + unknownErrHidden}>Unknown error occurred</div>
+                    {unavailableRooms.length !== 0 && unavailableRooms[0] !== -1 && unavailableRooms.map((room) => (<span>{room} </span>))}
                     <div className={"red " + dateErrHidden}>Please ensure your dates are correct</div>
                 </div>
             }

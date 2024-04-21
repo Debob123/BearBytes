@@ -1,0 +1,19 @@
+.center-input {
+    display: flex;
+    gap: 1vw;
+    justify-content: center;
+}
+
+.top-space {
+    margin-top: 4vh;
+}
+
+.submit-btn {
+    width: auto;
+    height: auto;
+    border-radius: 14%;
+}
+
+.red {
+    color: red;
+}

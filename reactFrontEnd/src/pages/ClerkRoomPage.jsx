@@ -1,5 +1,6 @@
 import ClerkHeader from '../clerkPageComponents/ClerkHeader';
 import ClerkRoomDisplay from '../clerkPageComponents/ClerkRoomDisplay';
+import ClerkNavigation from '../clerkPageComponents/ClerkNavigation';
 import Modal from 'react-modal';
 import { useState } from 'react';
 import './styles/clerkRoomPage.css';
@@ -87,20 +88,21 @@ function ClerkRoomPage() {
 
     return (
         <div>
-            <ClerkHeader/>
-            <h1 className='text-center clerk-label'>Room Management</h1>
-            <h2 className='text-center'>Room missing? <button onClick={openModal} className="room-button">Add a room</button></h2>
-            <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Example Modal"
-            >
-                <h2 className="modal-title">Add A Room</h2>
-                <button type="button" onClick={closeModal} className="close-btn">X</button>
-                <form className="form-container">
-                    <label htmlFor="roomNum">Room Number: </label>
-                    <input type="tel"
+            <ClerkNavigation/>
+            <div className="content">
+                <h1 className='text-center clerk-label'>Room Management</h1>
+                <h2 className='text-center'>Room missing? <button onClick={openModal} className="room-button">Add a room</button></h2>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                >
+                    <h2 className="modal-title">Add A Room</h2>
+                    <button type="button" onClick={closeModal} className="close-btn">X</button>
+                    <form className="form-container">
+                        <label htmlFor="roomNum">Room Number: </label>
+                        <input type="tel"
                            id="roomNum"
                            name="roomNum" 
                            defaultValue={number} 
@@ -108,8 +110,8 @@ function ClerkRoomPage() {
                            placeholder="111" 
                            required
                            pattern="^[0-9\b]+$"/>
-                    <label htmlFor="floor">Floor: </label>
-                    <input type="tel"
+                        <label htmlFor="floor">Floor: </label>
+                        <input type="tel"
                            id="floor"
                            name="floor" 
                            defaultValue={floor} 
@@ -117,9 +119,9 @@ function ClerkRoomPage() {
                            placeholder="1-3" 
                            pattern="[1-3]"
                            required
-                           />
-                    <label htmlFor="numBeds">Beds: </label>
-                    <input type="tel"
+                               />
+                        <label htmlFor="numBeds">Beds: </label>
+                        <input type="tel"
                            id="numBeds"
                            name="numBeds" 
                            defaultValue={numBeds} 
@@ -127,8 +129,8 @@ function ClerkRoomPage() {
                            placeholder="1" 
                            required
                            pattern="^[0-9\b]+$"/>
-                    <label htmlFor="rate">Daily Rate: </label>
-                    <input type="tel"
+                        <label htmlFor="rate">Daily Rate: </label>
+                        <input type="tel"
                            id="rate"
                            name="rate" 
                            defaultValue={rate} 
@@ -136,44 +138,45 @@ function ClerkRoomPage() {
                            placeholder="175.50" 
                            required
                            pattern="^[0-9]*[.,]?[0-9]*$"/>
-                    <label htmlFor="bedSize">Bed Size: </label>
-                    <select id="bedSize" defaultValue={bedSize} onChange={(e) => setBedSize(e.target.value)}>
-                        <option value="TWIN">Twin</option>
-                        <option value="FULL">Full</option>
-                        <option value="QUEEN">Queen</option>
-                        <option value="KING">King</option>
-                    </select>
-                    <label htmlFor="type">Room Type: </label>
-                    <select id="type" defaultValue={type} onChange={(e) => setType(e.target.value)}>
-                        <option value="SINGLE">Single</option>
-                        <option value="DOUBLE">Double</option>
-                        <option value="FAMILY">Family</option>
-                        <option value="SUITE">Suite</option>
-                        <option value="DELUXE">Deluxe</option>
-                        <option value="STANDARD">Standard</option>
-                    </select>
-                    <label htmlFor="quality">Quality: </label>
-                    <select id="quality" defaultValue={quality} onChange={(e) => setQuality(e.target.value)}>
-                        <option value="ECONOMY">Economy</option>
-                        <option value="COMFORT">Comfort</option>
-                        <option value="BUSINESS">Business</option>
-                        <option value="EXECUTIVE">Executive</option>
-                    </select>
-                    <label>Smoking Allowed: </label>
-                    <input type="checkbox"
+                        <label htmlFor="bedSize">Bed Size: </label>
+                        <select id="bedSize" defaultValue={bedSize} onChange={(e) => setBedSize(e.target.value)}>
+                            <option value="TWIN">Twin</option>
+                            <option value="FULL">Full</option>
+                            <option value="QUEEN">Queen</option>
+                            <option value="KING">King</option>
+                        </select>
+                        <label htmlFor="type">Room Type: </label>
+                        <select id="type" defaultValue={type} onChange={(e) => setType(e.target.value)}>
+                            <option value="SINGLE">Single</option>
+                            <option value="DOUBLE">Double</option>
+                            <option value="FAMILY">Family</option>
+                            <option value="SUITE">Suite</option>
+                            <option value="DELUXE">Deluxe</option>
+                            <option value="STANDARD">Standard</option>
+                        </select>
+                        <label htmlFor="quality">Quality: </label>
+                        <select id="quality" defaultValue={quality} onChange={(e) => setQuality(e.target.value)}>
+                            <option value="ECONOMY">Economy</option>
+                            <option value="COMFORT">Comfort</option>
+                            <option value="BUSINESS">Business</option>
+                            <option value="EXECUTIVE">Executive</option>
+                        </select>
+                        <label>Smoking Allowed: </label>
+                        <input type="checkbox"
                            value={smokingAllowed} 
                            onChange={(e) => setSmokingAllowed(e.target.checked)}/>
-                    <button className="center-button" 
+                        <button className="center-button" 
                             onClick={handleSubmit}
                             disabled={!number || !floor || !numBeds || !rate || !bedSize || !type || !quality}
                             >
-                            submit</button>
-                </form>
-            </Modal>
-            <ClerkRoomDisplay 
-                rooms={rooms}
-                setRooms={setRooms}
-                />
+                                submit</button>
+                    </form>
+                </Modal>
+                <ClerkRoomDisplay 
+                    rooms={rooms}
+                    setRooms={setRooms}
+                    />
+            </div>
         </div>
     )
 } 
