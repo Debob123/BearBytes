@@ -19,12 +19,12 @@ public class AccountAuthenticator {
     public static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
-     //checks a password against the hash using BCrypt
+    // checks a password against the hash using BCrypt
     public static boolean verifyPassword(String password, String hashedPassword) {
         return BCrypt.checkpw(password, hashedPassword);
     }
 
-    public Boolean authGuest(Guest g) throws SQLException {
+    public static Boolean authGuest(Guest g) throws SQLException {
         Connection c = null;
 
         // Now try to connect
@@ -39,7 +39,7 @@ public class AccountAuthenticator {
                 // Check if the user is in the database and if the password is correct
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                if(username.equals(g.getUsername()) && password.equals(g.getPassword())) {
+                if(username.equals(g.getUsername()) && verifyPassword(g.getPassword(), password)) {
                     return true;
                 }
             }
@@ -52,7 +52,7 @@ public class AccountAuthenticator {
         }
         return false;
     }
-    public Boolean authClerk(Clerk cl) throws SQLException {
+    public static Boolean authClerk(Clerk cl) throws SQLException {
         Connection c = null;
 
         // Now try to connect
@@ -67,7 +67,7 @@ public class AccountAuthenticator {
                 // Check if the user is in the database and if the password is correct
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                if(username.equals(cl.getUsername()) && password.equals(cl.getPassword())) {
+                if(username.equals(cl.getUsername()) && verifyPassword(cl.getPassword(), password)) {
                     return true;
                 }
             }
@@ -80,7 +80,7 @@ public class AccountAuthenticator {
         }
         return false;
     }
-    public Boolean authManager(Manager m) throws SQLException {
+    public static Boolean authManager(Manager m) throws SQLException {
         Connection c = null;
 
         // Now try to connect
@@ -95,7 +95,7 @@ public class AccountAuthenticator {
                 // Check if the user is in the database and if the password is correct
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                if(username.equals(m.getUsername()) && password.equals(m.getPassword())) {
+                if(username.equals(m.getUsername()) && verifyPassword(m.getPassword(), password)) {
                     return true;
                 }
             }
@@ -109,7 +109,7 @@ public class AccountAuthenticator {
         return false;
     }
 
-    public Boolean validateGuestUsername(Guest g) throws SQLException {
+    public static Boolean validateGuestUsername(Guest g) throws SQLException {
         Connection c = null;
 
         PreparedStatement ps = null;
@@ -131,7 +131,7 @@ public class AccountAuthenticator {
         }
         return false;
     }
-    public Boolean validateClerkUsername(Clerk cl) throws SQLException {
+    public static Boolean validateClerkUsername(Clerk cl) throws SQLException {
         Connection c = null;
 
         PreparedStatement ps = null;
@@ -153,7 +153,7 @@ public class AccountAuthenticator {
         }
         return false;
     }
-    public Boolean validateManagerUsername(Manager m) throws SQLException {
+    public static Boolean validateManagerUsername(Manager m) throws SQLException {
         Connection c = null;
 
         PreparedStatement ps = null;

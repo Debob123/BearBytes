@@ -12,10 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class AccountDAO implements IAccountDAO {
-    AccountAuthenticator auth;
-    public AccountDAO() {
-        auth = new AccountAuthenticator();
-    }
 
     public boolean addGuest(Guest g) throws SQLException {
         Connection c = null;
@@ -27,7 +23,7 @@ public class AccountDAO implements IAccountDAO {
             c = getDBConnection();
 
             // Check if the username is already in use
-            Boolean usernameTaken = auth.validateGuestUsername(g);
+            Boolean usernameTaken = AccountAuthenticator.validateGuestUsername(g);
 
             // if the username is available, add the guest account
             if(!usernameTaken) {
@@ -35,7 +31,7 @@ public class AccountDAO implements IAccountDAO {
                 ps = c.prepareStatement(query);
                 // Execute GuestAccounts table
                 ps.setString(1, g.getUsername());
-                ps.setString(2, g.getPassword());
+                ps.setString(2, AccountAuthenticator.hashPassword(g.getPassword()));
                 ps.executeUpdate();
 
                 query = "INSERT INTO APP.GuestInfo(name, address, username) values(?, ?, ?)";
@@ -77,7 +73,7 @@ public class AccountDAO implements IAccountDAO {
             c = getDBConnection();
 
             // Check if the username is already in use
-            Boolean usernameTaken = auth.validateClerkUsername(cl);
+            Boolean usernameTaken = AccountAuthenticator.validateClerkUsername(cl);
 
             // if the username is available, add the guest account
             if(!usernameTaken) {
@@ -85,7 +81,7 @@ public class AccountDAO implements IAccountDAO {
                 ps = c.prepareStatement(query);
                 // Execute GuestAccounts table
                 ps.setString(1, cl.getUsername());
-                ps.setString(2, cl.getPassword());
+                ps.setString(2, AccountAuthenticator.hashPassword(cl.getPassword()));
                 ps.executeUpdate();
 
                 // indicate the creation succeeded
@@ -116,7 +112,7 @@ public class AccountDAO implements IAccountDAO {
             c = getDBConnection();
 
             // Check if the username is already in use
-            Boolean usernameTaken = auth.validateManagerUsername(m);
+            Boolean usernameTaken = AccountAuthenticator.validateManagerUsername(m);
 
             // if the username is available, add the guest account
             if(!usernameTaken) {
@@ -124,7 +120,7 @@ public class AccountDAO implements IAccountDAO {
                 ps = c.prepareStatement(query);
                 // Execute GuestAccounts table
                 ps.setString(1, m.getUsername());
-                ps.setString(2, m.getPassword());
+                ps.setString(2, AccountAuthenticator.hashPassword(m.getPassword()));
                 ps.executeUpdate();
 
                 // indicate the creation succeeded

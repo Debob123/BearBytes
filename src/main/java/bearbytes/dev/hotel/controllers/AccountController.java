@@ -12,11 +12,9 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-    private AccountAuthenticator auth;
     private IAccountDAO aDAO;
 
     public AccountController()  {
-        auth = new AccountAuthenticator();
         aDAO = new AccountDAO();
     }
 
@@ -24,7 +22,7 @@ public class AccountController {
     @PostMapping("/guestlogin")
     public Boolean authGuest(@RequestBody Guest g) {
         try {
-            return auth.authGuest(g);
+            return AccountAuthenticator.authGuest(g);
         } catch(Exception e) {
             e.printStackTrace();
             System.out.println("Woops");
@@ -37,7 +35,7 @@ public class AccountController {
     @PostMapping("/clerklogin")
     public Boolean authClerk(@RequestBody Clerk c) {
         try {
-            return auth.authClerk(c);
+            return AccountAuthenticator.authClerk(c);
         } catch(Exception e) {
             e.printStackTrace();
             System.out.println("Woops");
@@ -50,7 +48,7 @@ public class AccountController {
     @PostMapping("/managerlogin")
     public Boolean authManager(@RequestBody Manager m) {
         try {
-            return auth.authManager(m);
+            return AccountAuthenticator.authManager(m);
         } catch(Exception e) {
             e.printStackTrace();
             System.out.println("Woops");

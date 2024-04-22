@@ -54,7 +54,24 @@ public class DatabaseCreator {
             ps.setString(8, qualities[i]);
             ps.executeUpdate();
         }
+    }
 
+    public static void addDefaultAccounts(Connection c) throws SQLException {
+        String sql = "INSERT INTO APP.GuestAccounts(username, password) values(?,?)";
+        PreparedStatement ps = c.prepareStatement(sql);
+        ps.setString(1, "guest");
+        ps.setString(2, AccountAuthenticator.hashPassword("password"));
+        ps.executeUpdate();
+        sql = "INSERT INTO APP.ClerkAccounts(username, password) values(?,?)";
+        ps = c.prepareStatement(sql);
+        ps.setString(1, "clerk");
+        ps.setString(2, AccountAuthenticator.hashPassword("password"));
+        ps.executeUpdate();
+        sql = "INSERT INTO APP.ManagerAccounts(username, password) values(?,?)";
+        ps = c.prepareStatement(sql);
+        ps.setString(1, "manager");
+        ps.setString(2, AccountAuthenticator.hashPassword("password"));
+        ps.executeUpdate();
     }
 
     public static void addDefaultProducts(Connection dbConnection) throws SQLException  {
@@ -83,6 +100,8 @@ public class DatabaseCreator {
         String[] deleteTables = {
                 "DROP TABLE APP.Reservations",
                 "DROP TABLE APP.GuestAccounts",
+                "DROP TABLE APP.ClerkAccounts",
+                "DROP TABLE APP.ManagerAccounts",
                 "DROP TABLE APP.GuestInfo",
                 "DROP TABLE APP.Bookings",
                 "DROP TABLE APP.Floors",
@@ -132,6 +151,12 @@ public class DatabaseCreator {
             String createGuestAccountsTableSQL = "CREATE TABLE APP.GuestAccounts(" + "username VARCHAR(225) NOT NULL, "
                     + "password VARCHAR(225) NOT NULL, " + "PRIMARY KEY (username) " + ")";
 
+            String createClerkAccountsTableSQL = "CREATE TABLE APP.ClerkAccounts(" + "username VARCHAR(225) NOT NULL, "
+                    + "password VARCHAR(225) NOT NULL, " + "PRIMARY KEY (username) " + ")";
+
+            String createManagerAccountsTableSQL = "CREATE TABLE APP.ManagerAccounts(" + "username VARCHAR(225) NOT NULL, "
+                    + "password VARCHAR(225) NOT NULL, " + "PRIMARY KEY (username) " + ")";
+
             String createGuestInfoTableSQL = "CREATE TABLE APP.GuestInfo(" + "name VARCHAR(225) NOT NULL, "
                     + "address VARCHAR(225) NOT NULL, " + "username VARCHAR(225) NOT NULL, "
                     + "cardNum VARCHAR(225), " + "cardExp VARCHAR(225), "
@@ -169,6 +194,8 @@ public class DatabaseCreator {
 
             statement.execute(createReservationsTableSQL);
             statement.execute(createGuestAccountsTableSQL);
+            statement.execute(createClerkAccountsTableSQL);
+            statement.execute(createManagerAccountsTableSQL);
             statement.execute(createGuestInfoTableSQL);
             statement.execute(createBookingsTableSQL);
             statement.execute(createFloorsTableSQL);
@@ -178,6 +205,7 @@ public class DatabaseCreator {
             statement.execute(createOrderItemsTableSQL);
 
             addDefaultRooms(connection);
+            addDefaultAccounts(connection);
             addDefaultProducts(connection);
 
         } catch (SQLException e) {
