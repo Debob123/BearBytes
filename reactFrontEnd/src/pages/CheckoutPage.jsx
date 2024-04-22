@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import GuestHeader from '../components/GuestHeader';
 import ShopHeader from '../shopComponents/ShopHeader';
 import CartDisplay from '../shopComponents/CartDisplay';

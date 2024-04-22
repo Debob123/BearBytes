@@ -1,0 +1,20 @@
+.shopping-bill-container  {
+  font-family:courier;
+  margin-left: 40px
+}
+
+.purchased-products  {
+  display: flex;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin: -20px 0;
+}
+
+.product-name-text  {
+  text-align: left;
+  width: 350px;
+}
+
+.product-price-text  {
+  text-align: right;
+}

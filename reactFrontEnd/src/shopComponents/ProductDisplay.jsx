@@ -26,7 +26,6 @@ function ProductDisplay() {
     }, []);
 
     const [isLoading, setLoading] = useState(true);
-    // Fetch all of the available rooms
     function renderProducts() {
         fetch('http://localhost:8080/shop/getProducts', {
         mode: 'cors',

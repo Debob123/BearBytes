@@ -76,19 +76,23 @@ public class OrderDAO {
             System.out.println(getOrdersSQL);
 
             while(rs.next())  {
-                String getOrderItemsSQL = "SELECT * FROM OrderItems WHERE orderID = " +  rs.getInt("orderID");
+                String getOrderItemsSQL = "SELECT * FROM OrderItems WHERE orderID = " +  rs.getInt(1);
                 ResultSet rs2 = statement2.executeQuery(getOrderItemsSQL);
+                System.out.println(getOrderItemsSQL);
                 List<Product> purchasedProducts = new ArrayList<>();
                 while(rs2.next())  {
-                    String getPurchasedProductsSQL = "SELECT * FROM Products WHERE productID = " + rs2.getInt("productID");
+                    String getPurchasedProductsSQL = "SELECT * FROM Products WHERE productID = " + rs2.getInt(2);
                     ResultSet rs3 = statement3.executeQuery(getPurchasedProductsSQL);
-                    Product p = new Product(
-                            rs3.getInt("productID"),
-                            rs3.getString("name"),
-                            rs3.getDouble("price"),
-                            rs3.getString("image")
-                    );
-                    purchasedProducts.add(p);
+                    System.out.println(getPurchasedProductsSQL);
+                    if(rs3.next()) {
+                        Product p = new Product(
+                                rs3.getInt(1),
+                                rs3.getString(2),
+                                rs3.getDouble(3),
+                                rs3.getString(4)
+                        );
+                        purchasedProducts.add(p);
+                    }
                 }
                 Order order = new Order(
                         rs.getInt("orderID"),

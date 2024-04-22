@@ -29,25 +29,15 @@ public class OrderController {
         return false;
     }
 
-    @RestController
-    @RequestMapping("/shop")
-    public static class ProductController {
-        ReservationDAO.ProductDAO productDAO;
-
-        public ProductController() {
-            productDAO = new ReservationDAO.ProductDAO();
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/getOrders")
+    public Collection<Order> getProducts() {
+        try {
+            return orderDAO.getOrders();
+        } catch(Exception e) {
+            System.out.println("API fail");
+            e.printStackTrace();
         }
-
-        @CrossOrigin(origins = "http://localhost:3000")
-        @PostMapping("/getProducts")
-        public Collection<Product> getProducts() {
-            try {
-                return productDAO.getProducts();
-            } catch(Exception e) {
-                System.out.println("API fail");
-                e.printStackTrace();
-            }
-            return new ArrayList<>();
-        }
+        return new ArrayList<>();
     }
 }
