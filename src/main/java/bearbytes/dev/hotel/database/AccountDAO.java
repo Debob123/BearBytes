@@ -1,9 +1,7 @@
 package bearbytes.dev.hotel.database;
 
-import bearbytes.dev.hotel.accounts.Account;
+import bearbytes.dev.hotel.accounts.*;
 import bearbytes.dev.hotel.database.AccountAuthenticator;
-import bearbytes.dev.hotel.accounts.Clerk;
-import bearbytes.dev.hotel.accounts.Guest;
 import bearbytes.dev.hotel.interfaces.IAccountDAO;
 
 import java.sql.Connection;
@@ -19,7 +17,7 @@ public class AccountDAO implements IAccountDAO {
         auth = new AccountAuthenticator();
     }
 
-    public boolean add( Guest g) throws SQLException {
+    public boolean addGuest(Guest g) throws SQLException {
         Connection c = null;
         PreparedStatement ps = null;
         PreparedStatement ps2 = null;
@@ -35,15 +33,13 @@ public class AccountDAO implements IAccountDAO {
             if(!usernameTaken) {
                 String query = "INSERT INTO APP.GuestAccounts(username, password) values(?,?)";
                 ps = c.prepareStatement(query);
-                query = "INSERT INTO APP.GuestInfo(name, address, username) values(?, ?, ?)";
-                ps2 = c.prepareStatement(query);
-
                 // Execute GuestAccounts table
                 ps.setString(1, g.getUsername());
                 ps.setString(2, g.getPassword());
-
                 ps.executeUpdate();
 
+                query = "INSERT INTO APP.GuestInfo(name, address, username) values(?, ?, ?)";
+                ps2 = c.prepareStatement(query);
                 // update GuestInfo table
                 ps2.setString(1, g.getName());
                 ps2.setString(2, g.getAddress());
@@ -71,13 +67,88 @@ public class AccountDAO implements IAccountDAO {
         // indicate creation failed
         return false;
     }
+    public boolean addClerk(Clerk cl) throws SQLException {
+        Connection c = null;
+        PreparedStatement ps = null;
+        PreparedStatement ps2 = null;
 
-    public boolean remove(Guest g) {
-        return true;
+        // Now try to connect
+        try {
+            c = getDBConnection();
+
+            // Check if the username is already in use
+            Boolean usernameTaken = auth.validateClerkUsername(cl);
+
+            // if the username is available, add the guest account
+            if(!usernameTaken) {
+                String query = "INSERT INTO APP.ClerkAccounts(username, password) values(?,?)";
+                ps = c.prepareStatement(query);
+                // Execute GuestAccounts table
+                ps.setString(1, cl.getUsername());
+                ps.setString(2, cl.getPassword());
+                ps.executeUpdate();
+
+                // indicate the creation succeeded
+                return true;
+            }
+        } catch( SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close any opened connection or statements
+            if (c != null) {
+                c.close();
+            }
+            if(ps != null) {
+                ps.close();
+            }
+        }
+
+        // indicate creation failed
+        return false;
+    }
+    public boolean addManager(Manager m) throws SQLException {
+        Connection c = null;
+        PreparedStatement ps = null;
+        PreparedStatement ps2 = null;
+
+        // Now try to connect
+        try {
+            c = getDBConnection();
+
+            // Check if the username is already in use
+            Boolean usernameTaken = auth.validateManagerUsername(m);
+
+            // if the username is available, add the guest account
+            if(!usernameTaken) {
+                String query = "INSERT INTO APP.ClerkAccounts(username, password) values(?,?)";
+                ps = c.prepareStatement(query);
+                // Execute GuestAccounts table
+                ps.setString(1, m.getUsername());
+                ps.setString(2, m.getPassword());
+                ps.executeUpdate();
+
+                // indicate the creation succeeded
+                return true;
+            }
+        } catch( SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close any opened connection or statements
+            if (c != null) {
+                c.close();
+            }
+            if(ps != null) {
+                ps.close();
+            }
+        }
+
+        // indicate creation failed
+        return false;
     }
 
-    public boolean add(Clerk c) {
-        return false;
+
+    public boolean remove(Account acc) {
+        return true;
     }
 
     public Collection<Account> getAll() {

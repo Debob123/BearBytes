@@ -1,7 +1,6 @@
 package bearbytes.dev.hotel.controllers;
 
-import bearbytes.dev.hotel.accounts.Account;
-import bearbytes.dev.hotel.accounts.Guest;
+import bearbytes.dev.hotel.accounts.*;
 import bearbytes.dev.hotel.database.AccountAuthenticator;
 import bearbytes.dev.hotel.database.AccountDAO;
 import bearbytes.dev.hotel.interfaces.IAccountDAO;
@@ -23,9 +22,35 @@ public class AccountController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/guestlogin")
-    public Boolean authAccount(@RequestBody Account acc) {
+    public Boolean authGuest(@RequestBody Guest g) {
         try {
-            return auth.authGuestAccount(acc);
+            return auth.authGuest(g);
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/clerklogin")
+    public Boolean authClerk(@RequestBody Clerk c) {
+        try {
+            return auth.authClerk(c);
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/managerlogin")
+    public Boolean authManager(@RequestBody Manager m) {
+        try {
+            return auth.authManager(m);
         } catch(Exception e) {
             e.printStackTrace();
             System.out.println("Woops");
@@ -38,7 +63,7 @@ public class AccountController {
     @PostMapping("/createGuest")
     public Boolean createGuest(@RequestBody Guest g) {
         try {
-            return aDAO.add(g);
+            return aDAO.addGuest(g);
         } catch(Exception e) {
             e.printStackTrace();
             System.out.println("Woops");

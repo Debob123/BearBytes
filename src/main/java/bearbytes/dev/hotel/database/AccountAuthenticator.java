@@ -1,6 +1,6 @@
 package bearbytes.dev.hotel.database;
 
-import bearbytes.dev.hotel.accounts.Account;
+import bearbytes.dev.hotel.accounts.*;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
@@ -24,7 +24,7 @@ public class AccountAuthenticator {
         return BCrypt.checkpw(password, hashedPassword);
     }
 
-    public Boolean authGuestAccount(Account acc) throws SQLException {
+    public Boolean authGuest(Guest g) throws SQLException {
         Connection c = null;
 
         // Now try to connect
@@ -33,13 +33,69 @@ public class AccountAuthenticator {
             // Add the reservation to the database
             String query = "SELECT * FROM APP.GuestAccounts WHERE username = ?";
             PreparedStatement ps = c.prepareStatement(query);
-            ps.setString(1, acc.getUsername());
+            ps.setString(1, g.getUsername());
             ResultSet rs = ps.executeQuery();
             while (rs.next() ) {
                 // Check if the user is in the database and if the password is correct
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                if(username.equals(acc.getUsername()) && password.equals(acc.getPassword())) {
+                if(username.equals(g.getUsername()) && password.equals(g.getPassword())) {
+                    return true;
+                }
+            }
+        } catch( SQLException e) {
+            e.printStackTrace();
+        } finally{
+            if(c != null) {
+                c.close();
+            }
+        }
+        return false;
+    }
+    public Boolean authClerk(Clerk cl) throws SQLException {
+        Connection c = null;
+
+        // Now try to connect
+        try {
+            c = getDBConnection();
+            // Add the reservation to the database
+            String query = "SELECT * FROM APP.ClerkAccounts WHERE username = ?";
+            PreparedStatement ps = c.prepareStatement(query);
+            ps.setString(1, cl.getUsername());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next() ) {
+                // Check if the user is in the database and if the password is correct
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                if(username.equals(cl.getUsername()) && password.equals(cl.getPassword())) {
+                    return true;
+                }
+            }
+        } catch( SQLException e) {
+            e.printStackTrace();
+        } finally{
+            if(c != null) {
+                c.close();
+            }
+        }
+        return false;
+    }
+    public Boolean authManager(Manager m) throws SQLException {
+        Connection c = null;
+
+        // Now try to connect
+        try {
+            c = getDBConnection();
+            // Add the reservation to the database
+            String query = "SELECT * FROM APP.ManagerAccounts WHERE username = ?";
+            PreparedStatement ps = c.prepareStatement(query);
+            ps.setString(1, m.getUsername());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next() ) {
+                // Check if the user is in the database and if the password is correct
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                if(username.equals(m.getUsername()) && password.equals(m.getPassword())) {
                     return true;
                 }
             }
@@ -53,7 +109,7 @@ public class AccountAuthenticator {
         return false;
     }
 
-    public Boolean validateGuestUsername(Account acc) throws SQLException {
+    public Boolean validateGuestUsername(Guest g) throws SQLException {
         Connection c = null;
 
         PreparedStatement ps = null;
@@ -63,7 +119,51 @@ public class AccountAuthenticator {
             // Retrieve all accounts from
             String query = "SELECT * FROM APP.GuestAccounts WHERE username = ?";
             ps = c.prepareStatement(query);
-            ps.setString(1, acc.getUsername());
+            ps.setString(1, g.getUsername());
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch( SQLException e) {
+            e.printStackTrace();
+        } finally{
+            if(c != null) {
+                c.close();
+            }
+        }
+        return false;
+    }
+    public Boolean validateClerkUsername(Clerk cl) throws SQLException {
+        Connection c = null;
+
+        PreparedStatement ps = null;
+        // Now try to connect
+        try {
+            c = getDBConnection();
+            // Retrieve all accounts from
+            String query = "SELECT * FROM APP.ClerkAccounts WHERE username = ?";
+            ps = c.prepareStatement(query);
+            ps.setString(1, cl.getUsername());
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch( SQLException e) {
+            e.printStackTrace();
+        } finally{
+            if(c != null) {
+                c.close();
+            }
+        }
+        return false;
+    }
+    public Boolean validateManagerUsername(Manager m) throws SQLException {
+        Connection c = null;
+
+        PreparedStatement ps = null;
+        // Now try to connect
+        try {
+            c = getDBConnection();
+            // Retrieve all accounts from
+            String query = "SELECT * FROM APP.ManagerAccounts WHERE username = ?";
+            ps = c.prepareStatement(query);
+            ps.setString(1, m.getUsername());
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch( SQLException e) {

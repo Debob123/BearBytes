@@ -9,8 +9,12 @@ function LoginPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const accountType = document.querySelector('input[name="account_type"]:checked').value;
+        // Construct the API endpoint based on the selected account type
+        const endpoint = `http://localhost:8080/accounts/${accountType.toLowerCase()}login`;
         // Request validation of the guest account through API
-        fetch('http://localhost:8080/accounts/guestlogin', {
+        fetch(endpoint, {
         mode: 'cors',
         method: 'POST',
         headers: {
@@ -43,30 +47,30 @@ function LoginPage() {
                         <label htmlFor="guest">Guest</label>
                     </div>
                     <div>
-                        <input type="radio" id="staff" name="account_type" value="staff" />
-                        <label htmlFor="staff">Staff</label>
+                        <input type="radio" id="staff" name="account_type" value="clerk" />
+                        <label htmlFor="clerk">Clerk</label>
                     </div>
                     <div>
-                        <input type="radio" id="admin" name="account_type" value="admin" />
-                        <label htmlFor="admin">Admin</label>
+                        <input type="radio" id="admin" name="account_type" value="manager" />
+                        <label htmlFor="manager">Manager</label>
                     </div>
                 </div>
                 <div className="login-row">
                     <label htmlFor="username">Username:</label>
-                    <input type="text" 
-                    id="username" 
-                    name="username" 
+                    <input type="text"
+                    id="username"
+                    name="username"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)} 
+                    onChange={(e) => setUsername(e.target.value)}
                     placeholder="Username" />
                 </div>
                 <div className="login-row">
                     <label htmlFor="pwd">Password:</label>
-                    <input type="password" 
-                    id="pwd" 
-                    name="pwd" 
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
+                    <input type="password"
+                    id="pwd"
+                    name="pwd"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password" />
                 </div>
                 <button className="login-submit" type="submit">Login</button>
