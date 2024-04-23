@@ -70,6 +70,46 @@ public class AccountController {
         return false;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/createClerk")
+    public Boolean createClerk(@RequestBody Clerk cl) {
+        try {
+            return aDAO.addClerk(cl);
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/createManager")
+    public Boolean createManager(@RequestBody Manager m) {
+        try {
+            return aDAO.addManager(m);
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/changePassword")
+    public Boolean changePassword(@RequestBody Account acc, String p) {
+        try {
+            return aDAO.changePassword(acc, p);
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
     // checks if password meets requirements
     public static boolean goodPassword(String password) {
         // 8 or more characters

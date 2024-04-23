@@ -1,7 +1,6 @@
 package bearbytes.dev.hotel.database;
 
 import bearbytes.dev.hotel.accounts.*;
-import bearbytes.dev.hotel.database.AccountAuthenticator;
 import bearbytes.dev.hotel.interfaces.IAccountDAO;
 
 import java.sql.Connection;
@@ -116,7 +115,7 @@ public class AccountDAO implements IAccountDAO {
 
             // if the username is available, add the guest account
             if(!usernameTaken) {
-                String query = "INSERT INTO APP.ClerkAccounts(username, password) values(?,?)";
+                String query = "INSERT INTO APP.ManagerAccounts(username, password) values(?,?)";
                 ps = c.prepareStatement(query);
                 // Execute GuestAccounts table
                 ps.setString(1, m.getUsername());
@@ -140,6 +139,56 @@ public class AccountDAO implements IAccountDAO {
 
         // indicate creation failed
         return false;
+    }
+
+    public boolean changePassword(Account acc, String p) {
+        Connection c = null;
+        PreparedStatement ps = null;
+
+        try {
+            c = getDBConnection();
+            String tableName;
+
+            // determine the table name based on the type of account
+            if (acc instanceof Guest) {
+                tableName = "GuestAccounts";
+            } else if (acc instanceof Clerk) {
+                tableName = "ClerkAccounts";
+            } else if (acc instanceof Manager) {
+                tableName = "ManagerAccounts";
+            } else {
+                throw new IllegalArgumentException("Unsupported account type");
+            }
+
+            String query = "UPDATE APP." + tableName + " SET password = ? WHERE username = ?";
+            ps = c.prepareStatement(query);
+            ps.setString(1, AccountAuthenticator.hashPassword(p));
+            ps.setString(2, acc.getUsername());
+
+            int rowsUpdated = ps.executeUpdate();
+
+            // check if any rows were affected
+            if (rowsUpdated > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (c != null) {
+                    c.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

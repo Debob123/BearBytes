@@ -18,4 +18,6 @@ public interface IAccountDAO {
     boolean addClerk(Clerk cl) throws SQLException;
     boolean addManager(Manager m) throws SQLException;
     boolean remove(Account acc) throws SQLException;
+
+    boolean changePassword(Account acc, String p);
 }
