@@ -15,13 +15,15 @@ import RegistrationSuccess from './pages/RegistrationSuccess';
 import RegistrationFailed from './pages/RegistrationFailed';
 import GuestReservations from './pages/GuestReservations';
 import ClerkModifyReservation from './pages/ClerkModifyReservations';
+import ClerkHome from "./pages/ClerkHome";
+import ManagerHome from "./pages/ManagerHome";
+import ClerkRegisterGuest from "./clerkPageComponents/ClerkRegisterGuest";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path='/roomSearch' element={<RoomSearch />} />
         <Route path="/reservation" element={<ReservationPage />} />
         <Route path="/confirmReservationPage" element ={<ConfirmReservationPage />} />
@@ -35,6 +37,9 @@ function App() {
         <Route path="/registrationFailed" element={<RegistrationFailed/>}/>
         <Route path="/guestReservations" element={<GuestReservations />}/>
         <Route path="/clerkModify" element={<ClerkModifyReservation/>}/>
+        <Route path="/clerkHome" element={<ClerkHome/>}/>
+        <Route path="/managerHome" element={<ManagerHome/>}/>
+        <Route path="/clerkRegisterGuest" element={<ClerkRegisterGuest />} />
       </Routes>
     </Router>
   );

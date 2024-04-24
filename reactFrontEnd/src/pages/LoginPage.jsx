@@ -11,9 +11,22 @@ function LoginPage() {
         e.preventDefault();
 
         const accountType = document.querySelector('input[name="account_type"]:checked').value;
-        // Construct the API endpoint based on the selected account type
+        let nextPage = "";
+        // construct endpoint based on the selected account type
+        switch (accountType) {
+            case "guest":
+                nextPage = "/guestReservations";
+                break;
+            case "clerk":
+                nextPage = "/clerkHome";
+                break;
+            case "manager":
+                nextPage = "/managerHome";
+                break;
+            default:
+                break;
+        }
         const endpoint = `http://localhost:8080/accounts/${accountType.toLowerCase()}login`;
-        // Request validation of the guest account through API
         fetch(endpoint, {
         mode: 'cors',
         method: 'POST',
@@ -30,7 +43,7 @@ function LoginPage() {
             // so it is accessible on other pages (this will be needed for associating
             // reservations and similar items)
             sessionStorage.setItem('user', JSON.stringify({username: username}));
-            navigate("/roomSearch");
+            navigate(nextPage);
         }
       })
       .catch(error => console.error('Error logging in user:', error));
