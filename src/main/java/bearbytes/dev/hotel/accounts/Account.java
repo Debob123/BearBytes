@@ -5,9 +5,8 @@ package bearbytes.dev.hotel.accounts;
  * able to log in (i.e. username and password).
  */
 public class Account {
-    /**
-     * The username and password for the account.
-     */
+    // The username and password for the account.
+
     private String username, password;
 
     /**

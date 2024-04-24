@@ -11,24 +11,16 @@ import java.util.Date;
  */
 public class Guest extends Account {
 
-    /**
-     * The name of the guest.
-     */
+    // The name of the guest.
     private String name;
 
-    /**
-     * The address of the guest.
-     */
+    // The address of the guest.
     private String address;
 
-    /**
-     * The credit card number of the guest.
-     */
+    // The credit card number of the guest.
     private String cardNum;
 
-    /**
-     * The credit card expiration date of the guest's credit card.
-     */
+    // The credit card expiration date of the guest's credit card.
     private String cardExp;
 
     /**
