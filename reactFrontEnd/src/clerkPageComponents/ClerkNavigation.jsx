@@ -37,11 +37,11 @@ function ClerkNavigation() {
         <div className="clerk-nav">
             <Button text="Home" onClick={homeRedirect} height="4vh"/>
             <Button text="View Rooms" onClick={roomsRedirect} height="4vh"/>
-            <Button text="Check in/out" onClick={checkInOutRedirect} height="4vh"/>
-            <Button text="Modify Reservations" onClick={guestReservationsRedirect} height="4vh"/>
+            <Button text="Check In/Out" onClick={checkInOutRedirect} height="4vh"/>
+            <Button text="Modify Reservations" onClick={guestReservationsRedirect} height="6vh"/>
             <Button text="Guest Billing" onClick={billingRedirect} height="4vh"/>
-            <Button text="Reserve Room" onClick={makeReservationRedirect} height="4vh"/>
-            <Button text="Register Guest" onClick={registerGuestRedirect} height="4vh"/>
+            <Button text="Reserve Room" onClick={makeReservationRedirect} height="6vh"/>
+            <Button text="Register Guest" onClick={registerGuestRedirect} height="6vh"/>
         </div>
     )
 }
