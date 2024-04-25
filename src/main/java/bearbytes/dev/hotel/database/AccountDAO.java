@@ -169,6 +169,13 @@ public class AccountDAO implements IAccountDAO {
         return false;
     }
 
+    /**
+     * Changes the username of a guest to the given username.
+     * 
+     * @param g The guest account whose username is being changed.
+     * @param u The new username to set for the guest's account.
+     * @return True if the username is successfully changed, else false.
+     */
     public boolean changeGuestUsername(Guest g, String u) {
         Connection c = null;
         PreparedStatement ps = null;
@@ -217,6 +224,13 @@ public class AccountDAO implements IAccountDAO {
         return false;
     }
 
+    /**
+     * Changes the password of a guest account to the given password.
+     * 
+     * @param g The guest account whose password is being changed.
+     * @param p The new password to change on the guest's account.
+     * @return True if the password is successfully changed, else false.
+     */
     public boolean changeGuestPassword(Guest g, String p) {
         Connection c = null;
         PreparedStatement ps = null;
@@ -255,6 +269,13 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
+    /**
+     * Changes the username of a clerk account to the given username.
+     * 
+     * @param cl The clerk account whose username is being changed.
+     * @param u  The new username to change on the clerk's account.
+     * @return True if the username is changed successfully, else false.
+     */
     public boolean changeClerkUsername(Clerk cl, String u) {
         Connection c = null;
         PreparedStatement ps = null;
@@ -303,6 +324,13 @@ public class AccountDAO implements IAccountDAO {
         return false;
     }
 
+    /**
+     * Changes the password of a clerk account to the given password.
+     * 
+     * @param cl The clerk account whose password is being changed.
+     * @param p  The new password to change on the clerk's account.
+     * @return True if the password is changed successfully, else false.
+     */
     public boolean changeClerkPassword(Clerk cl, String p) {
         Connection c = null;
         PreparedStatement ps = null;
@@ -341,6 +369,13 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
+    /**
+     * Changes the username of a manager account to the given username.
+     * 
+     * @param m The manager account whose username is being changed.
+     * @param u The new username to assign to the manager's account.
+     * @return True if the username is successfully changed, else false.
+     */
     public boolean changeManagerUsername(Manager m, String u) {
         Connection c = null;
         PreparedStatement ps = null;
@@ -389,6 +424,13 @@ public class AccountDAO implements IAccountDAO {
         return false;
     }
 
+    /**
+     * Changes the password of a manager account to the given password.
+     * 
+     * @param m The manager account whose password is being changed.
+     * @param p The new password to assign to the manager's account.
+     * @return True if the password was successfully changed, else false.
+     */
     public boolean changeManagerPassword(Manager m, String p) {
         Connection c = null;
         PreparedStatement ps = null;

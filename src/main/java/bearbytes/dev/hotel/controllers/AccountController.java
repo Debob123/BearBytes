@@ -141,6 +141,13 @@ public class AccountController {
         return false;
     }
 
+    /**
+     * Changes the username of the given guest account to the new username.
+     * 
+     * @param g           The guest account whose username is being changed.
+     * @param newUsername The new username to assign to the guest's account.
+     * @return True if the username was changed successfully, else false.
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/changeGuestUsername")
     public Boolean changeGuestUsername(@RequestBody Guest g, @RequestParam("newUsername") String newUsername) {
@@ -154,6 +161,13 @@ public class AccountController {
         return false;
     }
 
+    /**
+     * Changes the password of the given guest account to the new password.
+     * 
+     * @param g           The guest account whose password is being changed.
+     * @param newPassword The new password to assign to the guest's account.
+     * @return True if the password was successfully changed, else false.
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/changeGuestPassword")
     public Boolean changeGuestPassword(@RequestBody Guest g, @RequestParam("newPassword") String newPassword) {
@@ -167,6 +181,13 @@ public class AccountController {
         return false;
     }
 
+    /**
+     * Changes the username of the given clerk account to the new username.
+     * 
+     * @param cl          The clerk account whose username is being changed.
+     * @param newUsername The new username to assign to the clerk's account.
+     * @return True if the username was successfully changed, else false.
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/changeClerkUsername")
     public Boolean changeClerkUsername(@RequestBody Clerk cl, @RequestParam("newUsername") String newUsername) {
@@ -182,6 +203,13 @@ public class AccountController {
         return false;
     }
 
+    /**
+     * Changes the password of the given clerk account to the new password.
+     * 
+     * @param cl          The clerk account whose password is being changed.
+     * @param newPassword The new password to assign to the clerk's account.
+     * @return True if the password was successfully changed, else false.
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/changeClerkPassword")
     public Boolean changeClerkPassword(@RequestBody Clerk cl, @RequestParam("newPassword") String newPassword) {
@@ -195,6 +223,13 @@ public class AccountController {
         return false;
     }
 
+    /**
+     * Changes the username of the given manager account to the new username.
+     * 
+     * @param m           The manager account whose username is being changed.
+     * @param newUsername The new username to assign to the manager's account.
+     * @return True if the username is changed successfully, else false.
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/changeManagerUsername")
     public Boolean changeManagerUsername(@RequestBody Manager m, @RequestParam("newUsername") String newUsername) {
@@ -208,6 +243,13 @@ public class AccountController {
         return false;
     }
 
+    /**
+     * Changes the password of the manager account to the given password.
+     * 
+     * @param m           The manager account whose password is being changed.
+     * @param newPassword The new password to assign to the manager's account.
+     * @return True if the password is successfully changed, else false.
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/changeManagerPassword")
     public Boolean changeManagerPassword(@RequestBody Manager m, @RequestParam("newPassword") String newPassword) {

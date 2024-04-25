@@ -108,9 +108,7 @@ public class Receipt {
         this.items = items;
     }
 
-    /**
-     * Prints the information contained within this receipt.
-     */
+    // Prints the information contained within this receipt.
     public void printReceipt() {
         System.out.println("Receipt ID: " + receiptId);
         System.out.println("Amount: " + amount);
