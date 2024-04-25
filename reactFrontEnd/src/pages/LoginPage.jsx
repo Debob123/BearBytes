@@ -5,6 +5,7 @@ import './styles/loginPage.css'
 function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginFailed, setLoginFailed] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -43,7 +44,10 @@ function LoginPage() {
             // so it is accessible on other pages (this will be needed for associating
             // reservations and similar items)
             sessionStorage.setItem('user', JSON.stringify({username: username}));
+            sessionStorage.setItem('account_type', JSON.stringify({account_type: accountType}))
             navigate(nextPage);
+        } else {
+            setLoginFailed("Invalid username or password");
         }
       })
       .catch(error => console.error('Error logging in user:', error));
@@ -89,6 +93,7 @@ function LoginPage() {
                 <button className="login-submit" type="submit">Login</button>
                 <p>New Guest? <Link to="/registerGuest">Create Account</Link></p>
             </form>
+            {loginFailed && <div className="message" style={{ fontWeight: 'bold', color: "red" }}>{loginFailed}</div>}
         </div>
     );
 }

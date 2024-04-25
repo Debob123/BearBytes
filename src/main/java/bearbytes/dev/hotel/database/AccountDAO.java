@@ -169,36 +169,237 @@ public class AccountDAO implements IAccountDAO {
         return false;
     }
 
-    /**
-     * Changes the password of an account.
-     * 
-     * @param acc The account to change the password of.
-     * @param p   The new password.
-     * @return True if the password was successfully changed, else false.
-     */
-    public boolean changePassword(Account acc, String p) {
+    public boolean changeGuestUsername(Guest g, String u) {
         Connection c = null;
         PreparedStatement ps = null;
 
         try {
             c = getDBConnection();
             String tableName;
-
-            // determine the table name based on the type of account
-            if (acc instanceof Guest) {
-                tableName = "GuestAccounts";
-            } else if (acc instanceof Clerk) {
-                tableName = "ClerkAccounts";
-            } else if (acc instanceof Manager) {
-                tableName = "ManagerAccounts";
+            Boolean usernameTaken = AccountAuthenticator.validateGuestUsername(new Guest(u, "", "", "", "", ""));
+            if (usernameTaken) {
+                System.out.println("Username taken");
             } else {
-                throw new IllegalArgumentException("Unsupported account type");
+                System.out.println("Username available");
             }
 
-            String query = "UPDATE APP." + tableName + " SET password = ? WHERE username = ?";
+            if (!usernameTaken) {
+                String query = "UPDATE APP.GuestAccounts SET username = ? WHERE username = ?";
+                ps = c.prepareStatement(query);
+                ps.setString(1, u);
+                ps.setString(2, g.getUsername());
+
+                int rowsUpdated = ps.executeUpdate();
+
+                // check if any rows were affected
+                if (rowsUpdated > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (c != null) {
+                    c.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean changeGuestPassword(Guest g, String p) {
+        Connection c = null;
+        PreparedStatement ps = null;
+
+        try {
+            c = getDBConnection();
+
+            String query = "UPDATE APP.GuestAccounts SET password = ? WHERE username = ?";
             ps = c.prepareStatement(query);
             ps.setString(1, AccountAuthenticator.hashPassword(p));
-            ps.setString(2, acc.getUsername());
+            ps.setString(2, g.getUsername());
+
+            int rowsUpdated = ps.executeUpdate();
+
+            // check if any rows were affected
+            if (rowsUpdated > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (c != null) {
+                    c.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public boolean changeClerkUsername(Clerk cl, String u) {
+        Connection c = null;
+        PreparedStatement ps = null;
+
+        try {
+            c = getDBConnection();
+            String tableName;
+            Boolean usernameTaken = AccountAuthenticator.validateClerkUsername(new Clerk(u, ""));
+            if (usernameTaken) {
+                System.out.println("Username taken");
+            } else {
+                System.out.println("Username available");
+            }
+
+            if (!usernameTaken) {
+                String query = "UPDATE APP.ClerkAccounts SET username = ? WHERE username = ?";
+                ps = c.prepareStatement(query);
+                ps.setString(1, u);
+                ps.setString(2, cl.getUsername());
+
+                int rowsUpdated = ps.executeUpdate();
+
+                // check if any rows were affected
+                if (rowsUpdated > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (c != null) {
+                    c.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean changeClerkPassword(Clerk cl, String p) {
+        Connection c = null;
+        PreparedStatement ps = null;
+
+        try {
+            c = getDBConnection();
+
+            String query = "UPDATE APP.ClerkAccounts SET password = ? WHERE username = ?";
+            ps = c.prepareStatement(query);
+            ps.setString(1, AccountAuthenticator.hashPassword(p));
+            ps.setString(2, cl.getUsername());
+
+            int rowsUpdated = ps.executeUpdate();
+
+            // check if any rows were affected
+            if (rowsUpdated > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (c != null) {
+                    c.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public boolean changeManagerUsername(Manager m, String u) {
+        Connection c = null;
+        PreparedStatement ps = null;
+
+        try {
+            c = getDBConnection();
+            String tableName;
+            Boolean usernameTaken = AccountAuthenticator.validateManagerUsername(new Manager(u, ""));
+            if (usernameTaken) {
+                System.out.println("Username taken");
+            } else {
+                System.out.println("Username available");
+            }
+
+            if (!usernameTaken) {
+                String query = "UPDATE APP.ManagerAccounts SET username = ? WHERE username = ?";
+                ps = c.prepareStatement(query);
+                ps.setString(1, u);
+                ps.setString(2, m.getUsername());
+
+                int rowsUpdated = ps.executeUpdate();
+
+                // check if any rows were affected
+                if (rowsUpdated > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (c != null) {
+                    c.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean changeManagerPassword(Manager m, String p) {
+        Connection c = null;
+        PreparedStatement ps = null;
+
+        try {
+            c = getDBConnection();
+
+            String query = "UPDATE APP.ManagerAccounts SET password = ? WHERE username = ?";
+            ps = c.prepareStatement(query);
+            ps.setString(1, AccountAuthenticator.hashPassword(p));
+            ps.setString(2, m.getUsername());
 
             int rowsUpdated = ps.executeUpdate();
 

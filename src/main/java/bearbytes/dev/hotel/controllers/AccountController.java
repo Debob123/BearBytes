@@ -141,19 +141,78 @@ public class AccountController {
         return false;
     }
 
-    /**
-     * Changes the password for an account.
-     * 
-     * @param acc The account to change the password of.
-     * @param p   The new password value.
-     * @return True if a new password was successfully created and linked to the
-     *         account, else false.
-     */
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/changePassword")
-    public Boolean changePassword(@RequestBody Account acc, String p) {
+    @PostMapping("/changeGuestUsername")
+    public Boolean changeGuestUsername(@RequestBody Guest g, @RequestParam("newUsername") String newUsername) {
         try {
-            return aDAO.changePassword(acc, p);
+            return aDAO.changeGuestUsername(g, newUsername);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/changeGuestPassword")
+    public Boolean changeGuestPassword(@RequestBody Guest g, @RequestParam("newPassword") String newPassword) {
+        try {
+            return aDAO.changeGuestPassword(g, newPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/changeClerkUsername")
+    public Boolean changeClerkUsername(@RequestBody Clerk cl, @RequestParam("newUsername") String newUsername) {
+        System.out.println("Gets to changeClerkUsername - AccountController with u and cl.getUsername:");
+        System.out.println(newUsername + " " + cl.getUsername());
+        try {
+            return aDAO.changeClerkUsername(cl, newUsername);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/changeClerkPassword")
+    public Boolean changeClerkPassword(@RequestBody Clerk cl, @RequestParam("newPassword") String newPassword) {
+        try {
+            return aDAO.changeClerkPassword(cl, newPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/changeManagerUsername")
+    public Boolean changeManagerUsername(@RequestBody Manager m, @RequestParam("newUsername") String newUsername) {
+        try {
+            return aDAO.changeManagerUsername(m, newUsername);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Woops");
+        }
+
+        return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/changeManagerPassword")
+    public Boolean changeManagerPassword(@RequestBody Manager m, @RequestParam("newPassword") String newPassword) {
+        try {
+            return aDAO.changeManagerPassword(m, newPassword);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Whoops");
