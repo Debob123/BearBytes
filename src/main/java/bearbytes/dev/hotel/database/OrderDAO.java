@@ -12,13 +12,31 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The OrderDAO Class provides data access operations for Orders in the hotel.
+ * This means adding an order to the database, and getting all orders from the
+ * database.
+ */
 public class OrderDAO {
+    // The driver of the connected database.
     private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+
+    // The connection string of the database.
     private static final String DB_CONNECTION = "jdbc:derby:myDB";
+
+    // The user String for the database.
     private static final String DB_USER = "";
+
+    // The password String for the database.
     private static final String DB_PASSWORD = "";
 
-    public void addOrder(Order order) throws SQLException  {
+    /**
+     * Adds an order to the hotel's database.
+     * 
+     * @param order The order to add to the database.
+     * @throws SQLException If a database access error occurs.
+     */
+    public void addOrder(Order order) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
         Statement statement2 = null;
@@ -41,10 +59,9 @@ public class OrderDAO {
             rs.next();
             Integer mostRecentOrderID = rs.getInt(1);
 
-
-            for(Product p : order.getPurchasedProducts())  {
+            for (Product p : order.getPurchasedProducts()) {
                 String insertOrderItemSQL = "INSERT INTO OrderItems (orderID, productID) VALUES("
-                                            + mostRecentOrderID + ", " + p.getId() + ")";
+                        + mostRecentOrderID + ", " + p.getId() + ")";
                 System.out.println(insertOrderItemSQL);
                 statement.executeUpdate(insertOrderItemSQL);
             }
@@ -60,7 +77,13 @@ public class OrderDAO {
         }
     }
 
-    public Collection<Order> getOrders() throws SQLException  {
+    /**
+     * Gets all the orders in the hotel's database.
+     * 
+     * @return A collection of all orders in the database.
+     * @throws SQLException If a database access error occurs.
+     */
+    public Collection<Order> getOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
         Connection dbConnection = null;
         Statement statement = null;
@@ -75,26 +98,25 @@ public class OrderDAO {
             ResultSet rs = statement.executeQuery(getOrdersSQL);
             System.out.println(getOrdersSQL);
 
-            while(rs.next())  {
-                String getOrderItemsSQL = "SELECT * FROM OrderItems WHERE orderID = " +  rs.getInt("orderID");
+            while (rs.next()) {
+                String getOrderItemsSQL = "SELECT * FROM OrderItems WHERE orderID = " + rs.getInt("orderID");
                 ResultSet rs2 = statement2.executeQuery(getOrderItemsSQL);
                 List<Product> purchasedProducts = new ArrayList<>();
-                while(rs2.next())  {
-                    String getPurchasedProductsSQL = "SELECT * FROM Products WHERE productID = " + rs2.getInt("productID");
+                while (rs2.next()) {
+                    String getPurchasedProductsSQL = "SELECT * FROM Products WHERE productID = "
+                            + rs2.getInt("productID");
                     ResultSet rs3 = statement3.executeQuery(getPurchasedProductsSQL);
                     Product p = new Product(
                             rs3.getInt("productID"),
                             rs3.getString("name"),
                             rs3.getDouble("price"),
-                            rs3.getString("image")
-                    );
+                            rs3.getString("image"));
                     purchasedProducts.add(p);
                 }
                 Order order = new Order(
                         rs.getInt("orderID"),
                         rs.getString("purchaseDate"),
-                        purchasedProducts
-                );
+                        purchasedProducts);
                 orders.add(order);
             }
         } catch (SQLException e) {
@@ -110,7 +132,13 @@ public class OrderDAO {
         return orders;
     }
 
-    private static Connection connectToDatabase () throws SQLException {
+    /**
+     * Gets the connection to the hotel's database.
+     * 
+     * @return The connection to the database.
+     * @throws SQLException If a database access error occurs.
+     */
+    private static Connection connectToDatabase() throws SQLException {
         Connection dbConnection = null;
         try {
             Class.forName(DB_DRIVER);

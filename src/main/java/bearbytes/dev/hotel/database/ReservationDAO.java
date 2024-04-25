@@ -9,10 +9,24 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
 
+/**
+ * The ReservationDAO Class provides data access operations for Reservations in
+ * the hotel. This includes checking availability, adding a room to the
+ * database, modifying an existing reservation, and more.
+ */
 public class ReservationDAO implements IReservationDAO {
 
-    public ReservationDAO() {}
+    // The Default Constructor for ReservationDAO
+    public ReservationDAO() {
+    }
 
+    /**
+     * Checks to see if a reservation can be made with the given requirements.
+     * 
+     * @param r The reservation seeking to be created.
+     * @return All room numbers that match the given requirements.
+     * @throws SQLException If a database access error occurs.
+     */
     public Collection<Integer> checkAvailability(Reservation r) throws SQLException {
         // Now try to connect
         List<Integer> rooms = new ArrayList<>();
@@ -27,17 +41,17 @@ public class ReservationDAO implements IReservationDAO {
             ps = c.prepareStatement(query);
             ps.setString(2, r.getEndDate());
             ps.setString(3, r.getStartDate());
-            for(Room room : r.getRooms()) {
+            for (Room room : r.getRooms()) {
                 ps.setInt(1, room.getNumber());
                 rs = ps.executeQuery();
-                if(rs.next() && rs.getInt("reservationID") != r.getReservationID()) {
+                if (rs.next() && rs.getInt("reservationID") != r.getReservationID()) {
                     rooms.add(room.getNumber());
                 }
             }
-        } catch( SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally{
-            if(c != null) {
+        } finally {
+            if (c != null) {
                 c.close();
             }
         }
@@ -45,7 +59,13 @@ public class ReservationDAO implements IReservationDAO {
         return rooms;
     }
 
-    
+    /**
+     * Adds a reservation to the database.
+     * 
+     * @param reservation The reservation to add to the database.
+     * @return True if the reservation was successfully added, else false.
+     * @throws SQLException If a database access error occurs.
+     */
     public boolean add(Reservation reservation) throws SQLException {
         // Now try to connect
         Connection c = null;
@@ -58,7 +78,7 @@ public class ReservationDAO implements IReservationDAO {
             // Check if the reservation has already been added, if yes, stop execution
             stmt.setInt(1, reservation.getReservationID());
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 return false;
             }
             String query = "INSERT INTO Reservations(reservationID, username, startDate, endDate) values(?,?,?,?)";
@@ -76,26 +96,33 @@ public class ReservationDAO implements IReservationDAO {
             ps.executeUpdate();
 
             // Add the rooms to the reservation
-            for(int i = 0; i < reservation.getRooms().size(); ++i) {
+            for (int i = 0; i < reservation.getRooms().size(); ++i) {
                 ps2.setInt(1, reservation.getReservationID() + reservation.getRooms().get(i).getNumber());
                 ps2.setInt(2, reservation.getReservationID());
                 ps2.setInt(3, reservation.getRooms().get(i).getNumber());
                 ps2.executeUpdate();
             }
             return true;
-        } catch( SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally{
-            if(c != null) {
+        } finally {
+            if (c != null) {
                 c.close();
             }
         }
         return false;
     }
 
+    /**
+     * Modifies an existing reservation(s) in the database.
+     * 
+     * @param reservations The list of reservations to modify.
+     * @return A list of room numbers that match the given criteria.
+     * @throws SQLException If a database access error occurs.
+     */
     public Collection<Integer> modify(Reservation[] reservations) throws SQLException {
-        List<Integer> rooms = (ArrayList)checkAvailability(reservations[1]);
-        if(rooms.isEmpty()) {
+        List<Integer> rooms = (ArrayList) checkAvailability(reservations[1]);
+        if (rooms.isEmpty()) {
             remove(reservations[0]);
             add(reservations[1]);
         }
@@ -103,13 +130,21 @@ public class ReservationDAO implements IReservationDAO {
         return rooms;
     }
 
+    /**
+     * Removes a reservation from the database.
+     * 
+     * @param r The reservation to remove.
+     * @return True if the reservation is successfully removed, else false.
+     * @throws SQLException If a database access error occurs.
+     */
     public boolean remove(Reservation r) throws SQLException {
         Connection c = getDBConnection();
         PreparedStatement ps = null;
 
         try {
             System.out.println(r.getReservationID());
-            // Apache Derby does not support deleting from multiple tables, so must use two statements
+            // Apache Derby does not support deleting from multiple tables, so must use two
+            // statements
             // Delete from reservations table
             String query = "DELETE FROM APP.Reservations r WHERE r.reservationID = ?";
             ps = c.prepareStatement(query);
@@ -120,14 +155,14 @@ public class ReservationDAO implements IReservationDAO {
             ps = c.prepareStatement(query);
             ps.setInt(1, r.getReservationID());
             ps.executeUpdate();
-        } catch( SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } finally{
-            if(c != null) {
+        } finally {
+            if (c != null) {
                 c.close();
             }
-            if(ps != null) {
+            if (ps != null) {
                 ps.close();
             }
         }
@@ -135,6 +170,13 @@ public class ReservationDAO implements IReservationDAO {
         return true;
     }
 
+    /**
+     * Obtains all reservations for a user from the database.
+     * 
+     * @param username The username to find all the reservations of.
+     * @return A collection of all the current reservations matching the username.
+     * @throws SQLException If a database access error occurs.
+     */
     public Collection<Reservation> getAll(String username) throws SQLException {
         Connection c = getDBConnection();
         PreparedStatement ps = null;
@@ -166,7 +208,7 @@ public class ReservationDAO implements IReservationDAO {
                 reservationID = rs.getInt("reservationID");
                 start = rs.getString("startDate");
                 end = rs.getString("endDate");
-                if(prevResID == null && prevStart == null && prevEnd == null) {
+                if (prevResID == null && prevStart == null && prevEnd == null) {
                     prevResID = reservationID;
                     prevStart = start;
                     prevEnd = end;
@@ -184,23 +226,24 @@ public class ReservationDAO implements IReservationDAO {
 
                 List<Room> rooms = resRooms.getOrDefault(reservationID, new ArrayList<Room>());
                 rooms.add(new Room(roomNumber, floor, numBeds, dailyRate, smokingAllowed,
-                        Room.BedType.getEnum(bedSize), Room.RoomType.getEnum(type), Room.QualityLevel.getEnum(quality)));
+                        Room.BedType.getEnum(bedSize), Room.RoomType.getEnum(type),
+                        Room.QualityLevel.getEnum(quality)));
                 resRooms.put(reservationID, rooms);
 
-                if(!prevResID.equals(reservationID)) {
+                if (!prevResID.equals(reservationID)) {
                     reservations.add(new Reservation(prevResID, resRooms.get(prevResID), prevStart, prevEnd, username));
                 }
             }
-            if(hasReservations) {
+            if (hasReservations) {
                 reservations.add(new Reservation(reservationID, resRooms.get(reservationID), start, end, username));
             }
-        } catch( SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally{
-            if(c != null) {
+        } finally {
+            if (c != null) {
                 c.close();
             }
-            if(ps != null) {
+            if (ps != null) {
                 ps.close();
             }
         }
@@ -208,6 +251,11 @@ public class ReservationDAO implements IReservationDAO {
         return reservations;
     }
 
+    /**
+     * Gets the Connection to the hotel's database.
+     * 
+     * @return A connection to the database.
+     */
     private static Connection getDBConnection() {
         Connection dbConnection = null;
         try {
@@ -224,44 +272,68 @@ public class ReservationDAO implements IReservationDAO {
         return dbConnection;
     }
 
-    public static class ProductDAO  {
+    /**
+     * The ProductDAO class provides data access operations for Products in the
+     * hotel. This largely means getting a collection of all the products in the
+     * hotel.
+     */
+    public static class ProductDAO {
+        // The driver of the connected database.
         private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+
+        // The connection string of the database.
         private static final String DB_CONNECTION = "jdbc:derby:myDB";
+
+        // The user String for the database.
         private static final String DB_USER = "";
+
+        // The password String for the database.
         private static final String DB_PASSWORD = "";
 
-        public Collection<Product> getProducts() throws SQLException  {
+        /**
+         * Gets all products in the hotel's database.
+         * 
+         * @return A collection of all the products the hotel carries.
+         * @throws SQLException If a database access error occurs.
+         */
+        public Collection<Product> getProducts() throws SQLException {
             Connection dbConnection = null;
             Statement statement = null;
             String getListedProductsSQL = "SELECT * FROM Products";
             List<Product> products = new ArrayList<Product>();
-            try  {
+            try {
                 dbConnection = connectToDatabase();
                 statement = dbConnection.createStatement();
                 ResultSet rs = statement.executeQuery(getListedProductsSQL);
-                while(rs.next())  {
+                while (rs.next()) {
                     Product p = new Product(
                             rs.getInt("productID"),
                             rs.getString("name"),
                             rs.getDouble("price"),
-                            rs.getString("image")
-                    );
+                            rs.getString("image"));
                     products.add(p);
                 }
-            } catch(SQLException e)  {
+            } catch (SQLException e) {
                 e.printStackTrace();
                 return null;
-            } finally  {
-                if(statement != null)  {
+            } finally {
+                if (statement != null) {
                     statement.close();
                 }
-                if(dbConnection != null)  {
+                if (dbConnection != null) {
                     dbConnection.close();
                 }
             }
             return products;
         }
-        private static Connection connectToDatabase () throws SQLException {
+
+        /**
+         * Creates a connection to the hotel's database.
+         * 
+         * @return A connection to the database.
+         * @throws SQLException If a database access error occurs.
+         */
+        private static Connection connectToDatabase() throws SQLException {
             Connection dbConnection = null;
             try {
                 Class.forName(DB_DRIVER);

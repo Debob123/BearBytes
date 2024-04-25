@@ -18,7 +18,7 @@ function ManagerNavigation() {
     return (
         <div className="nav">
             <p className="profile">{user ? "Welcome " + user.username : "Error loading profile"}!</p>
-            <Button text="Manager Home" onClick={managerHomeRedirect} height="4vh"/>
+            <Button text="Manager Home" onClick={managerHomeRedirect} height="6vh"/>
             <Button text="Edit Profile" onClick={profileRedirect} height="4vh"/>
         </div>
     )
