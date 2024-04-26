@@ -489,7 +489,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
     /**
-     * Verifies if an accoutn is valid.
+     * Verifies if an account is valid.
      * 
      * @return True if the account is valid, else false.
      */

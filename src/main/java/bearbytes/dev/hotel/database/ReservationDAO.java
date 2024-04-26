@@ -1,5 +1,6 @@
 package bearbytes.dev.hotel.database;
 
+import bearbytes.dev.hotel.accounts.Guest;
 import bearbytes.dev.hotel.exceptions.InvalidArgumentException;
 import bearbytes.dev.hotel.floor.Room;
 import bearbytes.dev.hotel.interfaces.IReservationDAO;
@@ -73,8 +74,16 @@ public class ReservationDAO implements IReservationDAO {
      * @throws InvalidArgumentException If the passed reservation does not have valid data
      */
     public boolean add(Reservation reservation) throws SQLException, InvalidArgumentException {
-        if(reservation == null || reservation.getUsername() == null || (reservation.getRooms() == null || reservation.getRooms().isEmpty())) {
+        if(reservation == null) {
             throw new InvalidArgumentException("The reservation cannot be null");
+        } else if (reservation.getRooms() == null || reservation.getRooms().isEmpty()) {
+            throw new InvalidArgumentException("The list of rooms cannot be null or empty");
+        } else if(reservation.getUsername() == null) {
+            throw new InvalidArgumentException("This Guest's username is mandatory ");
+        }
+
+        if(!AccountAuthenticator.validateGuestUsername(new Guest(reservation.getUsername(), "", null, null, null, null))) {
+            throw new InvalidArgumentException("There is no guest with given username: " + reservation.getUsername());
         }
         // Now try to connect
         Connection c = null;

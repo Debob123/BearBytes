@@ -5,7 +5,7 @@ function ClerkHome() {
     return (
         <div>
             <ClerkNavigation/>
-            <h1> Welcome to the Clerk Home Page </h1>
+            <h1 className="content center"> Welcome to the Clerk Home Page </h1>
         </div>
     );
 }

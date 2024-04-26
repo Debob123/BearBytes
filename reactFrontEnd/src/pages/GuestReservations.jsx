@@ -59,7 +59,7 @@ function GuestReservations() {
     return (
         <div>
             <GuestNavigation />
-            <div className="reservations-display">
+            <div className="content">
                 <h1 className="center-text content-start">My Reservations</h1>
                 <div>
                     {isLoading ? <p className="center-text">Loading...</p> : displayReservations()}

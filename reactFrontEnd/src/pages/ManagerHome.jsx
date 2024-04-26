@@ -5,7 +5,7 @@ function ManagerHome() {
     return (
         <div>
             <ManagerNavigation />
-            <h1> Welcome to the Manager Home Page </h1>
+            <h1 className="content center"> Welcome to the Manager Home Page </h1>
         </div>
     );
 }

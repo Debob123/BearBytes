@@ -1,14 +1,13 @@
 .reservations-display {
-    max-height: 90vh;
-    display: grid;
-    margin-left: 10vw;
-    grid-template-rows: 1fr 9fr;
+    overflow-y: scroll;
+    min-height: 50vh;
+    max-height: 50vh;
 }
 
 .display {
     overflow-y: scroll;
-    min-height: 84vh;
-    max-height: 84vh;
+    min-height: 78vh;
+    max-height: 78vh;
 }
 
 .res-display {

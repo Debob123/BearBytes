@@ -18,6 +18,8 @@ import ClerkModifyReservation from './pages/ClerkModifyReservations';
 import ClerkHome from "./pages/ClerkHome";
 import ManagerHome from "./pages/ManagerHome";
 import ClerkRegisterGuest from "./clerkPageComponents/ClerkRegisterGuest";
+import ClerkMakeReservation from './pages/ClerkMakeReservation';
+import ClerkConfirmReservation from './pages/ClerkConfirmReservation';
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/clerkHome" element={<ClerkHome/>}/>
         <Route path="/managerHome" element={<ManagerHome/>}/>
         <Route path="/clerkRegisterGuest" element={<ClerkRegisterGuest />} />
+        <Route path="/clerkMakeReservation" element={<ClerkMakeReservation/>}/>
+        <Route path="/clerkConfirmReservation" element={<ClerkConfirmReservation/>}/>
       </Routes>
     </Router>
   );

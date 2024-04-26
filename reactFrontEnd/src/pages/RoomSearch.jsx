@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import GuestHeader from "../components/GuestHeader";
 import './styles/roomSearch.css'
+import GuestNavigation from '../components/GuestNavigation';
 
 
 function RoomSearch() {
@@ -13,7 +13,8 @@ function RoomSearch() {
         e.preventDefault();
         let currDate = new Date();
         let startingDate = new Date(start + "T00:00-0500")
-        if(!isNaN(startingDate) && end > start && startingDate > currDate) {
+        let endingDate = new Date(end + "T00:00-0500");
+        if(!isNaN(startingDate) && !isNaN(endingDate) && end > start && startingDate > currDate) {
             let dateRange = [start, end]
             sessionStorage.setItem('dates', JSON.stringify(dateRange));
             navigate('/reservation')
@@ -22,8 +23,9 @@ function RoomSearch() {
 
     return (
         <div>
-            <GuestHeader/>
-            <h1 className="content-start">Choose dates for your stay</h1>
+            <GuestNavigation/>
+            <div className="content">
+            <h1 className="center bottom-gap">Choose dates for your stay</h1>
             <form className="form-grid">
                 <div className="grid-element">
                     <label htmlFor="start_date">Start date:</label>
@@ -49,6 +51,7 @@ function RoomSearch() {
                 </div>
                 <button className="grid-element grid-btn" onClick={handleDateConfirm}>Confirm Dates</button>
             </form>
+            </div>
         </div>
     );
 }

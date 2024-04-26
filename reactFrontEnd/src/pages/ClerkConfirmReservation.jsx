@@ -1,15 +1,31 @@
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import singleRoom from '../images/hotelRoom1.jpg'
-import GuestHeader from "../components/GuestHeader.jsx";
+import ClerkNavigation from '../clerkPageComponents/ClerkNavigation.jsx';
 import BoxDisplay from '../components/BoxDisplay.jsx';
 import getSessionStorage from '../authentication/GetSessionStorage.js';
+import Modal from 'react-modal';
 import './styles/confirmReservationPage.css';
-import GuestNavigation from '../components/GuestNavigation.jsx';
 
-function ConfirmReservationPage() {
+const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+};
+
+function ClerkConfirmReservation() {
     const [checkbox, setCheckbox] = useState(false);
     const [isHidden, setIsHidden] = useState("hidden");
     const [content, setContent] = useState("");
+    const [username, setUsername] = useState("");
+    const [submitted, setSubmitted] = useState(false);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
     
     const dates = getSessionStorage('dates', null);
     const rooms = getSessionStorage('rooms', null);
@@ -42,12 +58,24 @@ function ConfirmReservationPage() {
         )
     }
 
+    function openModal() {
+        setIsOpen(true);
+    }
+    
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    function homeRedirect() {
+        navigate("/clerkHome");
+    }
+
     const handleSubmit = (e) => {
         let body = JSON.stringify({
                 rooms: rooms,
                 startDate: dates[0],
                 endDate: dates[1],
-                username: user.username
+                username: username
         })
         e.preventDefault();
         // Request validation of the guest account through API
@@ -64,22 +92,39 @@ function ConfirmReservationPage() {
       .then(data => {
         // Check if the room was added
         if(data) {
-            setIsHidden('green');
-            setContent("Reservation created");
-            console.log("success");
+            openModal();
+            setSubmitted(true);
         } else {
             setIsHidden('red');
-            setContent("Error creating reservation, please do not try to confirm the same reservation twice");
-            console.log("oh no");
+            setContent("Error creating reservation, Are you sure the username is correct?");
         }
       })
       .catch(error => console.error('Error creating booking:', error));
     }
     return (
         <div>
-            <GuestNavigation/>
+             <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Reservation created"
+            >
+                <p className="green">Reservation successfully created</p>
+                <button onClick={homeRedirect}>Continue</button>
+            </Modal>
+            <ClerkNavigation/>
             <div className="content">
-            <h2 className="center-text">Reserve Room</h2>
+            <h2 className="center-text">Reserve Guest Room</h2>
+            <div className="center top-space">
+                <label htmlFor="username">Guest Username: </label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username"
+                    placeholder="username"
+                    onChange={(e) => setUsername(e.target.value)}
+                    required/>
+            </div>
             <div className="container">
                 {displayRooms(rooms)}
                 <form className="confirm-input" onSubmit={handleSubmit}>
@@ -143,11 +188,11 @@ function ConfirmReservationPage() {
                             <p>${nightlyCost * nightsStayed}</p>
                         </div>
                     </div>
-                    <div className={isHidden + " center-text"}>{content}</div>
-                    <input type="submit" 
+                    <div className={isHidden + " center-text bottom-gap"}>{content}</div>
+                    {!submitted && <input type="submit" 
                            value="Confirm" 
                            className="cnf-btn" 
-                           disabled={!checkbox}/>
+                           disabled={!checkbox || username === ""}/>}
                 </form>
             </div>
             </div>
@@ -155,4 +200,4 @@ function ConfirmReservationPage() {
     );
 }
 
-export default ConfirmReservationPage;
+export default ClerkConfirmReservation;

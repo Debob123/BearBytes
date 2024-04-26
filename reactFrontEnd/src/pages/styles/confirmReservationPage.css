@@ -3,9 +3,18 @@
     gap: 10px;
 }
 
+.rooms-display {
+    display: grid;
+    gap: 5vw;
+    grid-template-columns: repeat(4, 1fr);
+    overflow-y: scroll;
+    margin-top: 2vh;
+    min-height: 65vh;
+    max-height: 65vh;
+}
+
 .content-begin {
     margin-top: 12vh;
-    margin-bottom: 4vh;
 }
 
 .center-text {
@@ -44,6 +53,7 @@
 
 .display {
     height: auto;
+    margin-top: 2vh;
 }
 
 ul.center-list{
@@ -51,16 +61,16 @@ ul.center-list{
     margin-left: auto;
     margin-right: auto;
     list-style-position: inside;
-  }
+}
 
-  .hidden {
+.hidden {
     display: none;
-  }
+}
 
-  .green {
-    color: green;
-  }
+.green {
+    color: green;  
+}
 
-  .red {
+.red {
     color: red;
-  }
+}

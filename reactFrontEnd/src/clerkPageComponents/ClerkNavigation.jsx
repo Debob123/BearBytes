@@ -26,7 +26,7 @@ function ClerkNavigation() {
     }
 
     const makeReservationRedirect = () => {
-
+        navigate("/clerkMakeReservation")
     }
 
     const registerGuestRedirect = () => {

@@ -3,6 +3,10 @@
     gap: 20px;
 }
 
+.bottom-gap {
+    margin-bottom: 10px;
+}
+
 .grid-element {
     justify-self: center;
 }
