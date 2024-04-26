@@ -1,0 +1,12 @@
+.clerk-nav {
+    background-color: gray;
+    min-height: 100vh;
+    width: 10vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+}

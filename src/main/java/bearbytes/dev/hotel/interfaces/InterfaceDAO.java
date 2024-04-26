@@ -1,5 +1,7 @@
 package bearbytes.dev.hotel.interfaces;
 
+import bearbytes.dev.hotel.exceptions.InvalidArgumentException;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collection;
@@ -10,8 +12,8 @@ public interface InterfaceDAO<T> {
     static final String DB_USER = "";
     static final String DB_PASSWORD = "";
 
-    boolean add(T value) throws SQLException, ParseException;
-    boolean remove(T value) throws SQLException;
+    boolean add(T value) throws SQLException, InvalidArgumentException;
+    boolean remove(T value) throws SQLException, InvalidArgumentException;
 
 
 }

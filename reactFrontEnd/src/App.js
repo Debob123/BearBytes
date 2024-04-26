@@ -16,13 +16,18 @@ import RegistrationFailed from './pages/RegistrationFailed';
 import GuestReservations from './pages/GuestReservations';
 import GuestMyBillPage from './pages/GuestMyBillPage';
 import GuestPayBillPage from './pages/GuestPayBillPage';
+import ClerkModifyReservation from './pages/ClerkModifyReservations';
+import ClerkHome from "./pages/ClerkHome";
+import ManagerHome from "./pages/ManagerHome";
+import ClerkRegisterGuest from "./clerkPageComponents/ClerkRegisterGuest";
+import ClerkMakeReservation from './pages/ClerkMakeReservation';
+import ClerkConfirmReservation from './pages/ClerkConfirmReservation';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path='/roomSearch' element={<RoomSearch />} />
         <Route path="/reservation" element={<ReservationPage />} />
         <Route path="/confirmReservationPage" element ={<ConfirmReservationPage />} />
@@ -37,6 +42,12 @@ function App() {
         <Route path="/guestReservations" element={<GuestReservations />}/>
         <Route path="/bill" element={<GuestMyBillPage />}/>
         <Route path="/bill/paybill" element={<GuestPayBillPage />}/>
+        <Route path="/clerkModify" element={<ClerkModifyReservation/>}/>
+        <Route path="/clerkHome" element={<ClerkHome/>}/>
+        <Route path="/managerHome" element={<ManagerHome/>}/>
+        <Route path="/clerkRegisterGuest" element={<ClerkRegisterGuest />} />
+        <Route path="/clerkMakeReservation" element={<ClerkMakeReservation/>}/>
+        <Route path="/clerkConfirmReservation" element={<ClerkConfirmReservation/>}/>
       </Routes>
     </Router>
   );

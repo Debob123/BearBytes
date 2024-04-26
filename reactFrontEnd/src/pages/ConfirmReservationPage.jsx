@@ -4,6 +4,7 @@ import GuestHeader from "../components/GuestHeader.jsx";
 import BoxDisplay from '../components/BoxDisplay.jsx';
 import getSessionStorage from '../authentication/GetSessionStorage.js';
 import './styles/confirmReservationPage.css';
+import GuestNavigation from '../components/GuestNavigation.jsx';
 
 function ConfirmReservationPage() {
     const [checkbox, setCheckbox] = useState(false);
@@ -22,7 +23,7 @@ function ConfirmReservationPage() {
 
     const displayRooms = (rooms) => {
         return (
-            <div className="display">
+            <div className="rooms-display">
                 {
                 rooms.map((room) =>(
                     <BoxDisplay className="box-display" 
@@ -43,10 +44,10 @@ function ConfirmReservationPage() {
 
     const handleSubmit = (e) => {
         let body = JSON.stringify({
-                username: user.username,
                 rooms: rooms,
                 startDate: dates[0],
-                endDate: dates[1]
+                endDate: dates[1],
+                username: user.username
         })
         e.preventDefault();
         // Request validation of the guest account through API
@@ -76,8 +77,9 @@ function ConfirmReservationPage() {
     }
     return (
         <div>
-            <GuestHeader className="header"/>
-            <h2 className="content-begin center-text">Reserve Room</h2>
+            <GuestNavigation/>
+            <div className="content">
+            <h2 className="center-text">Reserve Room</h2>
             <div className="container">
                 {displayRooms(rooms)}
                 <form className="confirm-input" onSubmit={handleSubmit}>
@@ -147,6 +149,7 @@ function ConfirmReservationPage() {
                            className="cnf-btn" 
                            disabled={!checkbox}/>
                 </form>
+            </div>
             </div>
         </div>
     );

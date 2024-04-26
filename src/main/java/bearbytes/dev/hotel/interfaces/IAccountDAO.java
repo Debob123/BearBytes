@@ -1,6 +1,6 @@
 package bearbytes.dev.hotel.interfaces;
 
-import bearbytes.dev.hotel.accounts.Guest;
+import bearbytes.dev.hotel.accounts.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -14,6 +14,15 @@ public interface IAccountDAO {
     boolean verify();
 
     boolean checkAvailability();
-    boolean add(Guest g) throws SQLException;
-    boolean remove(Guest g) throws SQLException;
+    boolean addGuest(Guest g) throws SQLException;
+    boolean addClerk(Clerk cl) throws SQLException;
+    boolean addManager(Manager m) throws SQLException;
+    boolean remove(Account acc) throws SQLException;
+
+    boolean changeGuestUsername(Guest g, String u);
+    boolean changeGuestPassword(Guest g, String p);
+    boolean changeClerkUsername(Clerk cl, String u);
+    boolean changeClerkPassword(Clerk cl, String p);
+    boolean changeManagerUsername(Manager m, String u);
+    boolean changeManagerPassword(Manager m, String p);
 }
