@@ -62,8 +62,6 @@ public class DatabaseCreator {
         String[] names = {"Tropical Shirt", "Shark Necklace", "Locally Made Vases", "Beach Hat",
                 "Sunglasses", "Beach Towels", "Locally Crafted Seashell Bracelet", "Beach Umbrella"};
         double[] prices = {25.00, 15.00, 50.00, 20.00, 10.00, 30.00, 15.00, 25.00};
-        //String[] images = {"tropicalShirt","sharkNecklace","vase","beachHat","sunglasses","beachTowels","shellBracelet","umbrella"};
-
         String[] images = {"tropical-shirt.jpg","shark-necklace.jpg","vase.jpg",
                             "beach-hat.jpg","sunglasses.jpg","beach-towels.jpg",
                             "seashell-bracelet.jpg","beach-umbrella.jpg",};
@@ -160,7 +158,7 @@ public class DatabaseCreator {
 
             String createOrdersTableSQL = "CREATE TABLE APP.Orders("
                     + "orderID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
-                    + "purchaseDate VARCHAR(225) NOT NULL, " + "subtotal DOUBLE NOT NULL, "
+                    + "purchaseDate VARCHAR(225) NOT NULL, " + "subtotal DOUBLE NOT NULL, " + "username VARCHAR(225) NOT NULL, "
                     + "PRIMARY KEY (orderID) " + ")";
 
 

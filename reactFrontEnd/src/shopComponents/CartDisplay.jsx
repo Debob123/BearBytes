@@ -1,13 +1,15 @@
 import CartBoxDisplay from './CartBoxDisplay.jsx';
-import '../components/display.css';
 import './cart.css';
 import './modal.css'
 import Button from '../components/Button.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
+import getSessionStorage from '../authentication/GetSessionStorage';
 const button = <Button text="Remove from Cart"/>
 
 function CartDisplay() {
+
+  const user = getSessionStorage('user', null);
 
   const cart = JSON.parse(sessionStorage.getItem('cart'));
   let cartSubtotal = 0.0;
@@ -23,7 +25,6 @@ function CartDisplay() {
   }
 
   const navigate = useNavigate();
-
   const confirmationRedirect = () => {
     navigate("/purchaseConfirmation")
   }
@@ -33,6 +34,7 @@ function CartDisplay() {
             orderId: 1111,
             purchaseDate: "",
             purchasedProducts: cart,
+            username: user.username
     })
     console.log(body);
     e.preventDefault();
@@ -43,7 +45,7 @@ function CartDisplay() {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: body
+      body: body
     },
   )
   .then(response => response.json())
@@ -60,7 +62,7 @@ function CartDisplay() {
   
   sessionStorage.setItem('cart', JSON.stringify([]));
   confirmationRedirect();
-}
+  }
 
   // Confirmation pop-up
   const [modal, setModal] = useState(false);
@@ -81,10 +83,14 @@ function CartDisplay() {
         <p className="subtotal-text">Subtotal:       ${cartSubtotal.toFixed(2)}</p>
         <p className="tax-test">+ Tax:               ${cartTax.toFixed(2)}</p>
         <p className="order-total-text">Order Total: ${cartTotal.toFixed(2)}</p>
-        <p>Purchase will be added to your bill and delivered to your room</p>
-        { (cart !== null) && (cart.length !== 0) ?
-          <button onClick={toggleModal} className="btn-modal">Checkout</button> :
-         <button className="btn-modal-unavailable">Checkout</button>}
+        {user === null ? <p>Must be logged in to make purchases!</p> :
+        <>
+          <p>Purchases will be added to your bill and delivered to your room</p>
+          { (cart !== null) && (cart.length !== 0) ?
+            <button onClick={toggleModal} className="btn-modal">Checkout</button> :
+          <button className="btn-modal-unavailable">Checkout</button>}
+          </>
+          }
       </div>
     </div>
 
@@ -93,7 +99,7 @@ function CartDisplay() {
         <div onClick={toggleModal} className="overlay"></div>
         <div className="modal-content">
           <div className="modal-title">Purchase Confirmation</div>
-          <div className="modal-body">Purchase will be added to your bill to be payed after your stay, confirm?</div>
+          <div className="modal-body">Purchase will be added to your bill and payed after your stay, confirm?</div>
           <div className="buttons">
             <button onClick={toggleModal} className="close-modal-button">cancel</button>
             <button className="confirm-button" onClick={handleSubmit}>confirm</button>

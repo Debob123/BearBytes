@@ -3,3 +3,26 @@
   padding: 20px;
   margin-top: 100px;
 }
+
+.sign-in-text  {
+  text-align: center;
+  padding: 20px;
+  margin-top: 100px;
+  font-size: 50px;
+}
+
+.bill-total-text  {
+  margin-top: 70px;
+  padding: 20px;
+}
+
+.bill-form  {
+  display:block;
+}
+
+.pay-bill-container  {
+  max-width: fit-content;
+  margin-inline: auto;
+  border-style: solid;
+  padding: 20px;
+}

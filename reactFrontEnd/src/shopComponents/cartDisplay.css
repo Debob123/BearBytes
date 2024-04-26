@@ -1,0 +1,32 @@
+.cart-display {
+  display: grid;
+  gap: 5vw;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-columns: repeat(4, 1fr);
+  overflow: scroll;
+  height: 73vh
+}
+
+.cart-box-display {
+  display: grid;
+  aspect-ratio: 1 / 1.5;
+  width: 15vw;
+  background-color: rgb(255, 255, 255);
+  justify-self: center;
+  padding: 10px;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.cart-box-display Button {
+  width: 100%;
+  cursor: pointer;
+  border-style: solid;
+  border-radius: 20px;
+  border-width: 1px;
+}
+
+.cart-box-display img {
+  width: 100%;
+  border-radius: 20px;
+}

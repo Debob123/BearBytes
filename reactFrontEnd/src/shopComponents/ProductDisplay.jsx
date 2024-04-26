@@ -1,5 +1,4 @@
 import ProductBoxDisplay from './ProductBoxDisplay.jsx';
-import '../components/display.css';
 import Button from '../components/Button.jsx';
 import {useState, useEffect} from 'react';
 

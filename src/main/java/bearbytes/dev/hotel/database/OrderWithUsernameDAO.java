@@ -1,24 +1,22 @@
 package bearbytes.dev.hotel.database;
 
 import bearbytes.dev.hotel.checkout.Order;
+import bearbytes.dev.hotel.checkout.OrderWithUsername;
 import bearbytes.dev.hotel.product.Product;
 
 import java.sql.*;
 import java.text.DateFormat;
-import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.Date;
 
-public class OrderDAO {
+public class OrderWithUsernameDAO {
     private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String DB_CONNECTION = "jdbc:derby:myDB";
     private static final String DB_USER = "";
     private static final String DB_PASSWORD = "";
 
-    public void addOrder(Order order) throws SQLException  {
+    public void addOrder(OrderWithUsername order) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
         Statement statement2 = null;
@@ -27,8 +25,8 @@ public class OrderDAO {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strDate = dateFormat.format(date);
 
-        String insertOrderSQL = "INSERT INTO Orders (purchaseDate, subtotal) " +
-                "VALUES('" + strDate + "', " + order.getSubtotal() + ")";
+        String insertOrderSQL = "INSERT INTO Orders (purchaseDate, subtotal, username) " +
+                "VALUES('" + strDate + "', " + order.getSubtotal() + ", '" + order.getUsername() + "')";
         try {
             dbConnection = connectToDatabase();
             statement = dbConnection.createStatement();
@@ -44,7 +42,7 @@ public class OrderDAO {
 
             for(Product p : order.getPurchasedProducts())  {
                 String insertOrderItemSQL = "INSERT INTO OrderItems (orderID, productID) VALUES("
-                                            + mostRecentOrderID + ", " + p.getId() + ")";
+                        + mostRecentOrderID + ", " + p.getId() + ")";
                 System.out.println(insertOrderItemSQL);
                 statement.executeUpdate(insertOrderItemSQL);
             }
@@ -60,13 +58,14 @@ public class OrderDAO {
         }
     }
 
-    public Collection<Order> getOrders() throws SQLException  {
-        List<Order> orders = new ArrayList<>();
+    public Collection<OrderWithUsername> getOrders(String username) throws SQLException  {
+        username = username.substring(1, username.length() - 1);
+        List<OrderWithUsername> orders = new ArrayList<>();
         Connection dbConnection = null;
         Statement statement = null;
         Statement statement2 = null;
         Statement statement3 = null;
-        String getOrdersSQL = "SELECT * FROM Orders";
+        String getOrdersSQL = "SELECT * FROM Orders WHERE username = '" + username + "'";
         try {
             dbConnection = connectToDatabase();
             statement = dbConnection.createStatement();
@@ -94,10 +93,11 @@ public class OrderDAO {
                         purchasedProducts.add(p);
                     }
                 }
-                Order order = new Order(
+                OrderWithUsername order = new OrderWithUsername(
                         rs.getInt("orderID"),
                         rs.getString("purchaseDate"),
-                        purchasedProducts
+                        purchasedProducts,
+                        rs.getString("username")
                 );
                 orders.add(order);
             }

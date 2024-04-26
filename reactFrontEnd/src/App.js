@@ -15,6 +15,7 @@ import RegistrationSuccess from './pages/RegistrationSuccess';
 import RegistrationFailed from './pages/RegistrationFailed';
 import GuestReservations from './pages/GuestReservations';
 import GuestMyBillPage from './pages/GuestMyBillPage';
+import GuestPayBillPage from './pages/GuestPayBillPage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/registrationFailed" element={<RegistrationFailed/>}/>
         <Route path="/guestReservations" element={<GuestReservations />}/>
         <Route path="/bill" element={<GuestMyBillPage />}/>
+        <Route path="/bill/paybill" element={<GuestPayBillPage />}/>
       </Routes>
     </Router>
   );

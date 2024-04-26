@@ -1,10 +1,12 @@
 import './bill.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import getSessionStorage from '../authentication/GetSessionStorage';
 
 function ShoppingBill()  {
 
   const [orders, setOrders] = useState([]);
+  const user = getSessionStorage('user', null);
 
   useEffect(() => {
       renderOrders();
@@ -12,12 +14,15 @@ function ShoppingBill()  {
 
   const [isLoading, setLoading] = useState(true);
   function renderOrders() {
+      let body = JSON.stringify(user.username);
+
       fetch('http://localhost:8080/shop/getOrders', {
       mode: 'cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+        body:body
       })
       .then(response => response.json())
       .then(data => {
@@ -31,11 +36,12 @@ function ShoppingBill()  {
   const shoppingSubtotal = orders.reduce((sum, {subtotal}) => sum + subtotal, 0);
   const shoppingTax = shoppingSubtotal * 0.08;
   const shoppingTotal = shoppingSubtotal + shoppingTax;
+  sessionStorage.setItem('shoppingTotal', shoppingTotal);
 
   return (
     <div>
-      <div className="shopping-bill-container">
-        <p className="shopping-purchases-text">Shopping Purchases</p>
+      <div className="bill-container">
+        <p className="category-text">Shopping Purchases</p>
         
         {orders.map((order) => (
           <>
@@ -43,15 +49,15 @@ function ShoppingBill()  {
             <ul>
               {order.purchasedProducts.map((product) =>(
                 <li className="purchased-products">
-                  <p className="product-name-text">{product.name}</p>
+                  <p className="product-name-text">-{product.name}</p>
                   <p className="product-price-text">${product.price.toFixed(2)}</p>
                 </li>
               ))}
             </ul>
           </>
         ))}
-        <p>Subtotal: ${shoppingSubtotal.toFixed(2)}</p>
-        <p>Tax: + ${shoppingTax.toFixed(2)}</p>
+        <p>Subtotal: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${shoppingSubtotal.toFixed(2)}</p>
+        <p>Tax: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + ${shoppingTax.toFixed(2)}</p>
         <p>Shopping Total: ${shoppingTotal.toFixed(2)}</p>
       </div>
     </div>

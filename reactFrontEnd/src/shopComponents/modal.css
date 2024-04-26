@@ -16,9 +16,10 @@
   margin: 100px auto 0;
   font-size: 18px;
   background-color: grey;
-  color: rgb(59, 59, 59);
+  color: rgb(87, 87, 87);
   pointer-events: none;
   font-weight: 1;
+  border-color: rgb(208, 208, 208);
 }
 
 .modal, .overlay {

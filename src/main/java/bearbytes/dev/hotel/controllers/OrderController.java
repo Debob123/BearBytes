@@ -1,7 +1,9 @@
 package bearbytes.dev.hotel.controllers;
 
 import bearbytes.dev.hotel.checkout.Order;
+import bearbytes.dev.hotel.checkout.OrderWithUsername;
 import bearbytes.dev.hotel.database.OrderDAO;
+import bearbytes.dev.hotel.database.OrderWithUsernameDAO;
 import bearbytes.dev.hotel.database.ReservationDAO;
 import bearbytes.dev.hotel.product.Product;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +14,15 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/shop")
 public class OrderController {
-    private OrderDAO orderDAO;
+    private OrderWithUsernameDAO orderDAO;
 
     OrderController() {
-        orderDAO = new OrderDAO();
+        orderDAO = new OrderWithUsernameDAO();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/add")
-    public Boolean add(@RequestBody Order order) throws ClassNotFoundException, SQLException {
+    public Boolean add(@RequestBody OrderWithUsername order) throws ClassNotFoundException, SQLException {
         try {
             orderDAO.addOrder(order);
         } catch(Exception e) {
@@ -31,9 +33,9 @@ public class OrderController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/getOrders")
-    public Collection<Order> getProducts() {
+    public Collection<OrderWithUsername> getProducts(@RequestBody String username) {
         try {
-            return orderDAO.getOrders();
+            return orderDAO.getOrders(username);
         } catch(Exception e) {
             System.out.println("API fail");
             e.printStackTrace();

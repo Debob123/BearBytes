@@ -25,9 +25,7 @@ function ShopHeader()  {
       <p className="shop-text">Shop</p>
       <ul>
         <li>
-          
             <input type="text" placeholder="Search Products" className="search-bar" value={inputValue} onKeyDown={handleEnterChange} onChange={handleInputChange}></input>
-          
         </li>
         <li>
           <Link to="/cart">

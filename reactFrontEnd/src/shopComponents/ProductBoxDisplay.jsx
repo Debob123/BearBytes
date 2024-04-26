@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './shopDisplay.css'
 
 // Define custom styles for the modal
 const customStyles = {
@@ -36,11 +37,11 @@ function ProductBoxDisplay({ id, image, title, cost, btnAct="y"}) {
 
 
     return (
-        <div className="box-display">
+        <div className="product-box-display">
             <img src={require('../images/' + `${image}`)} alt={title} />
             <h2>{title}</h2>
             <p>${cost}</p>
-            <button onClick={addToCart}>Add to Cart</button>
+            <button className="add-button" onClick={addToCart}>Add to Cart</button>
         </div>
     );
 }

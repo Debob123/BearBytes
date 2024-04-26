@@ -1,0 +1,44 @@
+.shop-display {
+  display: grid;
+  gap: 5vw;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-columns: repeat(4, 1fr);
+  overflow: scroll;
+  height: 73vh
+}
+
+.product-box-display {
+  display: grid;
+  aspect-ratio: 1 / 1.5;
+  width: 15vw;
+  background-color: rgb(255, 255, 255);
+  justify-self: center;
+  padding: 10px;
+  border-style: solid;
+  border-radius: 20px;
+  border-width: 3px;
+}
+
+.product-bod-display .flex-container {
+  display: flex;
+  flex: auto;
+  gap: 10px;
+}
+
+.product-box-display .add-button {
+  width: 100%;
+  cursor: pointer;
+  border-style: solid;
+  border-radius: 20px;
+  border-width: 1px;
+}
+
+.product-box-display .add-button:hover {
+  background-color: rgb(187, 187, 187);
+  transition: 0.7s;
+}
+
+.product-box-display img {
+  width: 100%;
+  border-radius: 20px;
+}
