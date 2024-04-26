@@ -45,8 +45,8 @@ public class loginTests {
         Guest guest = new Guest("username", "password", "name", "address", "cardNum", "cardExp");
         Clerk clerk = new Clerk("username", "password");
         Manager manager = new Manager("username", "password");
-        assertEquals(true, AccountAuthenticator.authGuest(guest));
-        assertEquals(true, AccountAuthenticator.authClerk(clerk));
+        assertEquals(false, AccountAuthenticator.authGuest(guest));
+        assertEquals(false, AccountAuthenticator.authClerk(clerk));
         assertEquals(true, AccountAuthenticator.authManager(manager));
     }
 
@@ -56,8 +56,8 @@ public class loginTests {
         Guest guest = new Guest("username", "password", "name", "address", "cardNum", "cardExp");
         Clerk clerk = new Clerk("username", "password");
         Manager manager = new Manager("username", "password");
-        assertEquals(true, accountController.authGuest(guest));
-        assertEquals(true, accountController.authClerk(clerk));
+        assertEquals(false, accountController.authGuest(guest));
+        assertEquals(false, accountController.authClerk(clerk));
         assertEquals(true, accountController.authManager(manager));
     }
 

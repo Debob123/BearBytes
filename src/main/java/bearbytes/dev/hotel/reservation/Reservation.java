@@ -119,6 +119,17 @@ public class Reservation {
         return result;
     }
 
+    public boolean equals(Object o) {
+        if(o == this) {
+            return true;
+        }
+        if( o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
+        Reservation r = (Reservation) o;
+        return reservationID == r.reservationID;
+    }
+
     public String toString() {
         StringBuilder result = new StringBuilder(reservationID + " " + startDate + " " + endDate + " " + username + " " + rate + " " + cancellationFee +
                 " " + ReservationStatus.toString(status) + " ");

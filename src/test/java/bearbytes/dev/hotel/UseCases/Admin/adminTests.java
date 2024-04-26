@@ -26,8 +26,9 @@ public class adminTests {
         AccountController accountController = new AccountController();
         Manager manager = new Manager("username", "password");
         accountController.createManager(manager);
-        manager.createClerkAccount("clerkUsername", "clerkPassword");
-        assertEquals(true, accountController.authClerk(new Clerk("clerkUsername", "clerkPassword")));
+        Clerk clerk = new Clerk("clerkUsername", "clerkPassword");
+        accountController.createClerk(clerk);
+        assertEquals(true, accountController.authClerk(clerk));
     }
 
 }

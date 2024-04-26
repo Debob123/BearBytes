@@ -1,5 +1,6 @@
 package bearbytes.dev.hotel.database;
 
+import bearbytes.dev.hotel.exceptions.InvalidArgumentException;
 import bearbytes.dev.hotel.floor.Room;
 import bearbytes.dev.hotel.interfaces.IReservationDAO;
 import bearbytes.dev.hotel.product.Product;
@@ -13,7 +14,10 @@ public class ReservationDAO implements IReservationDAO {
 
     public ReservationDAO() {}
 
-    public Collection<Integer> checkAvailability(Reservation r) throws SQLException {
+    public Collection<Integer> checkAvailability(Reservation r) throws SQLException, InvalidArgumentException {
+        if(r == null) {
+            throw new InvalidArgumentException("The reservation cannot be null");
+        }
         // Now try to connect
         List<Integer> rooms = new ArrayList<>();
         Connection c = null;
@@ -46,11 +50,13 @@ public class ReservationDAO implements IReservationDAO {
     }
 
     
-    public boolean add(Reservation reservation) throws SQLException {
+    public boolean add(Reservation reservation) throws SQLException, InvalidArgumentException {
+        if(reservation == null || reservation.getUsername() == null || (reservation.getRooms() == null || reservation.getRooms().isEmpty())) {
+            throw new InvalidArgumentException("The reservation cannot be null");
+        }
         // Now try to connect
         Connection c = null;
         try {
-            System.out.println(reservation.getReservationID());
             c = getDBConnection();
             // Prepare the query's
             String checkQuery = "SELECT * FROM Reservations WHERE ReservationID = ?";
@@ -93,7 +99,7 @@ public class ReservationDAO implements IReservationDAO {
         return false;
     }
 
-    public Collection<Integer> modify(Reservation[] reservations) throws SQLException {
+    public Collection<Integer> modify(Reservation[] reservations) throws SQLException, InvalidArgumentException {
         List<Integer> rooms = (ArrayList)checkAvailability(reservations[1]);
         if(rooms.isEmpty()) {
             remove(reservations[0]);
@@ -103,12 +109,14 @@ public class ReservationDAO implements IReservationDAO {
         return rooms;
     }
 
-    public boolean remove(Reservation r) throws SQLException {
+    public boolean remove(Reservation r) throws SQLException, InvalidArgumentException {
+        if(r == null) {
+            throw new InvalidArgumentException("The reservation cannot be null");
+        }
         Connection c = getDBConnection();
         PreparedStatement ps = null;
 
         try {
-            System.out.println(r.getReservationID());
             // Apache Derby does not support deleting from multiple tables, so must use two statements
             // Delete from reservations table
             String query = "DELETE FROM APP.Reservations r WHERE r.reservationID = ?";
@@ -139,7 +147,9 @@ public class ReservationDAO implements IReservationDAO {
         Connection c = getDBConnection();
         PreparedStatement ps = null;
         List<Reservation> reservations = new ArrayList<>();
-        username = username.substring(1, username.length() - 1);
+        if(username.startsWith("\"") && username.endsWith("\"") || username.startsWith("\'") && username.endsWith("\'")) {
+            username = username.substring(1, username.length() - 1);
+        }
 
         try {
             // Prepare the query's

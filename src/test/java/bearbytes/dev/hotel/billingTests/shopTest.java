@@ -18,7 +18,7 @@ public class shopTest {
         Order order = new Order(1, "2021-04-01", products);
         assertEquals(1, order.getOrderId());
         assertEquals("2021-04-01", order.getPurchaseDate());
-        assertEquals(product, order.getPurchasedProducts());
+        assertEquals(product, order.getPurchasedProducts().getFirst());
         assertEquals(1.0, order.getSubtotal());
     }
 

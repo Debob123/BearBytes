@@ -1,6 +1,7 @@
 package bearbytes.dev.hotel.controllers;
 
 import bearbytes.dev.hotel.database.ReservationDAO;
+import bearbytes.dev.hotel.exceptions.InvalidArgumentException;
 import bearbytes.dev.hotel.reservation.Reservation;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,16 +15,16 @@ import java.util.List;
 public class ReservationController {
     private ReservationDAO resDAO;
 
-    ReservationController() {
+    public ReservationController() {
         resDAO = new ReservationDAO();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/add")
-    public Boolean add(@RequestBody Reservation reservation) throws ClassNotFoundException, SQLException {
+    public Boolean add(@RequestBody Reservation reservation) {
         try {
             return resDAO.add(reservation);
-        } catch(Exception e) {
+        } catch (SQLException | InvalidArgumentException e ) {
             e.printStackTrace();
         }
         return false;
@@ -31,10 +32,10 @@ public class ReservationController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/modify")
-    public Collection<Integer> modify(@RequestBody Reservation[] reservations) throws SQLException {
+    public Collection<Integer> modify(@RequestBody Reservation[] reservations) {
         try {
             return resDAO.modify(reservations);
-        } catch(Exception e) {
+        } catch (SQLException | InvalidArgumentException e ) {
             e.printStackTrace();
         }
         List<Integer> result = new ArrayList<>();
@@ -44,10 +45,10 @@ public class ReservationController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/remove")
-    public Boolean remove(@RequestBody Reservation reservation) throws ClassNotFoundException, SQLException {
+    public Boolean remove(@RequestBody Reservation reservation) {
         try {
             return resDAO.remove(reservation);
-        } catch(Exception e) {
+        } catch (SQLException | InvalidArgumentException e ) {
             e.printStackTrace();
         }
         return false;

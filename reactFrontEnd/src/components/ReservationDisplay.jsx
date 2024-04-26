@@ -284,7 +284,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                     <div className={"red " + roomErrHidden}>Unable to confirm modifications because these</div>
                     <div className={"red " + roomErrHidden}>rooms are unavailable on selected dates: </div>
                     <div className={"red " + unknownErrHidden}>Unknown error occurred, please contact staff</div>
-                    {unavailableRooms.length !== 0 && unavailableRooms[0] !== -1 && unavailableRooms.map((room) => (<span className="red">{room} </span>))}
+                    {unavailableRooms.length !== 0 && unavailableRooms[0] !== -1 && unavailableRooms.map((room) => (<span className={"red " + roomErrHidden}>{room} </span>))}
                     <div className={"red " + dateErrHidden}>Please ensure your dates are correct</div>
                 </div>
             }
