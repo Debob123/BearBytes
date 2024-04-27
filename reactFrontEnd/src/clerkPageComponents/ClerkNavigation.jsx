@@ -37,6 +37,10 @@ function ClerkNavigation() {
         navigate("/profile")
     }
 
+    const guestPasswordResetRedirect = () => {
+        navigate("/guestPasswordReset")
+    }
+
     return (
         <div className="clerk-nav">
             <Button text="Home" onClick={homeRedirect} height="4vh"/>
@@ -47,6 +51,7 @@ function ClerkNavigation() {
             <Button text="Reserve Room" onClick={makeReservationRedirect} height="6vh"/>
             <Button text="Register Guest" onClick={registerGuestRedirect} height="6vh"/>
             <Button text="Edit Profile" onClick={profileRedirect} height="4vh"/>
+            <Button text="Guest Password" onClick={guestPasswordResetRedirect} height="4vh"/>
         </div>
     )
 }

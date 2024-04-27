@@ -96,6 +96,10 @@ public class DatabaseCreator {
         ps.setString(1, "guest");
         ps.setString(2, AccountAuthenticator.hashPassword("password"));
         ps.executeUpdate();
+        ps = c.prepareStatement(sql);
+        ps.setString(1, "guest1");
+        ps.setString(2, AccountAuthenticator.hashPassword("notpassword"));
+        ps.executeUpdate();
         sql = "INSERT INTO APP.ClerkAccounts(username, password) values(?,?)";
         ps = c.prepareStatement(sql);
         ps.setString(1, "clerk");

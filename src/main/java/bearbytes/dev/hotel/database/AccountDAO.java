@@ -2,13 +2,12 @@ package bearbytes.dev.hotel.database;
 
 import bearbytes.dev.hotel.accounts.*;
 import bearbytes.dev.hotel.interfaces.IAccountDAO;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The AccountDAO class provides data access operations for accounts in the
@@ -19,7 +18,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Adds a guest to the database.
-     * 
+     *
      * @param g The guest to add.
      * @return True if the account was successfully added, else false.
      * @throws SQLException If a database access error occurs.
@@ -77,7 +76,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Adds a clerk to the database.
-     * 
+     *
      * @param cl The glerk to add.
      * @return True if the account was successfully added, else false.
      * @throws SQLException If a database access error occurs.
@@ -124,7 +123,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Adds a manager to the database.
-     * 
+     *
      * @param m The manager to add.
      * @return True if the account was successfully added, else false.
      * @throws SQLException If a database access error occurs.
@@ -171,7 +170,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Changes the username of a guest to the given username.
-     * 
+     *
      * @param g The guest account whose username is being changed.
      * @param u The new username to set for the guest's account.
      * @return True if the username is successfully changed, else false.
@@ -226,7 +225,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Changes the password of a guest account to the given password.
-     * 
+     *
      * @param g The guest account whose password is being changed.
      * @param p The new password to change on the guest's account.
      * @return True if the password is successfully changed, else false.
@@ -271,7 +270,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Changes the username of a clerk account to the given username.
-     * 
+     *
      * @param cl The clerk account whose username is being changed.
      * @param u  The new username to change on the clerk's account.
      * @return True if the username is changed successfully, else false.
@@ -326,7 +325,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Changes the password of a clerk account to the given password.
-     * 
+     *
      * @param cl The clerk account whose password is being changed.
      * @param p  The new password to change on the clerk's account.
      * @return True if the password is changed successfully, else false.
@@ -371,7 +370,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Changes the username of a manager account to the given username.
-     * 
+     *
      * @param m The manager account whose username is being changed.
      * @param u The new username to assign to the manager's account.
      * @return True if the username is successfully changed, else false.
@@ -426,7 +425,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Changes the password of a manager account to the given password.
-     * 
+     *
      * @param m The manager account whose password is being changed.
      * @param p The new password to assign to the manager's account.
      * @return True if the password was successfully changed, else false.
@@ -471,7 +470,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Removes an account from the system.
-     * 
+     *
      * @param acc The account to remove.
      * @return True if the account is successfully removed, else false.
      */
@@ -481,7 +480,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Gets all accounts in the database.
-     * 
+     *
      * @return A collection of all accounts in the database.
      */
     public Collection<Account> getAll() {
@@ -490,7 +489,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Verifies if an account is valid.
-     * 
+     *
      * @return True if the account is valid, else false.
      */
     public boolean verify() {
@@ -499,7 +498,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Checks the availability of a username.
-     * 
+     *
      * @return True if the username is available, else false.
      */
     public boolean checkAvailability() {
@@ -508,7 +507,7 @@ public class AccountDAO implements IAccountDAO {
 
     /**
      * Establishes a connection to the database.
-     * 
+     *
      * @return The connection to the database.
      */
     private static Connection getDBConnection() {

@@ -20,6 +20,7 @@ import ManagerHome from "./pages/ManagerHome";
 import ClerkRegisterGuest from "./clerkPageComponents/ClerkRegisterGuest";
 import ClerkMakeReservation from './pages/ClerkMakeReservation';
 import ClerkConfirmReservation from './pages/ClerkConfirmReservation';
+import ChangeGuestPassword from "./pages/ChangeGuestPassword";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
         <Route path="/clerkHome" element={<ClerkHome/>}/>
         <Route path="/managerHome" element={<ManagerHome/>}/>
         <Route path="/clerkRegisterGuest" element={<ClerkRegisterGuest />} />
+        <Route path="/guestPasswordReset" element={<ChangeGuestPassword />} />
         <Route path="/clerkMakeReservation" element={<ClerkMakeReservation/>}/>
         <Route path="/clerkConfirmReservation" element={<ClerkConfirmReservation/>}/>
       </Routes>

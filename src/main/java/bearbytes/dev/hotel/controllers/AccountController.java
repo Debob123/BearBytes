@@ -6,6 +6,7 @@ import bearbytes.dev.hotel.database.AccountDAO;
 import bearbytes.dev.hotel.interfaces.IAccountDAO;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +27,7 @@ public class AccountController {
 
     /**
      * Authenticates a guest login attempt.
-     * 
+     *
      * @param g The guest credentials to check.
      * @return True if login successful, else false.
      */
@@ -45,7 +46,7 @@ public class AccountController {
 
     /**
      * Authenticates a clerk login attempt.
-     * 
+     *
      * @param c The clerk credentials to check.
      * @return True if login successful, else false.
      */
@@ -64,7 +65,7 @@ public class AccountController {
 
     /**
      * Authenticate a manager login attempt.
-     * 
+     *
      * @param m The manager credentials to check.
      * @return True if login successful, else false.
      */
@@ -83,7 +84,7 @@ public class AccountController {
 
     /**
      * Creates a guest account with the given credentials.
-     * 
+     *
      * @param g The guest account to create.
      * @return True if an accoutn was successfully created and added to the hotel,
      *         else false.
@@ -103,7 +104,7 @@ public class AccountController {
 
     /**
      * Creates a clerk account with the given credentials.
-     * 
+     *
      * @param cl The clerk account to create.
      * @return True if an account was successfully created and linked to the hotel,
      *         else false.
@@ -123,7 +124,7 @@ public class AccountController {
 
     /**
      * Creates a manager account with the given credentials.
-     * 
+     *
      * @param m The manager accout to create.
      * @return True if an account was successfully created and linked to the hotel,
      *         else false.
@@ -143,7 +144,7 @@ public class AccountController {
 
     /**
      * Changes the username of the given guest account to the new username.
-     * 
+     *
      * @param g           The guest account whose username is being changed.
      * @param newUsername The new username to assign to the guest's account.
      * @return True if the username was changed successfully, else false.
@@ -163,7 +164,7 @@ public class AccountController {
 
     /**
      * Changes the password of the given guest account to the new password.
-     * 
+     *
      * @param g           The guest account whose password is being changed.
      * @param newPassword The new password to assign to the guest's account.
      * @return True if the password was successfully changed, else false.
@@ -183,7 +184,7 @@ public class AccountController {
 
     /**
      * Changes the username of the given clerk account to the new username.
-     * 
+     *
      * @param cl          The clerk account whose username is being changed.
      * @param newUsername The new username to assign to the clerk's account.
      * @return True if the username was successfully changed, else false.
@@ -205,7 +206,7 @@ public class AccountController {
 
     /**
      * Changes the password of the given clerk account to the new password.
-     * 
+     *
      * @param cl          The clerk account whose password is being changed.
      * @param newPassword The new password to assign to the clerk's account.
      * @return True if the password was successfully changed, else false.
@@ -225,7 +226,7 @@ public class AccountController {
 
     /**
      * Changes the username of the given manager account to the new username.
-     * 
+     *
      * @param m           The manager account whose username is being changed.
      * @param newUsername The new username to assign to the manager's account.
      * @return True if the username is changed successfully, else false.
@@ -245,7 +246,7 @@ public class AccountController {
 
     /**
      * Changes the password of the manager account to the given password.
-     * 
+     *
      * @param m           The manager account whose password is being changed.
      * @param newPassword The new password to assign to the manager's account.
      * @return True if the password is successfully changed, else false.
@@ -265,7 +266,7 @@ public class AccountController {
 
     /**
      * Checks to see if a password matches the password requirements.
-     * 
+     *
      * @param password The password to check.
      * @return True if the password is valid, else false.
      */
