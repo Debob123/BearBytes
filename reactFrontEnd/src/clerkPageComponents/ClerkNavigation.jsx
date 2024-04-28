@@ -14,7 +14,7 @@ function ClerkNavigation() {
     }
 
     const checkInOutRedirect = () => {
-        
+        navigate("/clerkCheckInAndOut")
     }
 
     const guestReservationsRedirect = () => {

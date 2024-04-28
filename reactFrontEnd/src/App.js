@@ -21,6 +21,7 @@ import ClerkRegisterGuest from "./clerkPageComponents/ClerkRegisterGuest";
 import ClerkMakeReservation from './pages/ClerkMakeReservation';
 import ClerkConfirmReservation from './pages/ClerkConfirmReservation';
 import ChangeGuestPassword from "./pages/ChangeGuestPassword";
+import ClerkCheckInAndOut from "./pages/ClerkCheckInAndOut";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path="/guestPasswordReset" element={<ChangeGuestPassword />} />
         <Route path="/clerkMakeReservation" element={<ClerkMakeReservation/>}/>
         <Route path="/clerkConfirmReservation" element={<ClerkConfirmReservation/>}/>
+        <Route path="/clerkCheckInAndOut" element={<ClerkCheckInAndOut/>}/>
       </Routes>
     </Router>
   );
