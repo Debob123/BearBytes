@@ -15,11 +15,12 @@ function ReservationPage() {
     const [isLoading, setLoading] = useState(true);
     const [selectedFloor, setSelectedFloor] = useState(null);
     const [selectedBeds, setSelectedBeds] = useState(null);
+    const [smoking, setSmoking] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         renderRooms();
-    }, [selectedFloor, selectedBeds]);
+    }, [selectedFloor, selectedBeds, smoking]);
 
     // Fetch all of the available rooms
     function renderRooms() {
@@ -35,7 +36,8 @@ function ReservationPage() {
         .then(data => {
         // Set the array of room objects
         let filteredRooms = data.filter(room => (selectedFloor === null || room.floor === selectedFloor) &&
-            selectedBeds === null || room.numBeds === selectedBeds);
+            (selectedBeds === null || room.numBeds === selectedBeds) &&
+            (smoking === null) || room.smokingAllowed === smoking);
         setRooms(filteredRooms);
         setLoading(false);
         })
@@ -71,6 +73,10 @@ function ReservationPage() {
         setSelectedBeds(event.target.value === 'All' ? null : parseInt(event.target.value));
     }
 
+    const handleSmokingChange = (event) => {
+        setSmoking(event.target.value === "Both" ? null : event.target.value === "Yes");
+    }
+
     return (
         <div>
             <GuestNavigation/>
@@ -90,6 +96,12 @@ function ReservationPage() {
                         <option value="1">1 Bed</option>
                         <option value="2">2 Beds</option>
                         <option value="3">3 Beds</option>
+                    </select>
+                    <label htmlFor='smoking-select'>   Select Smoking: </label>
+                    <select id="smoking-select" onChange={handleSmokingChange} value={smoking === null ? "Both" : smoking ? "Yes" : "No"}>
+                        <option value="Both">Both</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
                     </select>
                 </div>
                     {isLoading ? <div>Loading...</div> 
