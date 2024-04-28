@@ -17,11 +17,12 @@ function ReservationPage() {
     const [selectedBeds, setSelectedBeds] = useState(null);
     const [smoking, setSmoking] = useState(null);
     const [bedType, setBedType] = useState(null);
+    const [roomType, setRoomType] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         renderRooms();
-    }, [selectedFloor, selectedBeds, smoking, bedType]);
+    }, [selectedFloor, selectedBeds, smoking, bedType, roomType]);
 
     // Fetch all of the available rooms
     function renderRooms() {
@@ -42,7 +43,8 @@ function ReservationPage() {
         let filteredRooms = data.filter(room => (selectedFloor === null || room.floor === selectedFloor) &&
             (selectedBeds === null || room.numBeds === selectedBeds) &&
             (smoking === null || room.smokingAllowed === smoking) &&
-            (bedType === null || bedType === room.bedSize));
+            (bedType === null || bedType === room.bedSize) &&
+            (roomType === null || roomType === room.type));
         setRooms(filteredRooms);
         setLoading(false);
         })
@@ -86,6 +88,10 @@ function ReservationPage() {
         setBedType(event.target.value === 'All' ? null : event.target.value);
     }
 
+    const handleRoomTypeChange = (event) => {
+        setRoomType(event.target.value === 'All' ? null : event.target.value);
+    }
+
     return (
         <div>
             <GuestNavigation/>
@@ -119,6 +125,16 @@ function ReservationPage() {
                         <option value="FULL">Full</option>
                         <option value="QUEEN">Queen</option>
                         <option value="KING">King</option>
+                    </select>
+                    <label htmlFor='room-type-select'>   Select Room Type: </label>
+                    <select id="room-type-select" onChange={handleRoomTypeChange} value={roomType === null ? "All" : roomType}>
+                        <option value="All">Any</option>
+                        <option value="SINGLE">Single</option>
+                        <option value="DOUBLE">Double</option>
+                        <option value="FAMILY">Family</option>
+                        <option value="SUITE">Suite</option>
+                        <option value="DELUXE">Deluxe</option>
+                        <option value="STANDARD">Standard</option>
                     </select>
                 </div>
                     {isLoading ? <div>Loading...</div> 
