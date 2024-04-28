@@ -18,11 +18,12 @@ function ReservationPage() {
     const [smoking, setSmoking] = useState(null);
     const [bedType, setBedType] = useState(null);
     const [roomType, setRoomType] = useState(null);
+    const [qualityLevel, setQualityLevel] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         renderRooms();
-    }, [selectedFloor, selectedBeds, smoking, bedType, roomType]);
+    }, [selectedFloor, selectedBeds, smoking, bedType, roomType, qualityLevel]);
 
     // Fetch all of the available rooms
     function renderRooms() {
@@ -36,15 +37,13 @@ function ReservationPage() {
         })
         .then(response => response.json())
         .then(data => {
-            data.forEach(room => {
-                console.log("Room ", room.number, " bedType: ", room.bedSize);
-            })
         // Set the array of room objects
         let filteredRooms = data.filter(room => (selectedFloor === null || room.floor === selectedFloor) &&
             (selectedBeds === null || room.numBeds === selectedBeds) &&
             (smoking === null || room.smokingAllowed === smoking) &&
             (bedType === null || bedType === room.bedSize) &&
-            (roomType === null || roomType === room.type));
+            (roomType === null || roomType === room.type) &&
+            (qualityLevel === null || qualityLevel === room.quality));
         setRooms(filteredRooms);
         setLoading(false);
         })
@@ -92,6 +91,10 @@ function ReservationPage() {
         setRoomType(event.target.value === 'All' ? null : event.target.value);
     }
 
+    const handleQualityLevelChange = (event) => {
+        setQualityLevel(event.target.value === 'All' ? null : event.target.value);
+    }
+
     return (
         <div>
             <GuestNavigation/>
@@ -121,10 +124,10 @@ function ReservationPage() {
                     <label htmlFor='bed-type-select'>   Select Bed Type: </label>
                     <select id="bed-type-select" onChange={handleBedTypeChange} value={bedType === null ? "All" : bedType}>
                         <option value="All">Any</option>
-                        <option value="TWIN">Twin</option>
                         <option value="FULL">Full</option>
-                        <option value="QUEEN">Queen</option>
                         <option value="KING">King</option>
+                        <option value="QUEEN">Queen</option>
+                        <option value="TWIN">Twin</option>
                     </select>
                     <label htmlFor='room-type-select'>   Select Room Type: </label>
                     <select id="room-type-select" onChange={handleRoomTypeChange} value={roomType === null ? "All" : roomType}>
@@ -133,8 +136,18 @@ function ReservationPage() {
                         <option value="DOUBLE">Double</option>
                         <option value="FAMILY">Family</option>
                         <option value="SUITE">Suite</option>
-                        <option value="DELUXE">Deluxe</option>
                         <option value="STANDARD">Standard</option>
+                        <option value="DELUXE">Deluxe</option>
+                    </select>
+                </div>
+                <div className='Other filters'>
+                <label htmlFor='quality-level-select'>   Select Quality Level: </label>
+                    <select id="quality-level-select" onChange={handleQualityLevelChange} value={qualityLevel === null ? "All" : qualityLevel}>
+                        <option value="All">Any</option>
+                        <option value="BUSINESS">Business</option>
+                        <option value="COMFORT">Comfort</option>
+                        <option value="ECONOMY">Economy</option>
+                        <option value="EXECUTIVE">Executive</option>
                     </select>
                 </div>
                     {isLoading ? <div>Loading...</div> 
