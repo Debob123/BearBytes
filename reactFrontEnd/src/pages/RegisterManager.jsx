@@ -12,7 +12,7 @@ function RegisterManager() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Request guest account creation through API
-        fetch('http://localhost:8080/accounts/createGuest', {
+        fetch('http://localhost:8080/accounts/createManager', {
             mode: 'cors',
             method: 'POST',
             headers: {

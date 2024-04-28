@@ -1,0 +1,29 @@
+.create-container {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-evenly;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.create-row {
+    display: flex;
+    gap: 10px;
+}
+.create-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.create-submit {
+    width: auto;
+    padding: 5px;
+    border-radius: 5%;
+}
+
+.main-title {
+    font-size: max(24px, 6vw);
+}
