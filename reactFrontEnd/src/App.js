@@ -21,6 +21,7 @@ import ClerkRegisterGuest from "./clerkPageComponents/ClerkRegisterGuest";
 import ClerkMakeReservation from './pages/ClerkMakeReservation';
 import ClerkConfirmReservation from './pages/ClerkConfirmReservation';
 import ChangeGuestPassword from "./pages/ChangeGuestPassword";
+import RegisterManager from "./pages/RegisterManager";
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
         <Route path="/cart" element={<Checkout/>} />
         <Route path="/purchaseConfirmation" element={<PurchaseConfirmationPage/>} />
         <Route path="/registerGuest" element={<RegisterGuest />} />
-        <Route path="/registerManager" element={<RegisterGuest />} />
+        <Route path="/registerManager" element={<RegisterManager />} />
         <Route path="/registrationSuccess" element={<RegistrationSuccess />} />
         <Route path="/registrationFailed" element={<RegistrationFailed/>}/>
         <Route path="/guestReservations" element={<GuestReservations />}/>

@@ -7,7 +7,7 @@ function RegistrationSuccess() {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/login');
+        navigate('/');
     }
 
     return (
