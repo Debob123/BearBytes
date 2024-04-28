@@ -3,11 +3,11 @@ import { mdiCheckCircleOutline } from '@mdi/js';
 import './styles/accountRegistration.css'
 import {useNavigate } from 'react-router-dom';
 
-function RegistrationSuccess() {
+function ManagerRegistrationSuccess() {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/login');
+        navigate("/managerHome");
     }
 
     return (
@@ -24,4 +24,4 @@ function RegistrationSuccess() {
     )
 }
 
-export default RegistrationSuccess;
+export default ManagerRegistrationSuccess;

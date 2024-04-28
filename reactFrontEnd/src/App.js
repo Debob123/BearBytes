@@ -11,7 +11,7 @@ import Checkout from './pages/CheckoutPage'
 import RoomSearch from './pages/RoomSearch'
 import PurchaseConfirmationPage from './pages/PurchaseConfirmationPage';
 import RegisterGuest from './pages/RegisterGuest';
-import RegistrationSuccess from './pages/RegistrationSuccess';
+import GuestRegistrationSuccess from './pages/GuestRegistrationSuccess';
 import RegistrationFailed from './pages/RegistrationFailed';
 import GuestReservations from './pages/GuestReservations';
 import ClerkModifyReservation from './pages/ClerkModifyReservations';
@@ -21,6 +21,8 @@ import ClerkRegisterGuest from "./clerkPageComponents/ClerkRegisterGuest";
 import ClerkMakeReservation from './pages/ClerkMakeReservation';
 import ClerkConfirmReservation from './pages/ClerkConfirmReservation';
 import ChangeGuestPassword from "./pages/ChangeGuestPassword";
+import RegisterManager from "./pages/RegisterManager";
+import ManagerRegistrationSuccess from "./pages/ManagerRegistrationSuccess";
 
 function App() {
   return (
@@ -36,8 +38,9 @@ function App() {
         <Route path="/cart" element={<Checkout/>} />
         <Route path="/purchaseConfirmation" element={<PurchaseConfirmationPage/>} />
         <Route path="/registerGuest" element={<RegisterGuest />} />
-        <Route path="/registerManager" element={<RegisterGuest />} />
-        <Route path="/registrationSuccess" element={<RegistrationSuccess />} />
+        <Route path="/registerManager" element={<RegisterManager />} />
+        <Route path="/guestRegistrationSuccess" element={<GuestRegistrationSuccess />} />
+        <Route path="/managerRegistrationSuccess" element={<ManagerRegistrationSuccess />} />
         <Route path="/registrationFailed" element={<RegistrationFailed/>}/>
         <Route path="/guestReservations" element={<GuestReservations />}/>
         <Route path="/clerkModify" element={<ClerkModifyReservation/>}/>

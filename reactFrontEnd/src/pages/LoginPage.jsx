@@ -92,8 +92,6 @@ function LoginPage() {
                 </div>
                 <button className="login-submit" type="submit">Login</button>
                 <p>New Guest? <Link to="/registerGuest">Create Account</Link></p>
-                <p>New Manager? <Link to="/registerManager">Create Account</Link></p>
-
             </form>
             {loginFailed && <div className="message" style={{ fontWeight: 'bold', color: "red" }}>{loginFailed}</div>}
         </div>

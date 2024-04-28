@@ -11,7 +11,7 @@ function RegisterManager() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Request guest account creation through API
+        // Request manager account creation through API
         fetch('http://localhost:8080/accounts/createManager', {
             mode: 'cors',
             method: 'POST',
@@ -27,15 +27,15 @@ function RegisterManager() {
         })
             .then(response => response.json())
             .then(data => {
-                // Check if the guest account was added
+                // Check if the manager account was added
                 if(data) {
-                    // If the guest was created, navigate back to login page
-                    navigate("/registrationSuccess");
+                    // If the manager was created, navigate back to login page
+                    navigate("/managerRegistrationSuccess");
                 } else {
                     navigate("/registrationFailed");
                 }
             })
-            .catch(error => console.error('Error creating guest account:', error));
+            .catch(error => console.error('Error creating manager account:', error));
     }
 
     return (
