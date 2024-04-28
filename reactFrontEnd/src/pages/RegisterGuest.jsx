@@ -30,7 +30,8 @@ function RegisterGuest() {
         // Check if the guest account was added
         if(data) {
             // If the guest was created, navigate back to login page
-            navigate("/registrationSuccess");
+            navigate("/guestRegistrationSuccess");
+
         } else {
             navigate("/registrationFailed");
         }

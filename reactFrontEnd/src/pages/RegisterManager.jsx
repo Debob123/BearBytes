@@ -30,7 +30,7 @@ function RegisterManager() {
                 // Check if the manager account was added
                 if(data) {
                     // If the manager was created, navigate back to login page
-                    navigate("/registrationSuccess");
+                    navigate("/managerRegistrationSuccess");
                 } else {
                     navigate("/registrationFailed");
                 }
