@@ -16,11 +16,12 @@ function ReservationPage() {
     const [selectedFloor, setSelectedFloor] = useState(null);
     const [selectedBeds, setSelectedBeds] = useState(null);
     const [smoking, setSmoking] = useState(null);
+    const [bedType, setBedType] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         renderRooms();
-    }, [selectedFloor, selectedBeds, smoking]);
+    }, [selectedFloor, selectedBeds, smoking, bedType]);
 
     // Fetch all of the available rooms
     function renderRooms() {
@@ -34,10 +35,14 @@ function ReservationPage() {
         })
         .then(response => response.json())
         .then(data => {
+            data.forEach(room => {
+                console.log("Room ", room.number, " bedType: ", room.bedSize);
+            })
         // Set the array of room objects
         let filteredRooms = data.filter(room => (selectedFloor === null || room.floor === selectedFloor) &&
             (selectedBeds === null || room.numBeds === selectedBeds) &&
-            (smoking === null) || room.smokingAllowed === smoking);
+            (smoking === null || room.smokingAllowed === smoking) &&
+            (bedType === null || bedType === room.bedSize));
         setRooms(filteredRooms);
         setLoading(false);
         })
@@ -77,6 +82,10 @@ function ReservationPage() {
         setSmoking(event.target.value === "Both" ? null : event.target.value === "Yes");
     }
 
+    const handleBedTypeChange = (event) => {
+        setBedType(event.target.value === 'All' ? null : event.target.value);
+    }
+
     return (
         <div>
             <GuestNavigation/>
@@ -102,6 +111,14 @@ function ReservationPage() {
                         <option value="Both">Both</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
+                    </select>
+                    <label htmlFor='bed-type-select'>   Select Bed Type: </label>
+                    <select id="bed-type-select" onChange={handleBedTypeChange} value={bedType === null ? "All" : bedType}>
+                        <option value="All">Any</option>
+                        <option value="TWIN">Twin</option>
+                        <option value="FULL">Full</option>
+                        <option value="QUEEN">Queen</option>
+                        <option value="KING">King</option>
                     </select>
                 </div>
                     {isLoading ? <div>Loading...</div> 
