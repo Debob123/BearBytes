@@ -94,9 +94,7 @@ function ReservationPage() {
                 </div>
                     {isLoading ? <div>Loading...</div> 
                     : <div className="display"> 
-                       { rooms.length !== 0 ? rooms
-                       //.filter(room => selectedFloor === null || room.floor === selectedFloor || selectedFloor === "All")
-                       .map((room) =>
+                       { rooms.length !== 0 ? rooms.map((room) =>
                         <BoxDisplay className="box-display" 
                             key={room.number} 
                             imgLink={singleRoom} 
