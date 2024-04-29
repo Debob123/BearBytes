@@ -1,10 +1,8 @@
 .cart-display {
   display: grid;
-  gap: 5vw;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-columns: repeat(4, 1fr);
+  gap: 1px;
   overflow: scroll;
-  height: 73vh
+  margin-left: 10vw;
 }
 
 .cart-box-display {
@@ -18,13 +16,6 @@
   border-width: 2px;
 }
 
-.cart-box-display Button {
-  width: 100%;
-  cursor: pointer;
-  border-style: solid;
-  border-radius: 20px;
-  border-width: 1px;
-}
 
 .cart-box-display img {
   width: 100%;

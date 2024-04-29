@@ -1,11 +1,11 @@
 .container-shop-header  {
   display: flex;
-  width: 100%;
+  width: 90%;
   height: 80px;
   background-color: black;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 10vh;
+  margin-left: 10vw;
 }
 
 .container-shop-header ul  {

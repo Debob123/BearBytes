@@ -10,15 +10,26 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Collection;
 
+// The ProductController class controls interactions with individual products.
 @RestController
 @RequestMapping("/shop")
 public class ProductController {
+    // An instance of an product via a Data Access Object
     ReservationDAO.ProductDAO productDAO;
 
+    /**
+     * The Default Constructor for a ProductController: creates a productDAO
+     * instance.
+     */
     public ProductController() {
         productDAO = new ReservationDAO.ProductDAO();
     }
 
+    /**
+     * Gets all the products currently in the order.
+     *
+     * @return True if all products correctly found, else false.
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/getProducts")
     public Collection<Product> getProducts() {

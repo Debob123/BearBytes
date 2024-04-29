@@ -1,22 +1,12 @@
 import './bill.css'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import getSessionStorage from '../authentication/GetSessionStorage';
 
 function ReservationBill()  {
 
   const user = getSessionStorage('user', null);
-
   const [reservations, setReservations] = useState([]);
 
-  useEffect(() => {
-    if(user !== null)  {
-      renderReservations();
-    }
-  }, []);
-
-
-  const [isLoading, setLoading] = useState(true);
   function renderReservations() {
       let body = JSON.stringify(user.username);
 
@@ -31,9 +21,7 @@ function ReservationBill()  {
       .then(response => response.json())
       .then(data => {
         setReservations(data);
-        setLoading(false);
       })
-      .catch(error => console.error('Error creating Reservation array:', error));
   }
 
   function calculateDaysStayed(reservation)  {
@@ -41,9 +29,14 @@ function ReservationBill()  {
     return daysStayed;
   }
 
+  useEffect(() => {
+    if(user !== null)  {
+      renderReservations();
+    }
+  },[]);
+
   let reservationTotal = 0.0;
   reservations.forEach(r => reservationTotal += r.rooms.reduce((sum, {dailyRate}) => sum + dailyRate, 0) * calculateDaysStayed(r));
-  sessionStorage.setItem('reservationTotal', reservationTotal);
 
   return (
     <div>
@@ -57,7 +50,7 @@ function ReservationBill()  {
               {reservation.rooms.map((room) =>(
                 <li className="purchased-products">
                   <p className="product-name-text">-Room {room.number} {room.bedSize}</p>
-                  <p className="product-price-text">${room.dailyRate.toFixed(2)} X {(Date.parse(reservation.endDate) - Date.parse(reservation.startDate)) / (1000 * 3600 * 24)} nights</p>
+                  <p className="product-price-text">${room.dailyRate.toFixed(2)} X {calculateDaysStayed(reservation)} nights</p>
                 </li>
               ))}
             </ul>

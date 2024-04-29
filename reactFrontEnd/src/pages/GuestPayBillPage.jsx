@@ -3,17 +3,15 @@ import './styles/guestMyBill.css';
 import getSessionStorage from '../authentication/GetSessionStorage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCreditCard} from '@fortawesome/free-solid-svg-icons';
-import { faCcMastercard} from '@fortawesome/free-solid-svg-icons';
 
 function GuestMyBillPage()  {
-  const user = getSessionStorage('user', null);
   const billTotal = getSessionStorage('billTotal', 0.0);
 
   return(
     <div>
       <GuestHeader />
       <div className="pay-bill-container">
-        <p className="bill-total-text">{billTotal}</p>
+        <p className="bill-total-text">Bill Total: {billTotal}</p>
         <p className="pay-with-card-text">Pay with card <FontAwesomeIcon icon={faCreditCard} /></p> 
         <form className="bill-form">
           <div className="payment-method-container">

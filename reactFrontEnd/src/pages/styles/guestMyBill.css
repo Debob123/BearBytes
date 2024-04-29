@@ -11,18 +11,16 @@
   font-size: 50px;
 }
 
-.bill-total-text  {
-  margin-top: 70px;
-  padding: 20px;
-}
-
 .bill-form  {
   display:block;
 }
 
 .pay-bill-container  {
+  font-size: 20px;
+  max-height: fit-content;
   max-width: fit-content;
   margin-inline: auto;
+  margin-top: 100px;
   border-style: solid;
   padding: 20px;
 }

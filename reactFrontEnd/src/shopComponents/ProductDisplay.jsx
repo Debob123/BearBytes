@@ -2,8 +2,6 @@ import ProductBoxDisplay from './ProductBoxDisplay.jsx';
 import Button from '../components/Button.jsx';
 import {useState, useEffect} from 'react';
 
-const images = require.context('../images', true); 
-
 const button = <Button text="Add to Cart"/>
 
 
@@ -22,9 +20,9 @@ function ProductDisplay() {
 
     useEffect(() => {
         renderProducts();
+        console.log(JSON.stringify(products));
     }, []);
 
-    const [isLoading, setLoading] = useState(true);
     function renderProducts() {
         fetch('http://localhost:8080/shop/getProducts', {
         mode: 'cors',
@@ -35,17 +33,15 @@ function ProductDisplay() {
         })
         .then(response => response.json())
         .then(data => {
-        
-        setProducts(data);
-        setLoading(false);
+            setProducts(data);
         })
         .catch(error => console.error('Error creating product array:', error));
     }
     
     return (
-        <div className="display">
+        <div className="shop-display">
             {products.filter(isSearch).map((product) =>(
-                <ProductBoxDisplay className="box-display" key={product.id} id={product.id} image={product.image} title={product.name} cost={product.price} btn={button}/>
+                <ProductBoxDisplay className="product-box-display" key={product.id} id={product.id} image={product.image} title={product.name} cost={product.price} btn={button}/>
             ))}
         </div>
     );

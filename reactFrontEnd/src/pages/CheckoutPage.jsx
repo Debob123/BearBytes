@@ -1,4 +1,4 @@
-import GuestHeader from '../components/GuestHeader';
+import GuestNavigation from '../components/GuestNavigation';
 import ShopHeader from '../shopComponents/ShopHeader';
 import CartDisplay from '../shopComponents/CartDisplay';
 
@@ -6,7 +6,7 @@ function CheckoutPage() {
 
     return (
         <div>
-            <GuestHeader/>
+            <GuestNavigation/>
             <ShopHeader/>
             <p className="cart-title">Your Cart</p>
             <CartDisplay/>

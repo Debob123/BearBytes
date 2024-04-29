@@ -49,14 +49,6 @@ function CartDisplay() {
     },
   )
   .then(response => response.json())
-  .then(data => {
-    // Check if the guest was authenticated
-    if(data) {
-        // If the guest was authenticated, save the username to the session info
-        // so it is accessible on other pages (this will be needed for associating
-        // reservations and similar items)
-    }
-  })
   .catch(error => console.error('Error adding order:', error));
 
   
@@ -74,7 +66,7 @@ function CartDisplay() {
   return(
     <>
     <div className="container-cart">
-      <div className="cart-products">
+      <div className="cart-display">
         {cart !== null ? cart.map((product) =>(
           <CartBoxDisplay key={product.id} id={product.id} image={product.image} title={product.name} cost={product.price} btn={button}/>
           )) : true}

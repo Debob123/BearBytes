@@ -1,59 +1,60 @@
 package bearbytes.dev.hotel.controllers;
 
+import bearbytes.dev.hotel.bill.Bill;
 import bearbytes.dev.hotel.checkout.Order;
 import bearbytes.dev.hotel.checkout.OrderWithUsername;
+import bearbytes.dev.hotel.database.BillDAO;
 import bearbytes.dev.hotel.database.OrderDAO;
 import bearbytes.dev.hotel.database.OrderWithUsernameDAO;
 import bearbytes.dev.hotel.database.ReservationDAO;
 import bearbytes.dev.hotel.product.Product;
+import bearbytes.dev.hotel.reservation.Reservation;
 import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The OrderController class controls interactions when creating an order of
  * products.
  */
 @RestController
-@RequestMapping("/shop")
-public class OrderController {
+@RequestMapping("/bill")
+public class BillController {
     // An instance of an order via a Data Access Object
+    private BillDAO billDAO;
+    private ReservationDAO reservationDAO;
     private OrderWithUsernameDAO orderDAO;
 
     // The Default Constructor for an OrderController: creates an orderDAO instance.
-    OrderController() {
+    BillController() {
+        billDAO = new BillDAO();
+        reservationDAO = new ReservationDAO();
         orderDAO = new OrderWithUsernameDAO();
     }
 
     /**
-     * Confirms an order.
-     * 
-     * @param order The order to finalize.
-     * @return True if the order was successfully finalized, else false.
-     * @throws ClassNotFoundException If an Order was not found.
+     * Generates a bill for a guest.
+     *
+     * @param username The username of current user.
+     * @return Final bill of user.
+     * @throws ClassNotFoundException If Bill was not inserted.
      * @throws SQLException           If a database access error occurs.
      */
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/add")
-    public Boolean add(@RequestBody OrderWithUsername order) throws ClassNotFoundException, SQLException {
+    @PostMapping("/generateBill")
+    public Bill generateBill(@RequestBody String username) throws ClassNotFoundException, SQLException {
         try {
-            orderDAO.addOrder(order);
-        } catch (Exception e) {
-            System.out.println("order not processed");
-        }
-        return false;
-    }
+            List<Reservation> reservations = new ArrayList<>(reservationDAO.getAll(username));
+            List<Order> orders = new ArrayList<>(orderDAO.getOrders(username));
+            return billDAO.generateBill(reservations, orders, username);
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/getOrders")
-    public Collection<OrderWithUsername> add(@RequestBody String username) throws ClassNotFoundException, SQLException {
-        try {
-            return orderDAO.getOrders(username);
         } catch (Exception e) {
-            System.out.println("order not processed");
             e.printStackTrace();
+            System.out.println("bill not generated");
         }
         return null;
     }
+
 }

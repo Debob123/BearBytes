@@ -9,10 +9,11 @@ function ShoppingBill()  {
   const user = getSessionStorage('user', null);
 
   useEffect(() => {
+    if(user !== null)  {
       renderOrders();
+    }
   }, []);
 
-  const [isLoading, setLoading] = useState(true);
   function renderOrders() {
       let body = JSON.stringify(user.username);
 
@@ -26,17 +27,15 @@ function ShoppingBill()  {
       })
       .then(response => response.json())
       .then(data => {
-      
-      setOrders(data);
-      setLoading(false);
+        setOrders(data);
       })
-      .catch(error => console.error('Error creating Order array:', error));
   }
 
   const shoppingSubtotal = orders.reduce((sum, {subtotal}) => sum + subtotal, 0);
   const shoppingTax = shoppingSubtotal * 0.08;
   const shoppingTotal = shoppingSubtotal + shoppingTax;
-  sessionStorage.setItem('shoppingTotal', shoppingTotal);
+  //sessionStorage.setItem('shoppingTotal', shoppingTotal);
+
 
   return (
     <div>

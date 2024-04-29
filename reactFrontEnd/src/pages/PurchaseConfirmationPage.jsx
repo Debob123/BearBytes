@@ -1,4 +1,4 @@
-import GuestHeader from '../components/GuestHeader';
+import GuestNavigation from '../components/GuestNavigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import ShopHeader from '../shopComponents/ShopHeader';
@@ -8,11 +8,12 @@ function PurchaseConfirmationPage() {
 
     return (
         <div>
-            <GuestHeader />
+            <GuestNavigation />
             <ShopHeader />
-            <h1 className="content-start"></h1>
-            <div className="check"><FontAwesomeIcon className="check-icon" icon={faCheck}/></div>
-            <p className="thank-you-message">Thank you for your purchase!</p>
+            <div className="check">
+                <FontAwesomeIcon className="check-icon" icon={faCheck}/>
+                <p className="thank-you-message">Thank you for your purchase!</p>
+            </div>
         </div>
     );
 }
