@@ -11,7 +11,7 @@ function GuestMyBillPage()  {
     <div>
       <GuestHeader />
       <div className="pay-bill-container">
-        <p className="bill-total-text">Bill Total: {billTotal}</p>
+        <p className="bill-total-text">Bill Total: {billTotal.toFixed(2)}</p>
         <p className="pay-with-card-text">Pay with card <FontAwesomeIcon icon={faCreditCard} /></p> 
         <form className="bill-form">
           <div className="payment-method-container">
