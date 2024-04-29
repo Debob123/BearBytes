@@ -1,5 +1,6 @@
 package bearbytes.dev.hotel.controllers;
 
+import bearbytes.dev.hotel.database.ProductDAO;
 import bearbytes.dev.hotel.database.ReservationDAO;
 import bearbytes.dev.hotel.product.Product;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,14 +16,14 @@ import java.util.Collection;
 @RequestMapping("/shop")
 public class ProductController {
     // An instance of an product via a Data Access Object
-    ReservationDAO.ProductDAO productDAO;
+    ProductDAO productDAO;
 
     /**
      * The Default Constructor for a ProductController: creates a productDAO
      * instance.
      */
     public ProductController() {
-        productDAO = new ReservationDAO.ProductDAO();
+        productDAO = new ProductDAO();
     }
 
     /**

@@ -57,7 +57,6 @@ function LoginPage() {
         <div className="login-container">
             <h1 className="center-text main-title">Stay and Shop</h1>
             <form className="login-form" onSubmit={handleSubmit}>
-                <p className="center-text">login</p>
                 <div className="login-row">
                     <div>
                         <input type="radio" id="guest" name="account_type" value="guest" defaultChecked/>

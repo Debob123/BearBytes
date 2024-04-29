@@ -33,11 +33,10 @@ function ShoppingPage() {
     function isCurrentlyStaying()  {
         reservations.map((reservation) => {
             const start = new Date(reservation.startDate);
-            //console.log('start ' + start.getTime());
             const end = new Date(reservation.endDate);
-            //console.log('end ' + end.getTime());
-            const current = new Date('2024-04-29');
-            //console.log('current ' + current.getTime());
+            // CHANGE DATE TO TIME IN BETWEEN RESERVATIONS TO ACCESS SHOP
+            // EXAMPLE: const current = new Date('2024-05-02');
+            const current = new Date();
             if((current.valueOf() >= start.valueOf()) && (current.valueOf() <= end.valueOf()))  {
                 setCurrentlyStaying(true);
             }

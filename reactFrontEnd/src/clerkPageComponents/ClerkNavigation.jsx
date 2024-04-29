@@ -14,7 +14,7 @@ function ClerkNavigation() {
     }
 
     const checkInOutRedirect = () => {
-        
+        navigate("/clerkCheckInAndOut")
     }
 
     const guestReservationsRedirect = () => {
@@ -34,7 +34,11 @@ function ClerkNavigation() {
     }
 
     const profileRedirect = () => {
-        navigate("/profile")
+        navigate("/clerkProfile")
+    }
+
+    const guestPasswordResetRedirect = () => {
+        navigate("/guestPasswordReset")
     }
 
     return (
@@ -47,6 +51,7 @@ function ClerkNavigation() {
             <Button text="Reserve Room" onClick={makeReservationRedirect} height="6vh"/>
             <Button text="Register Guest" onClick={registerGuestRedirect} height="6vh"/>
             <Button text="Edit Profile" onClick={profileRedirect} height="4vh"/>
+            <Button text="Guest Password" onClick={guestPasswordResetRedirect} height="4vh"/>
         </div>
     )
 }

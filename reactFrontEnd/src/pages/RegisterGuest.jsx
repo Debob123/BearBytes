@@ -40,9 +40,8 @@ function RegisterGuest() {
 
     return (
         <div className="create-container">
-            <h1 className="center-text main-title">Stay and Shop</h1>
+            <h1 className="center-text main-title">Register Guest</h1>
             <form className="create-form" onSubmit={handleSubmit}>
-                <p className="center-text">Create account</p>
                 <div className="create-row">
                     <label htmlFor="username">Username: </label>
                     <input type="text" 

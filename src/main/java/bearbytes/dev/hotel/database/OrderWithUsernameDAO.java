@@ -88,7 +88,8 @@ public class OrderWithUsernameDAO {
                                 rs3.getInt(1),
                                 rs3.getString(2),
                                 rs3.getDouble(3),
-                                rs3.getString(4)
+                                rs3.getString(4),
+                                0
                         );
                         purchasedProducts.add(p);
                     }

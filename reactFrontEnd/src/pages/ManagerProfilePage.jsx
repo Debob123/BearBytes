@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import getSessionStorage from "../authentication/GetSessionStorage";
+import ManagerNavigation from "../managerPageComponents/ManagerNavigation";
 
 function ChangeCredentials() {
     let username = getSessionStorage('user').username;
@@ -91,6 +92,7 @@ function ChangeCredentials() {
 
     return (
         <div>
+            <ManagerNavigation />
             <h1>Change Credentials</h1>
             <div>
                 <h2>Change Username</h2>

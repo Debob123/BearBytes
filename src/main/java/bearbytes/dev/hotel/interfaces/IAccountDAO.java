@@ -4,6 +4,7 @@ import bearbytes.dev.hotel.accounts.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 public interface IAccountDAO {
     static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
