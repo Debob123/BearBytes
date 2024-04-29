@@ -229,11 +229,12 @@ public class RoomDAO implements IRoomDAO {
             String wantedEnd = dates[1];
             c = getDBConnection();
             // Query for the rooms
-            Statement stmt = c.createStatement();
             String query = "SELECT * FROM APP.Rooms JOIN APP.Bookings ON APP.Bookings.roomNumber = APP.Rooms.roomNumber"
-                    +
-                    " JOIN APP.Reservations ON APP.Bookings.reservationID = APP.Reservations.reservationID";
-            ResultSet rs = stmt.executeQuery(query);
+                    + " JOIN APP.Reservations ON APP.Bookings.reservationID = APP.Reservations.reservationID " +
+                    "WHERE  APP.Reservations.status != ?";
+            PreparedStatement stmt = c.prepareStatement(query);
+            stmt.setString(1, "CANCELLED");
+            ResultSet rs = stmt.executeQuery();
             // Iterate over the returned rooms
 
             while (rs.next()) {

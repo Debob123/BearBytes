@@ -98,7 +98,7 @@ public class ReservationDAO implements IReservationDAO {
             if (rs.next()) {
                 return false;
             }
-            String query = "INSERT INTO Reservations(reservationID, username, startDate, endDate) values(?,?,?,?)";
+            String query = "INSERT INTO Reservations(reservationID, username, startDate, endDate, status) values(?,?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(query);
             query = "INSERT INTO Bookings(bookingID, reservationID, roomNumber) values(?,?,?)";
             PreparedStatement ps2 = c.prepareStatement(query);
@@ -110,6 +110,7 @@ public class ReservationDAO implements IReservationDAO {
             ps.setString(2, reservation.getUsername());
             ps.setString(3, dbStart);
             ps.setString(4, dbEnd);
+            ps.setString(5, "CONFIRMED");
             ps.executeUpdate();
 
             // Add the rooms to the reservation
@@ -191,6 +192,44 @@ public class ReservationDAO implements IReservationDAO {
     }
 
     /**
+     * Cancels a reservation from the database.
+     *
+     * @param r The reservation to cancel.
+     * @return True if the reservation is successfully cancelled, else false.
+     * @throws SQLException If a database access error occurs.
+     * @throws InvalidArgumentException If the passed reservation does not have valid data
+     */
+    public boolean cancel(Reservation r) throws SQLException, InvalidArgumentException {
+        if(r == null) {
+            throw new InvalidArgumentException("The reservation cannot be null");
+        }
+        Connection c = getDBConnection();
+        PreparedStatement ps = null;
+
+        try {
+            // Apache Derby does not support deleting from multiple tables, so must use two statements
+            // Edit the reservations table
+            String query = "UPDATE APP.Reservations SET status = ? WHERE reservationID = ?";
+            ps = c.prepareStatement(query);
+            ps.setString(1, "CANCELLED");
+            ps.setInt(2, r.getReservationID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Obtains all reservations for a user from the database.
      *
      * @param username The username to find all the reservations of.
@@ -208,11 +247,12 @@ public class ReservationDAO implements IReservationDAO {
         try {
             // Prepare the query's
             String query = "SELECT * FROM Reservations r JOIN Bookings b ON r.reservationID = b.reservationID " +
-                    "JOIN Rooms rm ON rm.roomNumber = b.roomNumber WHERE r.username = ? ORDER BY b.reservationID DESC";
+                    "JOIN Rooms rm ON rm.roomNumber = b.roomNumber WHERE r.username = ? AND r.status != ? ORDER BY b.reservationID DESC";
             ps = c.prepareStatement(query);
 
             // Retrieve the reservations
             ps.setString(1, username);
+            ps.setString(2, "CANCELLED");
             ResultSet rs = ps.executeQuery();
 
             // Add the rooms to the reservation
@@ -253,11 +293,11 @@ public class ReservationDAO implements IReservationDAO {
                 resRooms.put(reservationID, rooms);
 
                 if (!prevResID.equals(reservationID)) {
-                    reservations.add(new Reservation(prevResID, resRooms.get(prevResID), prevStart, prevEnd, username));
+                    reservations.add(new Reservation(prevResID, resRooms.get(prevResID), prevStart, prevEnd, username, null));
                 }
             }
             if (hasReservations) {
-                reservations.add(new Reservation(reservationID, resRooms.get(reservationID), start, end, username));
+                reservations.add(new Reservation(reservationID, resRooms.get(reservationID), start, end, username, ""));
             }
         } catch (SQLException e) {
             e.printStackTrace();
