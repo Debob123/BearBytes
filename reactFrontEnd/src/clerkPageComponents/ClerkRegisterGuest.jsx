@@ -51,7 +51,6 @@ function ClerkRegisterGuest() {
             <ClerkNavigation />
             <h1 className="center-text main-title">Register Guest</h1>
             <form className="create-form" onSubmit={handleSubmit}>
-                <p className="center-text">Create account</p>
                 <div className="create-row">
                     <label htmlFor="username">Username: </label>
                     <input type="text"

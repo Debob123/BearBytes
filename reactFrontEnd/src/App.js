@@ -4,13 +4,14 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ReservationPage from './pages/ReservationPage';
 import ShoppingPage from './pages/ShoppingPage';
-import ProfilePage from './pages/ProfilePage';
+import ManagerProfilePage from './pages/ManagerProfilePage';
 import ConfirmReservationPage from './pages/ConfirmReservationPage'
 import ClerkRooms from './pages/ClerkRoomPage'
 import Checkout from './pages/CheckoutPage'
 import RoomSearch from './pages/RoomSearch'
 import PurchaseConfirmationPage from './pages/PurchaseConfirmationPage';
 import RegisterGuest from './pages/RegisterGuest';
+import RegisterManager from './pages/RegisterManager';
 import RegistrationSuccess from './pages/RegistrationSuccess';
 import RegistrationFailed from './pages/RegistrationFailed';
 import GuestReservations from './pages/GuestReservations';
@@ -22,6 +23,7 @@ import ClerkMakeReservation from './pages/ClerkMakeReservation';
 import ClerkConfirmReservation from './pages/ClerkConfirmReservation';
 import ChangeGuestPassword from "./pages/ChangeGuestPassword";
 import ClerkCheckInAndOut from "./pages/ClerkCheckInAndOut";
+import ClerkProfilePage from "./pages/ClerkProfilePage";
 
 function App() {
   return (
@@ -32,12 +34,13 @@ function App() {
         <Route path="/reservation" element={<ReservationPage />} />
         <Route path="/confirmReservationPage" element ={<ConfirmReservationPage />} />
         <Route path="/shop" element={<ShoppingPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/managerProfile" element={<ManagerProfilePage />} />
+        <Route path="/clerkProfile" element={<ClerkProfilePage />} />
         <Route path="/clerkRooms" element={<ClerkRooms />} />
         <Route path="/cart" element={<Checkout/>} />
         <Route path="/purchaseConfirmation" element={<PurchaseConfirmationPage/>} />
         <Route path="/registerGuest" element={<RegisterGuest />} />
-        <Route path="/registerManager" element={<RegisterGuest />} />
+        <Route path="/registerManager" element={<RegisterManager />} />
         <Route path="/registrationSuccess" element={<RegistrationSuccess />} />
         <Route path="/registrationFailed" element={<RegistrationFailed/>}/>
         <Route path="/guestReservations" element={<GuestReservations />}/>

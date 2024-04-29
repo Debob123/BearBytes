@@ -57,7 +57,6 @@ function LoginPage() {
         <div className="login-container">
             <h1 className="center-text main-title">Stay and Shop</h1>
             <form className="login-form" onSubmit={handleSubmit}>
-                <p className="center-text">login</p>
                 <div className="login-row">
                     <div>
                         <input type="radio" id="guest" name="account_type" value="guest" defaultChecked/>
@@ -92,8 +91,6 @@ function LoginPage() {
                 </div>
                 <button className="login-submit" type="submit">Login</button>
                 <p>New Guest? <Link to="/registerGuest">Create Account</Link></p>
-                <p>New Manager? <Link to="/registerManager">Create Account</Link></p>
-
             </form>
             {loginFailed && <div className="message" style={{ fontWeight: 'bold', color: "red" }}>{loginFailed}</div>}
         </div>

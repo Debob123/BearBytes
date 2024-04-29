@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./styles/registerManager.css"
+import ManagerNavigation from "../managerPageComponents/ManagerNavigation";
 
 function RegisterManager() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const navigate = useNavigate();
+    const [message, setMessage] = useState('');
+    const [color, setColor] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,18 +21,19 @@ function RegisterManager() {
             body: JSON.stringify({
                 username: username,
                 password: password,
-                address: address,
-                name: name
             }),
         })
             .then(response => response.json())
             .then(data => {
                 // Check if the guest account was added
                 if(data) {
-                    // If the guest was created, navigate back to login page
-                    navigate("/registrationSuccess");
+                    setMessage("Account created successfully");
+                    setColor("green");
+                    setUsername("")
+                    setPassword("")
                 } else {
-                    navigate("/registrationFailed");
+                    setMessage("Account creation failed");
+                    setColor("red");
                 }
             })
             .catch(error => console.error('Error creating guest account:', error));
@@ -40,9 +41,9 @@ function RegisterManager() {
 
     return (
         <div className="create-container">
-            <h1 className="center-text main-title">Stay and Shop</h1>
+            <ManagerNavigation />
+            <h1 className="center-text main-title">Register Manager</h1>
             <form className="create-form" onSubmit={handleSubmit}>
-                <p className="center-text">Create account</p>
                 <div className="create-row">
                     <label htmlFor="username">Username: </label>
                     <input type="text"
@@ -63,31 +64,12 @@ function RegisterManager() {
                            placeholder="Password"
                            required />
                 </div>
-                <div className="create-row">
-                    <label htmlFor="name">Name: </label>
-                    <input type="text"
-                           id="name"
-                           name="name"
-                           value={name}
-                           onChange={(e) => setName(e.target.value)}
-                           placeholder="Full name"
-                           required />
-                </div>
-                <div className="create-row">
-                    <label htmlFor="address">Address: </label>
-                    <input type="text"
-                           id="address"
-                           name="address"
-                           value={address}
-                           onChange={(e) => setAddress(e.target.value)}
-                           placeholder="Address"
-                           required />
-                </div>
                 <button
                     className="create-submit"
                     type="submit"
-                    disabled={!address || !password || !username || !name}>Create Account</button>
+                    disabled={!password || !username}>Create Account</button>
             </form>
+            {message && <div className="message" style={{ fontWeight: 'bold', color: color }}>{message}</div>}
         </div>
     );
 }

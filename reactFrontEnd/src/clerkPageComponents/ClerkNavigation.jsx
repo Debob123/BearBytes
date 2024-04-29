@@ -34,7 +34,7 @@ function ClerkNavigation() {
     }
 
     const profileRedirect = () => {
-        navigate("/profile")
+        navigate("/clerkProfile")
     }
 
     const guestPasswordResetRedirect = () => {
