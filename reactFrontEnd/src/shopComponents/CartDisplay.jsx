@@ -74,8 +74,8 @@ function CartDisplay() {
     <div className="container-cart">
       <div className="cart-products">
         {cart !== null ? cart.map((product) =>(
-          <CartBoxDisplay key={product.id} id={product.id} image={product.image} title={product.name} cost={product.price} btn={button}/>
-          )) : true}
+          <CartBoxDisplay key={product.id} id={product.id} image={product.image} title={product.name} cost={product.price}
+                          checkoutbtn={button}  redeembtn={button}/>)) : true}
       </div>
       <div className="order-summary">
         <p className="subtotal-text">Subtotal:       ${cartSubtotal.toFixed(2)}</p>
@@ -83,8 +83,11 @@ function CartDisplay() {
         <p className="order-total-text">Order Total: ${cartTotal.toFixed(2)}</p>
         <p>Purchase will be added to your bill and delivered to your room</p>
         { (cart !== null) && (cart.length !== 0) ?
-          <button onClick={toggleModal} className="btn-modal">Checkout</button> :
-         <button className="btn-modal-unavailable">Checkout</button>}
+          <button onClick={toggleModal} className="checkoutbtn-modal">Checkout</button> :
+         <button className="checkoutbtn-modal-unavailable">Checkout</button>}
+        { (cart !== null) && (cart.length !== 0) ?
+            <button onClick={toggleModal} className="redeembtn-modal">Redeem Points</button> :
+            <button className="redeembtn-modal-unavailable">Redeem Points</button>}
       </div>
     </div>
 
