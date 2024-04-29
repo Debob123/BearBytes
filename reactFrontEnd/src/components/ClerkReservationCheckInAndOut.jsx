@@ -47,7 +47,8 @@ function CheckInAndOut({ imgLink, reservation, reservations, setReservations}) {
         modifiedRes.startDate = start;
         modifiedRes.endDate = end;
         setNewReservation(modifiedRes);
-        reservation.reservationStatus = storedStatus;
+        if (storedStatus !== null)
+            reservation.reservationStatus = storedStatus;
     }, [reservation.startDate, reservation.endDate]);
 
     useEffect(() => {
