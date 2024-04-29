@@ -22,6 +22,10 @@ function GuestNavigation() {
     const myBillRedirect = () => {
         navigate("/bill")
     }
+    const myPointsRedirect = () =>{
+        navigate("/")
+    }
+
 
     return (
         <div className="nav">
