@@ -27,10 +27,34 @@ function CheckInAndOut({ imgLink, reservation, reservations, setReservations}) {
     const [availableRooms, setAvailableRooms] = useState([]);
     const [newReservation, setNewReservation] = useState(reservation);
     const [unavailableRooms, setUnavailableRooms] = useState([]);
-    const [status, setStatus] = useState('Reserved');
+    const [status, setStatus] = useState(reservation.reservationStatus);
 
     let numDays = (new Date(reservation.endDate + "T00:00-0500") - new Date(reservation.startDate + "T00:00-0500")) / (24 * 60 * 60 * 1000);
     let timeUntilReservation = (new Date(reservation.startDate + "T00:00-0500") - new Date()) / (24 * 60 * 60 * 1000);
+
+    useEffect(() => {
+        const storedStart = sessionStorage.getItem('reservationStartDate');
+        const storedEnd = sessionStorage.getItem('reservationEndDate');
+        const storedStatus = sessionStorage.getItem('reservationStatus');
+
+        if (storedStart && storedEnd && storedStatus){
+            setStart(storedStart);
+            setEnd(storedEnd);
+            setStatus(storedStatus);
+        }
+
+        let modifiedRes = {...newReservation};
+        modifiedRes.startDate = start;
+        modifiedRes.endDate = end;
+        setNewReservation(modifiedRes);
+        reservation.reservationStatus = storedStatus;
+    }, [reservation.startDate, reservation.endDate]);
+
+    useEffect(() => {
+        sessionStorage.setItem('reservationStartDate', start);
+        sessionStorage.setItem('reserationEndDate', end);
+        sessionStorage.setItem('reservationStatus', status);
+    }, [start, end, status]);
 
     useEffect(() => {
         if(!isNaN(new Date(start + "T00:00-0500")) && !isNaN(new Date(end + "T00:00-0500")) && end > start) {
@@ -105,17 +129,17 @@ function CheckInAndOut({ imgLink, reservation, reservations, setReservations}) {
         let startingDate = new Date(start + "T00:00-0500");
         let endingDate = new Date(end + "T00:00-0500");
         if( start.length === 10 && end.length === 10 && !isNaN(startingDate) && !isNaN(endingDate) && end > start && startingDate > currDate) {
-            let newReservation = {...reservation};
-            newReservation.startDate = start;
-            newReservation.endDate = end;
-            newReservation.reservationStatus = status;
+            let modifiedRes = {...reservation};
+            modifiedRes.startDate = start;
+            modifiedRes.endDate = end;
+            modifiedRes.reservationStatus = status;
             fetch('http://localhost:8080/reservation/modify', {
                 mode: 'cors',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify([reservation, newReservation])
+                body: JSON.stringify([reservation, modifiedRes])
             })
             .then(response => response.json())
             .then(data => {
@@ -123,7 +147,7 @@ function CheckInAndOut({ imgLink, reservation, reservations, setReservations}) {
                     closeModify();
                     let index = reservations.findIndex(r => r.reservationID === reservation.reservationID);
                     const updatedReservations = [...reservations];
-                    updatedReservations[index] = newReservation;
+                    updatedReservations[index] = modifiedRes;
                     setReservations(updatedReservations);
                 } else if(data.length === 1 && data[0] === -1) {
                     setUnknownErrHidden('');
@@ -134,12 +158,12 @@ function CheckInAndOut({ imgLink, reservation, reservations, setReservations}) {
             })
             .catch(error => console.error('Error deleting reservation: ', error));
 
-            //Update status of each room to the selected status
+            /*//Update status of each room to the selected status
             const modifiedRes = {...newReservation};
             modifiedRes.rooms.forEach(room => {
                 room.status = status;
             })
-            setNewReservation(modifiedRes);
+            setNewReservation(modifiedRes);*/
         } else {
             setDateErrHidden('');
         }
