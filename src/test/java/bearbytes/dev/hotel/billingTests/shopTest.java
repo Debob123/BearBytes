@@ -12,7 +12,7 @@ import java.util.List;
 public class shopTest {
     @Test
     public void testOrder() {
-        Product product = new Product(1, "name", 1.0, "description");
+        Product product = new Product(1, "name", 1.0, "description",0);
         List<Product> products = new ArrayList<>();
         products.add(product);
         Order order = new Order(1, "2021-04-01", products);
@@ -24,7 +24,7 @@ public class shopTest {
 
     @Test
     public void testProduct() {
-        Product product = new Product(1, "name", 1.0, "image");
+        Product product = new Product(1, "name", 1.0, "image",0);
         assertEquals(1, product.getId());
         assertEquals("name", product.getName());
         assertEquals(1.0, product.getPrice());
@@ -34,7 +34,7 @@ public class shopTest {
 
     @Test
     public void testProductSetters() {
-        Product product = new Product(1, "name", 1.0, "image");
+        Product product = new Product(1, "name", 1.0, "image",0);
         product.setId(2);
         product.setName("newName");
         product.setPrice(2.0);

@@ -128,7 +128,8 @@ public class DatabaseCreator {
         String[] images = { "tropical-shirt.jpg", "shark-necklace.jpg", "vase.jpg",
                 "beach-hat.jpg", "sunglasses.jpg", "beach-towels.jpg",
                 "seashell-bracelet.jpg", "beach-umbrella.jpg", };
-        String room = "INSERT INTO APP.Products(name,price,image) values(?,?,?)";
+        int[] points = {50, 30, 100, 40, 20, 60, 30, 50};
+        String room = "INSERT INTO APP.Products(name,price,image,points) values(?,?,?,?)";
 
         for (int i = 0; i < names.length; i++) {
             PreparedStatement ps = dbConnection.prepareStatement(room);
@@ -136,6 +137,7 @@ public class DatabaseCreator {
             ps.setString(1, names[i]);
             ps.setDouble(2, prices[i]);
             ps.setString(3, images[i]);
+            ps.setInt(4, points[i]);
 
             ps.executeUpdate();
         }
@@ -224,9 +226,9 @@ public class DatabaseCreator {
                     + "quality VARCHAR(225) NOT NULL, " + "PRIMARY KEY (roomNumber) " + ")";
 
             String createProductsTableSQL = "CREATE TABLE APP.Products("
-                    + "productID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
-                    + "name VARCHAR(225) NOT NULL, " + "price INTEGER NOT NULL, "
-                    + "image VARCHAR(225) NOT NULL, " + "PRIMARY KEY (productID) " + ")";
+                    + "productID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " + "name VARCHAR(225) NOT NULL, "
+                    + "price INTEGER NOT NULL, " + "image VARCHAR(225) NOT NULL, "
+                    + "points INTEGER NOT NULL, " + "PRIMARY KEY (productID)" + ")";
 
             String createOrdersTableSQL = "CREATE TABLE APP.Orders("
                     + "orderID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "

@@ -12,14 +12,15 @@ const customStyles = {
 const images = require.context('../images', true); 
 
 
-function ProductBoxDisplay({ id, image, title, cost, btnAct="y"}) {
+function ProductBoxDisplay({ id, image, title, cost, btnAct="y", points}) {
 
     function addToCart() {
         const product = {
             "id": id,
             "name": title,
             "price": cost,
-            "image": image
+            "image": image,
+            "points": points
         }
 
         if(sessionStorage.getItem('cart') !== null)  {

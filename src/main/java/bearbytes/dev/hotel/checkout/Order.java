@@ -9,6 +9,7 @@ import java.util.List;
  * including the purchase date, the price, and all the items purchased.
  */
 public class Order {
+
     // The unique id of the order.
     private Integer orderId;
 
@@ -20,6 +21,9 @@ public class Order {
 
     // The price of the order.
     private Double subtotal = 0.0;
+
+    private Integer totalPoints = 0;
+
 
     /**
      * The Default Constructor for an Order: sets a unique id, the purchase date,
@@ -36,6 +40,7 @@ public class Order {
         this.purchasedProducts = purchasedProducts;
         for (Product p : this.purchasedProducts) {
             subtotal += p.getPrice();
+            totalPoints += p.getPoints();
         }
     }
 

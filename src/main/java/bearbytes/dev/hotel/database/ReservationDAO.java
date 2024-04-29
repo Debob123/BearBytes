@@ -332,7 +332,8 @@ public class ReservationDAO implements IReservationDAO {
                             rs.getInt("productID"),
                             rs.getString("name"),
                             rs.getDouble("price"),
-                            rs.getString("image"));
+                            rs.getString("image"),
+                            rs.getInt("points"));
                     products.add(p);
                 }
             } catch (SQLException e) {

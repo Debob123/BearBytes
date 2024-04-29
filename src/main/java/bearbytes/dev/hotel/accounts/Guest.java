@@ -23,6 +23,8 @@ public class Guest extends Account {
     // The credit card expiration date of the guest's credit card.
     private String cardExp;
 
+    private Integer points = 0;
+
     /**
      * Default constructor for Guest: takes a username, password, contact
      * information, shipping address, and payment information.
@@ -77,4 +79,6 @@ public class Guest extends Account {
     public String getCardExp() {
         return cardExp;
     }
+
+    public Integer getPoints(){return points;}
 }

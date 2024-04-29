@@ -110,7 +110,8 @@ public class OrderDAO {
                             rs3.getInt("productID"),
                             rs3.getString("name"),
                             rs3.getDouble("price"),
-                            rs3.getString("image"));
+                            rs3.getString("image"),
+                            rs3.getInt("points"));
                     purchasedProducts.add(p);
                 }
                 Order order = new Order(
