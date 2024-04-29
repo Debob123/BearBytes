@@ -25,7 +25,7 @@ public class Reservation {
      */
     public Reservation(@JsonProperty("reservationID") int reservationID, @JsonProperty("rooms") Collection<Room> rooms,
             @JsonProperty("startDate") String startDate, @JsonProperty("endDate") String endDate,
-            @JsonProperty("username") String username) {
+            @JsonProperty("username") String username, String status) {
         this.rate = 0;
         this.rooms = new ArrayList<>(rooms);
         for (Room room : rooms) {
@@ -34,7 +34,11 @@ public class Reservation {
         this.cancellationFee = rate * .8;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = ReservationStatus.CONFIRMED;
+        if(status == null || status.isEmpty()) {
+            this.status = ReservationStatus.CONFIRMED;
+        } else {
+            this.status = ReservationStatus.getEnum(status);
+        }
         if (reservationID == 0) {
             this.reservationID = hashCode();
         } else {
@@ -177,7 +181,7 @@ public class Reservation {
                     result = "CONFIRMED";
                     break;
                 case CANCELLED:
-                    result = "CANCELLEd";
+                    result = "CANCELLED";
                     break;
                 case MODIFIED:
                     result = "MODIFIED";
@@ -191,6 +195,23 @@ public class Reservation {
             }
 
             return result;
+        }
+
+        /**
+         * Converts a string from into its enum value.
+         *
+         * @param s The string to convert.
+         * @return The RoomType "s" represents.
+         */
+        public static ReservationStatus getEnum(String s) {
+            return switch (s) {
+                case "CONFIRMED" -> CONFIRMED;
+                case "CANCELLED" -> CANCELLED;
+                case "MODIFIED" -> MODIFIED;
+                case "CHECKED-IN" -> CHECKED_IN;
+                case "CHECKED-OUT" -> CHECKED_OUT;
+                default -> null;
+            };
         }
     }
 

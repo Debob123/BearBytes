@@ -193,7 +193,7 @@ public class DatabaseCreator {
             System.out.println("You made it, take control your database now!");
             String createReservationsTableSQL = "CREATE TABLE APP.Reservations(" + "reservationID INTEGER NOT NULL, "
                     + "username VARCHAR(225) NOT NULL, " + "startDate VARCHAR(225) NOT NULL, "
-                    + "endDate VARCHAR(225) NOT NULL, " + "PRIMARY KEY (reservationID) " + ")";
+                    + "endDate VARCHAR(225) NOT NULL, " + "status VARCHAR(225) NOT NULL, " + "PRIMARY KEY (reservationID) " + ")";
 
             String createGuestAccountsTableSQL = "CREATE TABLE APP.GuestAccounts(" + "username VARCHAR(225) NOT NULL, "
                     + "password VARCHAR(225) NOT NULL, " + "PRIMARY KEY (username) " + ")";

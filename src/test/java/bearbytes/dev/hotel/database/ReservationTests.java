@@ -46,7 +46,7 @@ public class ReservationTests {
     public void addReservationOneRoom() throws InvalidArgumentException, SQLException {
         List<Room> rooms = new ArrayList<>();
         rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
-        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest");
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
         res.add(reservation1);
         List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
         Assertions.assertEquals(reservation1, reservations.getFirst());
@@ -57,7 +57,7 @@ public class ReservationTests {
         List<Room> rooms = new ArrayList<>();
         rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
         rooms.add(new Room(102, 1, 2, 200, true, Room.BedType.FULL, Room.RoomType.DOUBLE, Room.QualityLevel.ECONOMY));
-        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest");
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
         res.add(reservation1);
         List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
         Assertions.assertEquals(reservation1, reservations.getFirst());
@@ -68,12 +68,12 @@ public class ReservationTests {
         List<Room> rooms = new ArrayList<>();
         List<Reservation> expectedReservations = new ArrayList<>();
         rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
-        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest");
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
         expectedReservations.add(reservation1);
         res.add(reservation1);
         rooms = new ArrayList<>();
         rooms.add(new Room(102, 1, 2, 200, true, Room.BedType.FULL, Room.RoomType.DOUBLE, Room.QualityLevel.ECONOMY));
-        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest");
+        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
         expectedReservations.add(reservation2);
         res.add(reservation2);
         List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
@@ -95,7 +95,7 @@ public class ReservationTests {
         List<Room> rooms = new ArrayList<>();
         List<Reservation> expectedReservations = new ArrayList<>();
         rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
-        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest");
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
         expectedReservations.add(reservation1);
         res.add(reservation1);
         List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
@@ -104,7 +104,7 @@ public class ReservationTests {
         rooms = new ArrayList<>();
         expectedReservations = new ArrayList<>();
         rooms.add(new Room(102, 1, 2, 200, true, Room.BedType.FULL, Room.RoomType.DOUBLE, Room.QualityLevel.ECONOMY));
-        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest2");
+        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest2", "");
         expectedReservations.add(reservation2);
         res.add(reservation2);
         reservations = (List<Reservation>) res.getAll("testerGuest2");
@@ -114,7 +114,7 @@ public class ReservationTests {
     @Test
     public void addReservationNoRooms() {
         List<Room> rooms = new ArrayList<>();
-        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest");
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
         Assertions.assertThrows(InvalidArgumentException.class, () -> res.add(reservation1));
     }
 
@@ -122,7 +122,7 @@ public class ReservationTests {
     public void addReservationNoUser() {
         List<Room> rooms = new ArrayList<>();
         rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
-        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", null);
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", null, "");
         Assertions.assertThrows(InvalidArgumentException.class, () -> res.add(reservation1));
     }
 
@@ -131,13 +131,13 @@ public class ReservationTests {
         List<Room> rooms = new ArrayList<>();
         List<Reservation> expectedReservations = new ArrayList<>();
         rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
-        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest");
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
         expectedReservations.add(reservation1);
         res.add(reservation1);
         List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
         Assertions.assertEquals(expectedReservations, reservations);
 
-        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest2");
+        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest2", "");
         Assertions.assertFalse(res.add(reservation2));
     }
 
@@ -150,7 +150,7 @@ public class ReservationTests {
     public void removeReservation() throws InvalidArgumentException, SQLException {
         List<Room> rooms = new ArrayList<>();
         rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
-        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest");
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
         res.add(reservation1);
         res.remove(reservation1);
         List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");

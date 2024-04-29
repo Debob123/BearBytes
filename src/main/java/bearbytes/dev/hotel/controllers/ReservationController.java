@@ -6,9 +6,12 @@ import bearbytes.dev.hotel.reservation.Reservation;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 // The ReservationController class controls interactions when on the reservation page.
 @RestController
@@ -75,10 +78,21 @@ public class ReservationController {
      */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/remove")
-    public Boolean remove(@RequestBody Reservation reservation) {
+    public Boolean cancel(@RequestBody Reservation reservation) {
         try {
-            return resDAO.remove(reservation);
-        } catch (SQLException | InvalidArgumentException e ) {
+            Date today = Calendar.getInstance().getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String todayDate = dateFormat.format(today);
+            today = dateFormat.parse(todayDate);
+            Date start = dateFormat.parse(reservation.getStartDate());
+            long diffInMili = start.getTime() - today.getTime();
+            long diff = TimeUnit.DAYS.convert(diffInMili, TimeUnit.MILLISECONDS);
+            if(diff < 2) {
+                return resDAO.cancel(reservation);
+            } else {
+                return resDAO.remove(reservation);
+            }
+        } catch (SQLException | InvalidArgumentException | ParseException e ) {
             e.printStackTrace();
         }
         return false;
