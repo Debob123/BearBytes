@@ -20,6 +20,9 @@ public class Product {
     // An image link of the product.
     private String image;
 
+    private Integer points;
+
+
     /**
      * The Default Constructor for a Product. Creates a unique id for the product,
      * names it, gives it a price and links an image.
@@ -29,11 +32,12 @@ public class Product {
      * @param price The price of one instance of the product.
      * @param image A link to an image of this product.
      */
-    public Product(Integer id, String name, Double price, String image) {
+    public Product(int id, String name, double price, String image, int points) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
+        this.points = points;
     }
 
     /**
@@ -107,4 +111,23 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
+
+    /**
+     * Gets the image link for the product.
+     *
+     * @return points of the product
+     */
+    public Integer getPoints() {
+        return points;
+    }
+
+    /**
+     * Sets the image link for the product.
+     *
+     * @param points of the product
+     */
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
 }
