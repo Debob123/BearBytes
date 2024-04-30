@@ -50,8 +50,6 @@ function ClerkNavigation() {
 
     return (
         <div className="clerk-nav">
-            <Button text="Home" onClick={homeRedirect} height="4vh" />
-            <Button text="Log Out" onClick={logOut} height="4vh" />
             <Button text="View Rooms" onClick={roomsRedirect} height="4vh" />
             <Button text="Check In/Out" onClick={checkInOutRedirect} height="4vh" />
             <Button text="Modify Reservations" onClick={guestReservationsRedirect} height="6vh" />
@@ -60,6 +58,7 @@ function ClerkNavigation() {
             <Button text="Register Guest" onClick={registerGuestRedirect} height="6vh" />
             <Button text="Edit Profile" onClick={profileRedirect} height="4vh" />
             <Button text="Guest Password" onClick={guestPasswordResetRedirect} height="4vh" />
+            <Button text="Log Out" onClick={logOut} height="4vh" />
         </div>
     )
 }
