@@ -35,7 +35,7 @@
     padding: 0px;
 }
 
-body {
+body.login-page {
     background-image: url('../../images/login-screen.jpg');
     background-repeat: no-repeat;
     background-size: cover;
