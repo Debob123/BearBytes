@@ -204,7 +204,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                 <p>Start date: {reservation.startDate}</p>
                 <p>End date:   {reservation.endDate}</p>
                 <p>Nights staying: {numDays}</p>
-                <p>Total cost: ${reservation.rate * numDays}</p>
+                <p>Total cost: ${(reservation.rate * numDays).toFixed(2)}</p>
                 <p>Rooms: {reservation.rooms.map((room) =>(
                     <span key={room.number}>{room.number} </span>
                 )
@@ -276,7 +276,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                                     <span className="grid-item">{room.number}</span> 
                                     <span className="grid-item">{room.numBeds}</span> 
                                     <span className="grid-item">{room.quality}</span> 
-                                    <span className="grid-item">{room.dailyRate}</span> 
+                                    <span className="grid-item">${room.dailyRate.toFixed(2)}</span> 
                                     <button className="room-btn" onClick={() => removeRoom(room)}>Remove</button></div>
                             ))}
                         </div> 
@@ -327,7 +327,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
             <img src={imgLink} alt="reservation" />
             <p>Start date: {reservation.startDate}</p>
             <p>End date: {reservation.endDate}</p>
-            <p>Daily rate: {reservation.rate}</p>
+            <p>Daily rate: ${reservation.rate.toFixed(2)}</p>
             <p>Status: {reservation.reservationStatus}</p>
             <div className="res-btns">
                 <button className="res-btn" onClick={openModify}>Modify</button>
