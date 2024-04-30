@@ -20,8 +20,10 @@ function ManagerNavigation() {
     }
 
     const logoutManager = () => {
-        sessionStorage.removeItem('user');
-        navigate("/");
+        if (window.confirm("Are you sure you want to log out?")) {
+            sessionStorage.removeItem('user');
+            navigate("/");
+        }
     }
 
     return (
