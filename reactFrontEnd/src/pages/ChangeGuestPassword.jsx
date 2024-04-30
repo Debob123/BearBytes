@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import ClerkNavigation from "../clerkPageComponents/ClerkNavigation";
 
 function ChangeGuestPassword() {
 
@@ -30,16 +31,28 @@ function ChangeGuestPassword() {
 
     return (
         <div>
-            <h1>Change Guest Password</h1>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Guest Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <button onClick={handleChangePassword}>Reset Password</button>
+            <ClerkNavigation/>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <h1 style={{ fontSize: '4em' }}>Change Guest Password</h1>
             </div>
+            <div>
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <p>Enter a guest username and press the button to reset their password to: 'password'</p>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <input
+                        type="text"
+                        placeholder="Guest Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        style={{ width: '200px' }}
+                    />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center'}}>
+                    <button style={{ width: '150px' }} onClick={handleChangePassword}>Reset Password</button>
+                </div>
+            </div>
+
             {message && <p>{message}</p>}
         </div>
     );
