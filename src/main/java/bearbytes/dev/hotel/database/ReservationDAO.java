@@ -43,10 +43,11 @@ public class ReservationDAO implements IReservationDAO {
             c = getDBConnection();
             String query = "SELECT * FROM Reservations JOIN BOOKINGS ON " +
                     "Reservations.ReservationID = Bookings.ReservationID WHERE Bookings.roomNumber = ? " +
-                    "AND Reservations.STARTDATE < ? AND Reservations.ENDDATE > ?";
+                    "AND Reservations.STARTDATE < ? AND Reservations.ENDDATE > ? AND Reservations.status != ?";
             ps = c.prepareStatement(query);
             ps.setString(2, r.getEndDate());
             ps.setString(3, r.getStartDate());
+            ps.setString(4, "CANCELLED");
             for (Room room : r.getRooms()) {
                 ps.setInt(1, room.getNumber());
                 rs = ps.executeQuery();
@@ -85,40 +86,50 @@ public class ReservationDAO implements IReservationDAO {
         if(!AccountAuthenticator.validateGuestUsername(new Guest(reservation.getUsername(), "", null, null, null, null))) {
             throw new InvalidArgumentException("There is no guest with given username: " + reservation.getUsername());
         }
+
+        if(!checkAvailability(reservation).isEmpty()) {
+            return false;
+        }
         // Now try to connect
         Connection c = null;
+        PreparedStatement ps = null;
         try {
             c = getDBConnection();
             // Prepare the query's
             String checkQuery = "SELECT * FROM Reservations WHERE ReservationID = ?";
-            PreparedStatement stmt = c.prepareStatement(checkQuery);
+            ps = c.prepareStatement(checkQuery);
             // Check if the reservation has already been added, if yes, stop execution
-            stmt.setInt(1, reservation.getReservationID());
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return false;
-            }
-            String query = "INSERT INTO Reservations(reservationID, username, startDate, endDate, status) values(?,?,?,?,?)";
-            PreparedStatement ps = c.prepareStatement(query);
-            query = "INSERT INTO Bookings(bookingID, reservationID, roomNumber) values(?,?,?)";
-            PreparedStatement ps2 = c.prepareStatement(query);
-            String dbStart = reservation.getStartDate();
-            String dbEnd = reservation.getEndDate();
-
-            // Add the reservation
             ps.setInt(1, reservation.getReservationID());
-            ps.setString(2, reservation.getUsername());
-            ps.setString(3, dbStart);
-            ps.setString(4, dbEnd);
-            ps.setString(5, "CONFIRMED");
-            ps.executeUpdate();
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String query = "UPDATE APP.Reservations SET status = ? WHERE reservationID = ?";
+                ps = c.prepareStatement(query);
+                ps.setString(1, "CONFIRMED");
+                ps.setInt(2, reservation.getReservationID());
+                ps.executeUpdate();
+            } else {
+                String query = "INSERT INTO Reservations(reservationID, username, startDate, endDate, status) values(?,?,?,?,?)";
+                ps = c.prepareStatement(query);
+                query = "INSERT INTO Bookings(bookingID, reservationID, roomNumber) values(?,?,?)";
+                PreparedStatement ps2 = c.prepareStatement(query);
+                String dbStart = reservation.getStartDate();
+                String dbEnd = reservation.getEndDate();
 
-            // Add the rooms to the reservation
-            for (int i = 0; i < reservation.getRooms().size(); ++i) {
-                ps2.setInt(1, reservation.getReservationID() + reservation.getRooms().get(i).getNumber());
-                ps2.setInt(2, reservation.getReservationID());
-                ps2.setInt(3, reservation.getRooms().get(i).getNumber());
-                ps2.executeUpdate();
+                // Add the reservation
+                ps.setInt(1, reservation.getReservationID());
+                ps.setString(2, reservation.getUsername());
+                ps.setString(3, dbStart);
+                ps.setString(4, dbEnd);
+                ps.setString(5, "CONFIRMED");
+                ps.executeUpdate();
+
+                // Add the rooms to the reservation
+                for (int i = 0; i < reservation.getRooms().size(); ++i) {
+                    ps2.setInt(1, reservation.getReservationID() + reservation.getRooms().get(i).getNumber());
+                    ps2.setInt(2, reservation.getReservationID());
+                    ps2.setInt(3, reservation.getRooms().get(i).getNumber());
+                    ps2.executeUpdate();
+                }
             }
             return true;
         } catch (SQLException e) {
@@ -126,6 +137,9 @@ public class ReservationDAO implements IReservationDAO {
         } finally {
             if (c != null) {
                 c.close();
+            }
+            if (ps != null) {
+                ps.close();
             }
         }
         return false;

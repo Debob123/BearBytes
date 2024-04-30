@@ -33,7 +33,7 @@ function BoxDisplay({ imgLink, type, cost, numBeds, bedSize, smokingAllowed, add
             <p>Room type: {type}</p>
             <p>Bed size: {bedSize}</p>
             <p>Beds: {numBeds}</p>
-            <p>Daily rate: {cost}</p>
+            <p>Daily rate: ${cost}</p>
             <p>Smoking allowed: {smokingAllowed ? "Yes" : "No"}</p>
             {btnAct !== null && <button onClick={handleClick}>Reserve</button> }
         </div>

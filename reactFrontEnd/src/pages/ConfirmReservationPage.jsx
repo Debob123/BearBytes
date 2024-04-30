@@ -139,11 +139,11 @@ function ConfirmReservationPage() {
                         <div className="box">
                             <div className="row">
                                 <p>Nights stayed: {nightsStayed}</p>
-                                <p>${nightlyCost} per night</p>
+                                <p>${nightlyCost.toFixed(2)} per night</p>
                             </div>
                             <div className="row">
                                 <p>Total Stay Cost:</p>
-                                <p>${nightlyCost * nightsStayed}</p>
+                                <p>${(nightlyCost * nightsStayed).toFixed(2)}</p>
                             </div>
                         </div>
                         <div className={isHidden + " center-text"}>{content}</div>

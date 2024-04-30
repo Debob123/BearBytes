@@ -261,7 +261,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                             required/>
                     </div>
                     <p>Nights staying: {numDays}</p>
-                    <p>Total cost: ${newReservation.rate * numDays}</p>
+                    <p>Total cost: ${(newReservation.rate * numDays).toFixed(2)}</p>
                     <div>Rooms:
                         <div>
                             <div className="grid-container">
@@ -316,7 +316,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                                     <span className="grid-item">{room.number}</span> 
                                     <span className="grid-item">{room.numBeds}</span> 
                                     <span className="grid-item">{room.quality}</span> 
-                                    <span className="grid-item">{room.dailyRate}</span> 
+                                    <span className="grid-item">${room.dailyRate.toFixed(2)}</span> 
                                     <button className="room-btn" onClick={() => addRoom(room)}>Add</button></div>
                             ))}
                         </div> 
