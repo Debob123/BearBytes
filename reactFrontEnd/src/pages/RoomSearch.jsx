@@ -24,7 +24,7 @@ function RoomSearch() {
 
 
 
-        console.log(`Start date: ${startingDate}, End date: ${endingDate}`); // Add this line
+        console.log(`Start date: ${startingDate}, End date: ${endingDate}`);
 
 
 
