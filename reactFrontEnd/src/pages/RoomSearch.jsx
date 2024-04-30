@@ -14,20 +14,23 @@ function RoomSearch() {
     const handleDateConfirm = (e) => {
         e.preventDefault();
         let currDate = new Date();
-        let startingDate = new Date(start);
-        let endingDate = new Date(end);
+        let startingDate = new Date(start + "T00:00:00-0500");
+        let endingDate = new Date(end + "T00:00:00-0500");
 
         startingDate.setMinutes(startingDate.getMinutes() - startingDate.getTimezoneOffset());
         endingDate.setMinutes(endingDate.getMinutes() - endingDate.getTimezoneOffset());
 
         console.log("Button Pressed!");
 
+
+
         console.log(`Start date: ${startingDate}, End date: ${endingDate}`); // Add this line
 
 
 
         if (!isNaN(startingDate) && !isNaN(endingDate) && end > start && startingDate > currDate) {
-            let dateRange = [start, end]
+            let dateRange = [startingDate.toISOString().split('T')[0], endingDate.toISOString().split('T')[0]];
+            console.log(dateRange);
             sessionStorage.setItem('dates', JSON.stringify(dateRange));
             console.log("Dates confirmed!");
             navigate('/reservation');
