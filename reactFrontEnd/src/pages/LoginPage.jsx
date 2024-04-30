@@ -8,6 +8,9 @@ function LoginPage() {
     const [loginFailed, setLoginFailed] = useState("");
     const navigate = useNavigate();
 
+    document.body.classList.add('login-page');
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -29,28 +32,29 @@ function LoginPage() {
         }
         const endpoint = `http://localhost:8080/accounts/${accountType.toLowerCase()}login`;
         fetch(endpoint, {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username: username, password: password}),
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Check if the guest was authenticated
-        if(data) {
-            // If the guest was authenticated, save the username to the session info
-            // so it is accessible on other pages (this will be needed for associating
-            // reservations and similar items)
-            sessionStorage.setItem('user', JSON.stringify({username: username}));
-            sessionStorage.setItem('account_type', JSON.stringify({account_type: accountType}))
-            navigate(nextPage);
-        } else {
-            setLoginFailed("Invalid username or password");
-        }
-      })
-      .catch(error => console.error('Error logging in user:', error));
+            mode: 'cors',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username, password: password }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Check if the guest was authenticated
+                if (data) {
+                    // If the guest was authenticated, save the username to the session info
+                    // so it is accessible on other pages (this will be needed for associating
+                    // reservations and similar items)
+                    sessionStorage.setItem('user', JSON.stringify({ username: username }));
+                    sessionStorage.setItem('account_type', JSON.stringify({ account_type: accountType }))
+                    document.body.classList.remove('login-page');
+                    navigate(nextPage);
+                } else {
+                    setLoginFailed("Invalid username or password");
+                }
+            })
+            .catch(error => console.error('Error logging in user:', error));
     }
 
     return (
@@ -59,7 +63,7 @@ function LoginPage() {
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="login-row">
                     <div>
-                        <input type="radio" id="guest" name="account_type" value="guest" defaultChecked/>
+                        <input type="radio" id="guest" name="account_type" value="guest" defaultChecked />
                         <label htmlFor="guest">Guest</label>
                     </div>
                     <div>
@@ -74,20 +78,20 @@ function LoginPage() {
                 <div className="login-row">
                     <label htmlFor="username">Username:</label>
                     <input type="text"
-                    id="username"
-                    name="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username" />
+                        id="username"
+                        name="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Username" />
                 </div>
                 <div className="login-row">
                     <label htmlFor="pwd">Password:</label>
                     <input type="password"
-                    id="pwd"
-                    name="pwd"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password" />
+                        id="pwd"
+                        name="pwd"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password" />
                 </div>
                 <button className="login-submit" type="submit">Login</button>
                 <p>New Guest? <Link to="/registerGuest">Create Account</Link></p>

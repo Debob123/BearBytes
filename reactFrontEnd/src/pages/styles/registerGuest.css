@@ -17,6 +17,9 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, .8);
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
 }
 
 .create-submit {

@@ -100,7 +100,7 @@ function ClerkMakeReservation() {
         <div>
             <ClerkNavigation/>
             <div className="content">
-                <h1 className="center-text">Guest Reservation</h1>
+                <h1 className="center-text" style={{ fontSize: '4em' }} >Guest Reservation</h1>
                 <div className="center-input top-space">
                     <label htmlFor="start_date">Start date:</label>
                     <input 

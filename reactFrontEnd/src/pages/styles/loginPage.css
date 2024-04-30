@@ -17,6 +17,10 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, .8);
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    /* 2/3 translucent */
 }
 
 .login-submit {
@@ -27,4 +31,13 @@
 
 .main-title {
     font-size: max(24px, 6vw);
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0px;
+}
+
+body.login-page {
+    background-image: url('../../images/login-screen.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }

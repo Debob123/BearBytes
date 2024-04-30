@@ -9,29 +9,14 @@ function ChangeCredentials() {
     const [newUsername, setNewUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [color, setColor] = useState('');
 
 
 
     const handleChangeUsername = (e) => {
         e.preventDefault();
-        let type = "";
 
-        switch (account_type) {
-            case "guest":
-                type = "Guest";
-                break;
-            case "clerk":
-                type = "Clerk";
-                break;
-            case "manager":
-                type = "Manager";
-                break;
-            default:
-                type = "account_type_error"
-                break;
-        }
-
-        fetch('http://localhost:8080/accounts/change'+type+'Username?newUsername=' + newUsername, {
+        fetch('http://localhost:8080/accounts/changeClerkUsername?newUsername=' + newUsername, {
             mode: 'cors',
             method: 'POST',
             headers: {
@@ -45,8 +30,10 @@ function ChangeCredentials() {
                     sessionStorage.setItem('user', JSON.stringify({username: newUsername}));
                     username = newUsername;
                     setMessage('Username changed successfully');
+                    setColor("green");
                 } else {
                     setMessage('Username change failed');
+                    setColor("red");
                 }
             })
             .catch(error => { console.error('Error changing username'); });
@@ -54,24 +41,8 @@ function ChangeCredentials() {
 
     const handleChangePassword = (e) => {
         e.preventDefault();
-        let type = "";
 
-        switch (account_type) {
-            case "guest":
-                type = "Guest";
-                break;
-            case "clerk":
-                type = "Clerk";
-                break;
-            case "manager":
-                type = "Manager";
-                break;
-            default:
-                type = "account_type_error"
-                break;
-        }
-
-        fetch('http://localhost:8080/accounts/change'+type+'Password?newPassword=' + newPassword, {
+        fetch('http://localhost:8080/accounts/changeClerkPassword?newPassword=' + newPassword, {
             mode: 'cors',
             method: 'POST',
             headers: {
@@ -93,28 +64,49 @@ function ChangeCredentials() {
     return (
         <div>
             <ClerkNavigation />
-            <h1>Change Credentials</h1>
-            <div>
-                <h2>Change Username</h2>
-                <input
-                    type="text"
-                    placeholder="New Username"
-                    value={newUsername}
-                    onChange={(e) => setNewUsername(e.target.value)}
-                />
-                <button onClick={handleChangeUsername}>Change Username</button>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <h1 style={{ fontSize: '4em' }}>Change Credentials</h1>
             </div>
             <div>
-                <h2>Change Password</h2>
-                <input
-                    type="text"
-                    placeholder="New Password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <button onClick={handleChangePassword}>Change Password</button>
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+                    <p>Change your profile's username/password</p>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+                    <h1>Change Username</h1>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '5px'}}>
+                    <input
+                        type="text"
+                        placeholder="New Username"
+                        value={newUsername}
+                        onChange={(e) => setNewUsername(e.target.value)}
+                        style={{width: '200px'}}
+                    />
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <button style={{width: '150px'}} onClick={handleChangeUsername}>Change Username</button>
+                </div>
             </div>
-            {message && <p>{message}</p>}
+            <div>
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+                    <h1>Change Password</h1>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '5px'}}>
+                    <input
+                        type="text"
+                        placeholder="New Password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        style={{ width: '200px' }}
+                    />
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <button style={{ width: '150px' }} onClick={handleChangePassword}>Change Password</button>
+                </div>
+            </div>
+            <div style={{ display: 'flex', color: color, justifyContent: 'center', marginTop: '20px'}}>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 }
