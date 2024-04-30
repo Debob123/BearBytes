@@ -22,18 +22,26 @@ function GuestNavigation() {
     const myBillRedirect = () => {
         navigate("/bill")
     }
-    const myPointsRedirect = () =>{
+    const myPointsRedirect = () => {
         navigate("/")
     }
+
+    const logOut = () => {
+        sessionStorage.removeItem('user');
+        navigate("/");
+    }
+
+
 
 
     return (
         <div className="nav">
             <p className="profile">{user ? "Welcome " + user.username : "Error loading profile"}!</p>
-            <Button text="Shop" onClick={shopRedirect} height="4vh"/>
-            <Button text="Reserve Room" onClick={reservationRedirect} height="6vh"/>
-            <Button text="My Reservations" onClick={myReservationsRedirect} height="6vh"/>
-            <Button text="My Bill" onClick={myBillRedirect} height="4vh"/>
+            <Button text="Shop" onClick={shopRedirect} height="4vh" />
+            <Button text="Reserve Room" onClick={reservationRedirect} height="6vh" />
+            <Button text="My Reservations" onClick={myReservationsRedirect} height="6vh" />
+            <Button text="My Bill" onClick={myBillRedirect} height="4vh" />
+            <Button text="Log Out" onClick={logOut} height="4vh" />
         </div>
     )
 }
