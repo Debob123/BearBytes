@@ -1,7 +1,7 @@
 .create-container {
     display: flex;
     flex-direction: column;
-    justify-content:space-evenly;
+    justify-content: space-evenly;
     align-items: center;
     height: 100vh;
     box-sizing: border-box;
@@ -11,6 +11,7 @@
     display: flex;
     gap: 10px;
 }
+
 .create-form {
     display: flex;
     flex-direction: column;
@@ -26,4 +27,22 @@
 
 .main-title {
     font-size: max(24px, 6vw);
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #e7e9ec;
 }
