@@ -122,16 +122,13 @@ public class DatabaseCreator {
         String[] names = { "Tropical Shirt", "Shark Necklace", "Locally Made Vases", "Beach Hat",
                 "Sunglasses", "Beach Towels", "Locally Crafted Seashell Bracelet", "Beach Umbrella" };
         double[] prices = { 25.00, 15.00, 50.00, 20.00, 10.00, 30.00, 15.00, 25.00 };
-        // String[] images =
-        // {"tropicalShirt","sharkNecklace","vase","beachHat","sunglasses","beachTowels","shellBracelet","umbrella"};
-
         String[] images = { "tropical-shirt.jpg", "shark-necklace.jpg", "vase.jpg",
                 "beach-hat.jpg", "sunglasses.jpg", "beach-towels.jpg",
                 "seashell-bracelet.jpg", "beach-umbrella.jpg", };
-        String room = "INSERT INTO APP.Products(name,price,image) values(?,?,?)";
+        String insertProductsSQL = "INSERT INTO APP.Products(name,price,image) values(?,?,?)";
 
         for (int i = 0; i < names.length; i++) {
-            PreparedStatement ps = dbConnection.prepareStatement(room);
+            PreparedStatement ps = dbConnection.prepareStatement(insertProductsSQL);
 
             ps.setString(1, names[i]);
             ps.setDouble(2, prices[i]);

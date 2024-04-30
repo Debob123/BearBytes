@@ -1,6 +1,7 @@
 package bearbytes.dev.hotel.product;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -31,6 +32,7 @@ public class Product {
      * @param name  The name of the product.
      * @param price The price of one instance of the product.
      * @param image A link to an image of this product.
+     * @param points The point value of one instance of the product.
      */
     public Product(int id, String name, double price, String image, int points) {
         this.id = id;
@@ -129,16 +131,16 @@ public class Product {
     }
 
     /**
-     * Gets the image link for the product.
+     * Gets the point value for the product.
      *
-     * @return points of the product
+     * @return point value of the product
      */
     public Integer getPoints() {
         return points;
     }
 
     /**
-     * Sets the image link for the product.
+     * Sets the point value for the product.
      *
      * @param points of the product
      */
@@ -146,4 +148,27 @@ public class Product {
         this.points = points;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(image, product.image) && Objects.equals(points, product.points);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, image, points);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                ", points=" + points +
+                '}';
+    }
 }

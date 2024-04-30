@@ -39,6 +39,16 @@ public class Order {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", purchaseDate='" + purchaseDate + '\'' +
+                ", purchasedProducts=" + purchasedProducts +
+                ", subtotal=" + subtotal +
+                '}';
+    }
+
     /**
      * Gets the unique id of this order.
      * 

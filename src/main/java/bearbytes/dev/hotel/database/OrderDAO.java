@@ -17,6 +17,7 @@ import java.util.List;
  * This means adding an order to the database, and getting all orders from the
  * database.
  */
+@Deprecated
 public class OrderDAO {
     // The driver of the connected database.
     private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";

@@ -19,7 +19,6 @@ public class OrderWithUsernameDAO {
     public void addOrder(OrderWithUsername order) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
-        Statement statement2 = null;
 
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
