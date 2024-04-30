@@ -17,8 +17,9 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 0 10px 5px rgba(0.5, 0.5, 1, 1);
-    background-color: rgba(255, 255, 255, 0.66);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, .8);
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
     /* 2/3 translucent */
 }
 
