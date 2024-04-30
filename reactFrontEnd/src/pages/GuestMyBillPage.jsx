@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 function GuestMyBillPage()  {
   const user = getSessionStorage('user', null);
   const [bill, setBill] = useState([]);
+  const [cancelledReservations, setCancelledReservations] = useState([]);
 
   useEffect(() => {
     if(user !== null)  {
@@ -33,6 +34,7 @@ function GuestMyBillPage()  {
       .then(response => response.json())
       .then(data => {
         setBill(data);
+        setCancelledReservations(data.cancelledReservations);
       })
   }
 
@@ -49,7 +51,7 @@ function GuestMyBillPage()  {
       <p className="your-bill-text">Your Bill</p>
       {user !== null ? 
       <>
-        <ReservationBill/>
+        <ReservationBill bill={bill}/>
         <ShoppingBill />
         <p className="total-bill-text">Total Bill: {(Math.round(bill.billTotal * 100) / 100).toFixed(2)}</p>
         <button className="pay-bill-button" onClick={payBillRedirect}>

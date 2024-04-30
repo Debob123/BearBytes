@@ -314,6 +314,90 @@ public class ReservationDAO implements IReservationDAO {
     }
 
     /**
+     * Obtains all cancelled reservations for a user from the database.
+     *
+     * @param username The username to find all the reservations of.
+     * @return A collection of all the current reservations matching the username.
+     * @throws SQLException If a database access error occurs.
+     */
+    public Collection<Reservation> getAllCancelled(String username) throws SQLException {
+        Connection c = getDBConnection();
+        PreparedStatement ps = null;
+        List<Reservation> reservations = new ArrayList<>();
+        if(username.startsWith("\"") && username.endsWith("\"") || username.startsWith("\'") && username.endsWith("\'")) {
+            username = username.substring(1, username.length() - 1);
+        }
+
+        try {
+            // Prepare the query's
+            String query = "SELECT * FROM Reservations r JOIN Bookings b ON r.reservationID = b.reservationID " +
+                    "JOIN Rooms rm ON rm.roomNumber = b.roomNumber WHERE r.username = ? AND r.status = ? ORDER BY b.reservationID DESC";
+            ps = c.prepareStatement(query);
+
+            // Retrieve the reservations
+            ps.setString(1, username);
+            ps.setString(2, "CANCELLED");
+            ResultSet rs = ps.executeQuery();
+
+            // Add the rooms to the reservation
+            Map<Integer, List<Room>> resRooms = new HashMap<>();
+            Integer prevResID;
+            Integer reservationID = null;
+            String prevStart;
+            String prevEnd;
+            boolean hasReservations = false;
+            String start = null, end = null;
+            while (rs.next()) {
+                prevResID = reservationID;
+                prevStart = start;
+                prevEnd = end;
+                reservationID = rs.getInt("reservationID");
+                start = rs.getString("startDate");
+                end = rs.getString("endDate");
+                if (prevResID == null && prevStart == null && prevEnd == null) {
+                    prevResID = reservationID;
+                    prevStart = start;
+                    prevEnd = end;
+                    hasReservations = true;
+                }
+                // Get room information
+                Integer roomNumber = rs.getInt("roomNumber");
+                Integer floor = rs.getInt("floor");
+                Integer numBeds = rs.getInt("numBeds");
+                Double dailyRate = rs.getDouble("dailyRate");
+                Boolean smokingAllowed = rs.getBoolean("smokingAllowed");
+                String bedSize = rs.getString("bedSize");
+                String type = rs.getString("type");
+                String quality = rs.getString("quality");
+
+                List<Room> rooms = resRooms.getOrDefault(reservationID, new ArrayList<Room>());
+                rooms.add(new Room(roomNumber, floor, numBeds, dailyRate, smokingAllowed,
+                        Room.BedType.getEnum(bedSize), Room.RoomType.getEnum(type),
+                        Room.QualityLevel.getEnum(quality)));
+                resRooms.put(reservationID, rooms);
+
+                if (!prevResID.equals(reservationID)) {
+                    reservations.add(new Reservation(prevResID, resRooms.get(prevResID), prevStart, prevEnd, username, null));
+                }
+            }
+            if (hasReservations) {
+                reservations.add(new Reservation(reservationID, resRooms.get(reservationID), start, end, username, ""));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+        }
+
+        return reservations;
+    }
+
+    /**
      * Gets the Connection to the hotel's database.
      *
      * @return A connection to the database.

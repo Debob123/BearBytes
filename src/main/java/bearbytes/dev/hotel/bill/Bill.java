@@ -13,9 +13,11 @@ public class Bill {
     private double shoppingTotal = 0.0;
     private double shoppingTax = 0.0;
     private double shoppingSubTotal = 0.0;
+    private double cancelationTotal = 0.0;
     private double billTotal = 0.0;
     private String username;
     private List<Reservation> reservations;
+    private List<Reservation> cancelledReservations;
     private List<Order> orders;
 
     public Integer getBillID()  {
@@ -54,10 +56,19 @@ public class Bill {
         return username;
     }
 
-    public Bill(List<Reservation> reservations, List<Order> orders, String username, Integer billID)  {
+    public List<Reservation> getCancelledReservations() {
+        return cancelledReservations;
+    }
+
+    public double getCancelationTotal() {
+        return cancelationTotal;
+    }
+
+    public Bill(List<Reservation> reservations, List<Order> orders, String username, Integer billID, List<Reservation> cancelledReservations)  {
         this.billID = billID;
         this.username = username;
         this.reservations = reservations;
+        this.cancelledReservations = cancelledReservations;
         this.orders = orders;
 
         for(Order o : orders)  {
@@ -75,12 +86,16 @@ public class Bill {
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-
-
             Long daysStayed = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
             reservationTotal += reservation.getRate() * daysStayed;
         }
-        billTotal = shoppingTotal + reservationTotal;
+
+        for(Reservation reservation : cancelledReservations)  {
+            cancelationTotal += reservation.getCancellationFee();
+        }
+
+
+        billTotal = shoppingTotal + reservationTotal + cancelationTotal;
     }
 
     @Override

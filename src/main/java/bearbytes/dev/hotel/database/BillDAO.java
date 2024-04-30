@@ -30,10 +30,12 @@ public class BillDAO {
      * @return A collection of all orders in the database.
      * @throws SQLException If a database access error occurs.
      */
-    public Bill generateBill(List<Reservation> reservations, List<Order> orders, String username) throws SQLException {
+    public Bill generateBill(List<Reservation> reservations, List<Order> orders, String username, List<Reservation> cancelledReservations) throws SQLException {
         Random rand = new Random();
-        Bill bill = new Bill(reservations, orders, username, rand.nextInt());
+        Bill bill = new Bill(reservations, orders, username, rand.nextInt(), cancelledReservations);
         return bill;
+
+
         /*
         Connection dbConnection = null;
         Statement statement = null;

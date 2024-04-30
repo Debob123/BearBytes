@@ -47,8 +47,9 @@ public class BillController {
     public Bill generateBill(@RequestBody String username) throws ClassNotFoundException, SQLException {
         try {
             List<Reservation> reservations = new ArrayList<>(reservationDAO.getAll(username));
+            List<Reservation> cancelledReservations = new ArrayList<>(reservationDAO.getAllCancelled(username));
             List<Order> orders = new ArrayList<>(orderDAO.getOrders(username));
-            return billDAO.generateBill(reservations, orders, username);
+            return billDAO.generateBill(reservations, orders, username, cancelledReservations);
 
         } catch (Exception e) {
             e.printStackTrace();
