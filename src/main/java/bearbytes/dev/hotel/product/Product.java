@@ -42,21 +42,6 @@ public class Product {
         this.points = points;
     }
 
-    /**
-     * The Default Constructor for a Product. Creates a unique id for the product,
-     * names it, gives it a price and links an image.
-     *
-     * @param id    The unique id of the product.
-     * @param name  The name of the product.
-     * @param price The price of one instance of the product.
-     * @param image A link to an image of this product.
-     */
-    public Product(int id, String name, double price, String image) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.image = image;
-    }
 
     /**
      * Gets the name of the product.

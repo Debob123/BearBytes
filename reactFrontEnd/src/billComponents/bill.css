@@ -28,7 +28,7 @@
 .pay-bill-button  {
   width: 150px;
   height: 30px;
-  margin: auto 50% 2% 45%;
+  margin: auto 50% 2% 44%;
   font-size: 20px;
 }
 
@@ -36,4 +36,8 @@
   font-family: courier;
   font-size: 20px;
   text-align: center;
+}
+
+.reservation-cancelation-text  {
+  margin-left: 35px;
 }

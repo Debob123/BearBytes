@@ -1,4 +1,4 @@
-import GuestHeader from '../components/GuestHeader';
+import GuestNavigation from '../components/GuestNavigation';
 import './styles/guestMyBill.css';
 import getSessionStorage from '../authentication/GetSessionStorage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,9 +9,11 @@ function GuestMyBillPage()  {
 
   return(
     <div>
-      <GuestHeader />
+      
+      <GuestNavigation />
+      <div className="white-space-fix">ignore</div>
       <div className="pay-bill-container">
-        <p className="bill-total-text">Bill Total: {billTotal.toFixed(2)}</p>
+        <p className="bill-total-text">Bill Total: ${billTotal.toFixed(2)}</p>
         <p className="pay-with-card-text">Pay with card <FontAwesomeIcon icon={faCreditCard} /></p> 
         <form className="bill-form">
           <div className="payment-method-container">

@@ -2,6 +2,7 @@ package bearbytes.dev.hotel.database;
 
 import bearbytes.dev.hotel.checkout.OrderWithUsername;
 import bearbytes.dev.hotel.product.Product;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -204,6 +205,12 @@ public class OrderWithUsernameDAOTest {
         }
         return dbConnection;
     }
+
+    @AfterEach
+    void resetTables()  {
+        clearDB();
+    }
+
 
 
     static void clearDB()  {

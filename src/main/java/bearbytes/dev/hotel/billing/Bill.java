@@ -7,6 +7,7 @@ import java.util.List;
  * This class holds all information in order to charge an account
  * for a purchase that was made.
  */
+@Deprecated
 public class Bill {
     // The unique id for this bill, that seperates it from other purchases.
     private int billId;

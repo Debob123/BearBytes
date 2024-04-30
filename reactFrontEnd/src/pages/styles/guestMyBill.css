@@ -1,14 +1,13 @@
 .your-bill-text  {
   text-align: center;
-  padding: 20px;
-  margin-top: 100px;
+  
 }
 
 .sign-in-text  {
   text-align: center;
   padding: 20px;
-  margin-top: 100px;
   font-size: 50px;
+  width: 83%;
 }
 
 .bill-form  {
@@ -23,4 +22,13 @@
   margin-top: 100px;
   border-style: solid;
   padding: 20px;
+}
+
+.my-bill-container  {
+  margin-left: 10vw;
+  width: 83%;
+}
+
+.white-space-fix  {
+  width: 83%;
 }

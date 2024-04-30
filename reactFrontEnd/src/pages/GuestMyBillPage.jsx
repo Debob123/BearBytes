@@ -1,6 +1,7 @@
 import ReservationBill from '../billComponents/ReservationBill';
 import ShoppingBill from '../billComponents/ShoppingBill';
-import GuestHeader from '../components/GuestHeader';
+import CancelationBill from '../billComponents/CancelationBill';
+import GuestNavigation from '../components/GuestNavigation';
 import './styles/guestMyBill.css';
 import getSessionStorage from '../authentication/GetSessionStorage';
 import { useState, useEffect } from 'react';
@@ -13,6 +14,8 @@ function GuestMyBillPage()  {
   const user = getSessionStorage('user', null);
   const [bill, setBill] = useState([]);
   const [cancelledReservations, setCancelledReservations] = useState([]);
+  const [billedReservations, setBilledReservations] = useState([]);
+  const [billedOrders, setBilledOrders] = useState([]);
 
   useEffect(() => {
     if(user !== null)  {
@@ -35,6 +38,8 @@ function GuestMyBillPage()  {
       .then(data => {
         setBill(data);
         setCancelledReservations(data.cancelledReservations);
+        setBilledReservations(data.reservations);
+        setBilledOrders(data.orders)
       })
   }
 
@@ -47,18 +52,24 @@ function GuestMyBillPage()  {
 
   return(
     <div>
-      <GuestHeader />
-      <p className="your-bill-text">Your Bill</p>
-      {user !== null ? 
-      <>
-        <ReservationBill bill={bill}/>
-        <ShoppingBill />
-        <p className="total-bill-text">Total Bill: {(Math.round(bill.billTotal * 100) / 100).toFixed(2)}</p>
-        <button className="pay-bill-button" onClick={payBillRedirect}>
-        <FontAwesomeIcon className="cart-icon" icon={faFileInvoiceDollar} /> Pay Bill
-        </button>
-      </> : 
-      <p className="sign-in-text">Please sign in <a href="/login"n>here</a> to see bill</p>}
+      <GuestNavigation />
+      <div className="white-space-fix">ignore</div>
+      <div className="my-bill-container">
+        <p className="your-bill-text">Your Bill</p>
+        {user != null ? 
+        <>
+          <ReservationBill billedReservations={billedReservations} bill={bill}/>
+          <CancelationBill cancelledReservations={cancelledReservations} bill={bill} />
+          <ShoppingBill billedOrders={billedOrders} bill={bill} />
+          <div className="pay-container">
+            <p className="total-bill-text">Total Bill: ${(Math.round(bill.billTotal * 100) / 100).toFixed(2)}</p>
+            <button className="pay-bill-button" onClick={payBillRedirect}>
+            <FontAwesomeIcon className="invoice-icon" icon={faFileInvoiceDollar} /> Pay Bill
+            </button>
+          </div>
+        </> : 
+        <p className="sign-in-text">Please sign in <a href="/login"n>here</a> to see bill</p>}
+      </div>
     </div>
   )
   
