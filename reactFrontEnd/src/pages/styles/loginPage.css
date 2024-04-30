@@ -28,3 +28,10 @@
 .main-title {
     font-size: max(24px, 6vw);
 }
+
+body {
+    background-image: url('../../images/login-screen.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
