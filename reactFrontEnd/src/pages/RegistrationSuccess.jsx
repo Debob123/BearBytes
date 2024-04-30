@@ -1,19 +1,19 @@
 import Icon from '@mdi/react';
 import { mdiCheckCircleOutline } from '@mdi/js';
 import './styles/accountRegistration.css'
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function RegistrationSuccess() {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/login');
+        navigate('/');
     }
 
     return (
         <div className="result-container">
             <div className="flex-result">
-                <Icon path={mdiCheckCircleOutline} size={10} color="green" className="center-item"/>
+                <Icon path={mdiCheckCircleOutline} size={10} color="green" className="center-item" />
                 <h1 className="green center-item">Success</h1>
             </div>
             <div className="flex-result">
