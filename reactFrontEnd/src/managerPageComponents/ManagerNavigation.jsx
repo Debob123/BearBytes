@@ -19,7 +19,7 @@ function ManagerNavigation() {
         navigate("/registerManager")
     }
 
-    const logoutManager = () => {
+    const logOut = () => {
         if (window.confirm("Are you sure you want to log out?")) {
             sessionStorage.removeItem('user');
             navigate("/");
@@ -29,10 +29,10 @@ function ManagerNavigation() {
     return (
         <div className="nav">
             <p className="profile">{user ? "Welcome " + user.username : "Error loading profile"}!</p>
-            <Button text="Home" onClick={managerHomeRedirect} height="6vh"/>
+            <Button text="Home" onClick={managerHomeRedirect} height="6vh" />
             <Button text="Log Out" onClick={logOut} height="4vh" />
-            <Button text="Edit Profile" onClick={profileRedirect} height="4vh"/>
-            <Button text="Register Manager" onClick={registerManagerRedirect} height="4vh"/>
+            <Button text="Edit Profile" onClick={profileRedirect} height="4vh" />
+            <Button text="Register Manager" onClick={registerManagerRedirect} height="4vh" />
         </div>
     )
 }
