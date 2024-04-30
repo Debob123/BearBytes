@@ -205,13 +205,13 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                 <p>Start date: {reservation.startDate}</p>
                 <p>End date:   {reservation.endDate}</p>
                 <p>Nights staying: {numDays}</p>
-                <p>Total cost: ${reservation.rate * numDays}</p>
+                <p>Total cost: ${(reservation.rate * numDays).toFixed(2)}</p>
                 <p>Rooms: {reservation.rooms.map((room) =>(
                     <span key={room.number}>{room.number} </span>
                 )
                 )}</p>
                 {timeUntilReservation > 0 ? 
-                timeUntilReservation < 2  ? <p>Cancellation fee: {reservation.rate*0.8}</p> : <p>No cancellation fee</p>
+                timeUntilReservation < 2  ? <p>Cancellation fee: ${(reservation.rate*0.8).toFixed(2)}</p> : <p>No cancellation fee</p>
                 : <p>You cannot cancel a reservation after the start date</p>}
                 {
                 timeUntilReservation > 0 && (<div>
@@ -274,7 +274,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                                     <span className="grid-item">{room.number}</span> 
                                     <span className="grid-item">{room.numBeds}</span> 
                                     <span className="grid-item">{room.quality}</span> 
-                                    <span className="grid-item">{room.dailyRate}</span> 
+                                    <span className="grid-item">${room.dailyRate.toFixed(2)}</span> 
                                     <button className="room-btn" onClick={() => removeRoom(room)}>Remove</button></div>
                             ))}
                         </div> 
@@ -314,7 +314,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                                     <span className="grid-item">{room.number}</span> 
                                     <span className="grid-item">{room.numBeds}</span> 
                                     <span className="grid-item">{room.quality}</span> 
-                                    <span className="grid-item">{room.dailyRate}</span> 
+                                    <span className="grid-item">${room.dailyRate.toFixed(2)}</span> 
                                     <button className="room-btn" onClick={() => addRoom(room)}>Add</button></div>
                             ))}
                         </div> 
@@ -325,7 +325,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
             <img src={imgLink} alt="reservation" />
             <p>Start date: {reservation.startDate}</p>
             <p>End date: {reservation.endDate}</p>
-            <p>Daily rate: {reservation.rate}</p>
+            <p>Daily rate: ${reservation.rate.toFixed(2)}</p>
             <p>Status: {reservation.reservationStatus}</p>
             <div className="res-btns">
                 <button className="res-btn" onClick={openModify}>Modify</button>

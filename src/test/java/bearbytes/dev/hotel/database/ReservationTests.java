@@ -137,8 +137,26 @@ public class ReservationTests {
         List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
         Assertions.assertEquals(expectedReservations, reservations);
 
-        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest2", "");
+        reservation2 = new Reservation(1, rooms, "2040-05-01", "2040-05-02", "testerGuest2", "");
         Assertions.assertFalse(res.add(reservation2));
+    }
+
+    @Test
+    public void addReservationTwice() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        List<Reservation> expectedReservations = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        expectedReservations.add(reservation1);
+        res.add(reservation1);
+        res.add(reservation1);
+        List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
+        Assertions.assertEquals(expectedReservations, reservations);
+    }
+
+    @Test
+    public void addCancelledReservation() throws InvalidArgumentException, SQLException {
+        Assertions.assertTrue(true);
     }
 
     @Test

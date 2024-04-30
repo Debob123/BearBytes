@@ -5,12 +5,12 @@ import GuestNavigation from '../components/GuestNavigation';
 import './styles/guestMyBill.css';
 import getSessionStorage from '../authentication/GetSessionStorage';
 import { useState, useEffect } from 'react';
-import { faFileInvoiceDollar} from '@fortawesome/free-solid-svg-icons';
+import { faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 
 
-function GuestMyBillPage()  {
+function GuestMyBillPage() {
   const user = getSessionStorage('user', null);
   const [bill, setBill] = useState([]);
   const [cancelledReservations, setCancelledReservations] = useState([]);
@@ -18,22 +18,22 @@ function GuestMyBillPage()  {
   const [billedOrders, setBilledOrders] = useState([]);
 
   useEffect(() => {
-    if(user !== null)  {
+    if (user !== null) {
       generateBill();
     }
-  },[]);
+  }, []);
 
   function generateBill() {
-      let body = JSON.stringify(user.username);
+    let body = JSON.stringify(user.username);
 
-      fetch('http://localhost:8080/bill/generateBill', {
+    fetch('http://localhost:8080/bill/generateBill', {
       mode: 'cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-        body: body
-      })
+      body: body
+    })
       .then(response => response.json())
       .then(data => {
         setBill(data);
@@ -72,7 +72,6 @@ function GuestMyBillPage()  {
       </div>
     </div>
   )
-  
 }
 
 export default GuestMyBillPage;

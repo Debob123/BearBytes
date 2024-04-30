@@ -54,7 +54,7 @@ function CheckInAndOut() {
         <div>
             <ClerkNavigation/>
             <div className="content">
-                <h1 className="center-text">Guest Check In/Out</h1>
+                <h1 className="center-text" style={{ fontSize: '4em' }} >Guest Check In/Out</h1>
                 <div className="center-input top-space">
                     <label htmlFor="username">Enter guest username:</label>
                     <input type="text" 
