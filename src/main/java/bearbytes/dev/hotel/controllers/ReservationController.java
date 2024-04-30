@@ -41,7 +41,7 @@ public class ReservationController {
     public Boolean add(@RequestBody Reservation reservation) {
         try {
             return resDAO.add(reservation);
-        } catch (SQLException | InvalidArgumentException e ) {
+        } catch (SQLException | InvalidArgumentException e) {
             e.printStackTrace();
         }
         return false;
@@ -60,7 +60,7 @@ public class ReservationController {
     public Collection<Integer> modify(@RequestBody Reservation[] reservations) {
         try {
             return resDAO.modify(reservations);
-        } catch (SQLException | InvalidArgumentException e ) {
+        } catch (SQLException | InvalidArgumentException e) {
             e.printStackTrace();
         }
         List<Integer> result = new ArrayList<>();
@@ -87,12 +87,12 @@ public class ReservationController {
             Date start = dateFormat.parse(reservation.getStartDate());
             long diffInMili = start.getTime() - today.getTime();
             long diff = TimeUnit.DAYS.convert(diffInMili, TimeUnit.MILLISECONDS);
-            if(diff < 2) {
+            if (diff < 2) {
                 return resDAO.cancel(reservation);
             } else {
                 return resDAO.remove(reservation);
             }
-        } catch (SQLException | InvalidArgumentException | ParseException e ) {
+        } catch (SQLException | InvalidArgumentException | ParseException e) {
             e.printStackTrace();
         }
         return false;
@@ -111,6 +111,24 @@ public class ReservationController {
     public Collection<Reservation> get(@RequestBody String username) throws ClassNotFoundException, SQLException {
         try {
             return resDAO.getAll(username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    /**
+     * Gets a collection of all current reservations.
+     *
+     * @return A Collection of all the reservations.
+     * @throws ClassNotFoundException If the required class is not found.
+     * @throws SQLException           If a database access error occurs.
+     */
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/getAllReservations")
+    public Collection<Reservation> getAllReservations() throws ClassNotFoundException, SQLException {
+        try {
+            return resDAO.getAllRes();
         } catch (Exception e) {
             e.printStackTrace();
         }

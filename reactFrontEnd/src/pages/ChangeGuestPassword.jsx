@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import ClerkNavigation from "../clerkPageComponents/ClerkNavigation";
 
 function ChangeGuestPassword() {
 
     const [username, setUsername] = useState('');
     const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
 
     const handleChangePassword = (e) => {
         e.preventDefault();
@@ -20,9 +22,11 @@ function ChangeGuestPassword() {
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                    setMessage('Password changed to: password');
+                    setMessage('Password successfully changed to: password');
+                    setMessageType('success');
                 } else {
-                    setMessage('Password reset failed');
+                    setMessage('Password reset failed. Please try again.');
+                    setMessageType('danger');
                 }
             })
             .catch(error => { console.error('Error resetting Password'); });
@@ -30,17 +34,32 @@ function ChangeGuestPassword() {
 
     return (
         <div>
-            <h1>Change Guest Password</h1>
+            <ClerkNavigation />
             <div>
-                <input
-                    type="text"
-                    placeholder="Guest Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <button onClick={handleChangePassword}>Reset Password</button>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <h1 style={{ fontSize: '4em' }}>Change Guest Password</h1>
+                </div>
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                        <p>Enter a guest username and press the button to reset their password to: 'password'</p>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                        <input
+                            type="text"
+                            placeholder="Guest Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            style={{ width: '200px' }}
+                        />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                        <button style={{ width: '150px' }} onClick={handleChangePassword}>Reset Password</button>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                        {message && <div className={`alert alert-${messageType}`} role="alert">{message}</div>}
+                    </div>
+                </div>
             </div>
-            {message && <p>{message}</p>}
         </div>
     );
 }
