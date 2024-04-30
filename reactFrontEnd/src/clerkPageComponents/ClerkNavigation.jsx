@@ -41,9 +41,11 @@ function ClerkNavigation() {
         navigate("/guestPasswordReset")
     }
 
-    const logOut = () => {
-        sessionStorage.removeItem('user');
-        navigate("/");
+    const logoutClerk = () => {
+        if (window.confirm("Are you sure you want to log out?")) {
+            sessionStorage.removeItem('user');
+            navigate("/");
+        }
     }
 
     return (
