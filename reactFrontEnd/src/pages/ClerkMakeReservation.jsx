@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ClerkNavigation from '../clerkPageComponents/ClerkNavigation';
 import singleRoom from '../images/hotelRoom1.jpg'
@@ -14,6 +14,25 @@ function ClerkMakeReservation() {
     const [submitted, setSubmitted] = useState(false);
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
+    const [selectedFloor, setSelectedFloor] = useState(null);
+    const [selectedBeds, setSelectedBeds] = useState(null);
+    const [smoking, setSmoking] = useState(null);
+    const [bedType, setBedType] = useState(null);
+    const [roomType, setRoomType] = useState(null);
+    const [qualityLevel, setQualityLevel] = useState(null);
+    const [allRooms, setAllRooms] = useState([]);
+
+
+    useEffect(() => {
+        let filteredRooms = allRooms.filter(room =>
+            (selectedFloor === null || room.floor === selectedFloor) &&
+            (selectedBeds === null || room.numBeds === selectedBeds) &&
+            (smoking === null || room.smokingAllowed === smoking) &&
+            (bedType === null || bedType === room.bedSize) &&
+            (roomType === null || roomType === room.type)
+        );
+        setRooms(filteredRooms);
+    }, [selectedFloor, selectedBeds, smoking, bedType, roomType, allRooms]);
 
     // Fetch all of the available rooms
     const renderRooms = (e) => {
@@ -32,6 +51,9 @@ function ClerkMakeReservation() {
 
         console.log(`Start date: ${startingDate}, End date: ${endingDate}`);
 
+
+
+
         if (!isNaN(startingDate) && !isNaN(endingDate) && end > start && startingDate > currDate) {
             let dateRange = [start, end]
             sessionStorage.setItem('dates', JSON.stringify(dateRange));
@@ -46,8 +68,7 @@ function ClerkMakeReservation() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Set the array of room objects
-                    setRooms(data);
+                    setAllRooms(data);
                     setSubmitted(true);
                 })
                 .catch(error => console.error('Error creating room array:', error));
@@ -60,6 +81,7 @@ function ClerkMakeReservation() {
             navigate("/clerkConfirmReservation")
         }
     }
+
 
     const displayRooms = () => {
         return (
@@ -107,11 +129,80 @@ function ClerkMakeReservation() {
         }
     }
 
+    const handleFloorChange = (event) => {
+        setSelectedFloor(event.target.value === 'All' ? null : parseInt(event.target.value));
+    }
+
+    const handleBedChange = (event) => {
+        setSelectedBeds(event.target.value === 'All' ? null : parseInt(event.target.value));
+    }
+
+    const handleSmokingChange = (event) => {
+        setSmoking(event.target.value === "Both" ? null : event.target.value === "Yes");
+    }
+
+    const handleBedTypeChange = (event) => {
+        setBedType(event.target.value === 'All' ? null : event.target.value);
+    }
+
+    const handleRoomTypeChange = (event) => {
+        setRoomType(event.target.value === 'All' ? null : event.target.value);
+    }
+
     return (
         <div>
             <ClerkNavigation />
             <div className="content">
+
                 <h1 className="center-text" style={{ fontSize: '4em' }} >Guest Reservation</h1>
+                <div className='floor-number-filter' style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <label htmlFor='floor-select'>Select Floor: </label>
+                    <select id="floor-select" onChange={handleFloorChange} value={selectedFloor === null ? 'All' : selectedFloor}>
+                        <option value="All">All Floors</option>
+                        <option value="1">1st Floor</option>
+                        <option value="2">2nd Floor</option>
+                        <option value="3">3rd Floor</option>
+                    </select>
+                    <div style={{ margin: '0 10px' }}></div>
+                    <label htmlFor='bed-number-select'>   Select Number of Beds: </label>
+
+                    <select id="bed-select" onChange={handleBedChange} value={selectedBeds === null ? 'All' : selectedBeds}>
+                        <option value="All">Any</option>
+                        <option value="1">1 Bed</option>
+                        <option value="2">2 Beds</option>
+                        <option value="3">3 Beds</option>
+                    </select>
+                    <div style={{ margin: '0 10px' }}></div>
+
+                    <label htmlFor='smoking-select'>   Select Smoking: </label>
+                    <select id="smoking-select" onChange={handleSmokingChange} value={smoking === null ? "Both" : smoking ? "Yes" : "No"}>
+                        <option value="Both">Both</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <div style={{ margin: '0 10px' }}></div>
+
+                    <label htmlFor='bed-type-select'>   Select Bed Type: </label>
+                    <select id="bed-type-select" onChange={handleBedTypeChange} value={bedType === null ? "All" : bedType}>
+                        <option value="All">Any</option>
+                        <option value="FULL">Full</option>
+                        <option value="KING">King</option>
+                        <option value="QUEEN">Queen</option>
+                        <option value="TWIN">Twin</option>
+                    </select>
+                    <div style={{ margin: '0 10px' }}></div>
+
+                    <label htmlFor='room-type-select'>   Select Room Type: </label>
+                    <select id="room-type-select" onChange={handleRoomTypeChange} value={roomType === null ? "All" : roomType}>
+                        <option value="All">Any</option>
+                        <option value="SINGLE">Single</option>
+                        <option value="DOUBLE">Double</option>
+                        <option value="FAMILY">Family</option>
+                        <option value="SUITE">Suite</option>
+                        <option value="STANDARD">Standard</option>
+                        <option value="DELUXE">Deluxe</option>
+                    </select>
+                </div>
                 <div className="center-input top-space">
                     <label htmlFor="start_date">Start date:</label>
                     <input
