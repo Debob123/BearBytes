@@ -24,12 +24,18 @@ function GuestHeader() {
         navigate("/bill")
     }
 
+    const logOut = () => {
+        sessionStorage.removeItem('user');
+        navigate("/");
+    }
+
     return (
         <div className="header">
-            <Button text="Shop" onClick={shopRedirect}/>
-            <Button text="Reserve Room" onClick={reservationRedirect}/>
-            <Button text="My Reservations" onClick={myReservationsRedirect}/>
-            <Button text="My Bill" onClick={myBillRedirect}/>
+            <Button text="Shop" onClick={shopRedirect} />
+            <Button text="Reserve Room" onClick={reservationRedirect} />
+            <Button text="My Reservations" onClick={myReservationsRedirect} />
+            <Button text="My Bill" onClick={myBillRedirect} />
+            <Button text="Log Out" onClick={logOut} />
             <p className="profile">{user ? "Welcome " + user.username : "Error loading profile"}!</p>
         </div>
     )
