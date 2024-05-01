@@ -4,11 +4,9 @@ import bearbytes.dev.hotel.accounts.Guest;
 import bearbytes.dev.hotel.exceptions.InvalidArgumentException;
 import bearbytes.dev.hotel.floor.Room;
 import bearbytes.dev.hotel.interfaces.IReservationDAO;
-import bearbytes.dev.hotel.product.Product;
 import bearbytes.dev.hotel.reservation.Reservation;
 
 import java.sql.*;
-import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -81,7 +79,7 @@ public class ReservationDAO implements IReservationDAO {
             throw new InvalidArgumentException("The reservation cannot be null");
         } else if (reservation.getRooms() == null || reservation.getRooms().isEmpty()) {
             throw new InvalidArgumentException("The list of rooms cannot be null or empty");
-        } else if (reservation.getUsername() == null) {
+        } else if (reservation.getUsername() == null || reservation.getUsername().isEmpty()) {
             throw new InvalidArgumentException("This Guest's username is mandatory ");
         }
 
@@ -158,6 +156,9 @@ public class ReservationDAO implements IReservationDAO {
      *                                  data
      */
     public Collection<Integer> modify(Reservation[] reservations) throws SQLException, InvalidArgumentException {
+        if(reservations.length != 2 || reservations[0] == null || reservations[1] == null) {
+            throw new InvalidArgumentException("The reservations cannot be null or empty");
+        }
         List<Integer> rooms = (ArrayList) checkAvailability(reservations[1]);
         if (rooms.isEmpty()) {
             remove(reservations[0]);
@@ -174,11 +175,18 @@ public class ReservationDAO implements IReservationDAO {
      * @return True if the reservation is successfully removed, else false.
      * @throws SQLException             If a database access error occurs.
      * @throws InvalidArgumentException If the passed reservation does not have
-     *                                  valid data
+     *                                  valid data or null attributes
      */
     public boolean remove(Reservation r) throws SQLException, InvalidArgumentException {
         if (r == null) {
             throw new InvalidArgumentException("The reservation cannot be null");
+        } else if (r.getUsername() == null || r.getUsername().isEmpty()) {
+            throw new InvalidArgumentException("This Guest's username is mandatory ");
+        }
+
+        if (!AccountAuthenticator
+                .validateGuestUsername(new Guest(r.getUsername(), "", null, null, null, null))) {
+            throw new InvalidArgumentException("There is no guest with given username: " + r.getUsername());
         }
         Connection c = getDBConnection();
         PreparedStatement ps = null;
@@ -212,18 +220,26 @@ public class ReservationDAO implements IReservationDAO {
     }
 
     /**
-     * Cancels a reservation from the database.
+     * Changes a reservations status to cancelled in the database.
      *
      * @param r The reservation to cancel.
      * @return True if the reservation is successfully cancelled, else false.
      * @throws SQLException             If a database access error occurs.
      * @throws InvalidArgumentException If the passed reservation does not have
-     *                                  valid data
+     *                                  valid data or null attributes
      */
     public boolean cancel(Reservation r) throws SQLException, InvalidArgumentException {
         if (r == null) {
             throw new InvalidArgumentException("The reservation cannot be null");
+        } else if (r.getUsername() == null || r.getUsername().isEmpty()) {
+            throw new InvalidArgumentException("This Guest's username is mandatory ");
         }
+
+        if (!AccountAuthenticator
+                .validateGuestUsername(new Guest(r.getUsername(), "", null, null, null, null))) {
+            throw new InvalidArgumentException("There is no guest with given username: " + r.getUsername());
+        }
+
         Connection c = getDBConnection();
         PreparedStatement ps = null;
 
