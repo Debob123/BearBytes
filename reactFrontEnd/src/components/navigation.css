@@ -6,7 +6,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    background-color: gray;
+    background-color: rgba(27, 66, 27, 0.979);
     position: fixed;
     left: 0;
 }
@@ -14,12 +14,17 @@
 .profile {
     padding-right: 10px;
     margin: 0;
+    border: 1px solid white;
+    background-color: rgba(251, 255, 0, 0.979);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 10vh;
 }
 
 .button {
-    /* Normal button styles go here */
-    background-color: #00ba09;
-    /* Blue color */
+    background-color: #00ff0d;
     color: white;
     border: none;
     padding: 15px 32px;
@@ -28,12 +33,9 @@
     display: inline-block;
     font-size: 16px;
     transition-duration: 0.4s;
-    /* Optional - adds a transition effect */
 }
 
 .button:hover {
-    /* Styles to apply on hover go here */
     background-color: #e1ff00;
-    /* Green color */
     color: white;
 }
