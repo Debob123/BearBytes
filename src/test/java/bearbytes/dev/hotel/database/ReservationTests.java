@@ -5,10 +5,7 @@ import bearbytes.dev.hotel.controllers.ReservationController;
 import bearbytes.dev.hotel.exceptions.InvalidArgumentException;
 import bearbytes.dev.hotel.floor.Room;
 import bearbytes.dev.hotel.reservation.Reservation;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,9 +21,10 @@ public class ReservationTests {
     @BeforeAll
     public static void init() throws SQLException {
         AccountDAO acc = new AccountDAO();
-        acc.addGuest(new Guest("testerGuest", "password", null, null, null, null));
-        acc.addGuest(new Guest("testerGuest2", "password", null, null, null, null));
+        acc.addGuest(new Guest("testerGuest", "password", "guest2", null, null, null));
+        acc.addGuest(new Guest("testerGuest2", "password", "guest1", null, null, null));
     }
+
     @AfterEach
     public void tearDown() {
         try {
@@ -156,7 +154,20 @@ public class ReservationTests {
 
     @Test
     public void addCancelledReservation() throws InvalidArgumentException, SQLException {
-        Assertions.assertTrue(true);
+        List<Room> rooms = new ArrayList<>();
+        List<Reservation> expectedReservations = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        expectedReservations.add(reservation1);
+
+        res.add(reservation1);
+        res.cancel(reservation1);
+        List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
+        Assertions.assertTrue(reservations.isEmpty());
+
+        res.add(reservation1);
+        reservations = (List<Reservation>) res.getAll("testerGuest");
+        Assertions.assertEquals(expectedReservations, reservations);
     }
 
     @Test
@@ -173,5 +184,203 @@ public class ReservationTests {
         res.remove(reservation1);
         List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
         Assertions.assertEquals(0, reservations.size());
+    }
+
+    @Test
+    public void removeReservationsSameGuest() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        res.add(reservation1);
+        rooms = new ArrayList<>();
+        rooms.add(new Room(102, 1, 2, 200, true, Room.BedType.FULL, Room.RoomType.DOUBLE, Room.QualityLevel.ECONOMY));
+        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        res.add(reservation2);
+
+        res.remove(reservation1);
+        res.remove(reservation2);
+        List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
+
+        Assertions.assertTrue(reservations.isEmpty());
+    }
+
+    @Test
+    public void removeReservationsDifferentGuest() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        res.add(reservation1);
+        rooms = new ArrayList<>();
+        rooms.add(new Room(102, 1, 2, 200, true, Room.BedType.FULL, Room.RoomType.DOUBLE, Room.QualityLevel.ECONOMY));
+        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest2", "");
+        res.add(reservation2);
+
+        res.remove(reservation1);
+        List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
+        Assertions.assertTrue(reservations.isEmpty());
+
+        res.remove(reservation2);
+        reservations = (List<Reservation>) res.getAll("testerGuest2");
+        Assertions.assertTrue(reservations.isEmpty());
+    }
+
+    @Test
+    public void removeReservationNullUsername() {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", null, "");
+
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.remove(reservation1));
+    }
+
+    @Test
+    public void removeReservationEmptyUsername() {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "", "");
+
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.remove(reservation1));
+    }
+
+    @Test
+    public void removeReservationEmptyRooms() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+
+        Assertions.assertTrue(res.remove(reservation1));
+    }
+
+    @Test
+    public void removeReservationNotRealGuest() {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "notRealGuest", "");
+
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.remove(reservation1));
+    }
+
+    @Test
+    public void cancelNullReservation(){
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.cancel(null));
+    }
+
+    @Test
+    public void cancelReservation() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        res.add(reservation1);
+        res.cancel(reservation1);
+        List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
+        Assertions.assertEquals(0, reservations.size());
+    }
+
+    @Test
+    public void cancelReservationsSameGuest() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        res.add(reservation1);
+        rooms = new ArrayList<>();
+        rooms.add(new Room(102, 1, 2, 200, true, Room.BedType.FULL, Room.RoomType.DOUBLE, Room.QualityLevel.ECONOMY));
+        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        res.add(reservation2);
+
+        res.cancel(reservation1);
+        res.cancel(reservation2);
+        List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
+
+        Assertions.assertTrue(reservations.isEmpty());
+    }
+
+    @Test
+    public void cancelReservationsDifferentGuest() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+        res.add(reservation1);
+        rooms = new ArrayList<>();
+        rooms.add(new Room(102, 1, 2, 200, true, Room.BedType.FULL, Room.RoomType.DOUBLE, Room.QualityLevel.ECONOMY));
+        reservation2 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest2", "");
+        res.add(reservation2);
+
+        res.cancel(reservation1);
+        List<Reservation> reservations = (List<Reservation>) res.getAll("testerGuest");
+        Assertions.assertTrue(reservations.isEmpty());
+
+        res.cancel(reservation2);
+        reservations = (List<Reservation>) res.getAll("testerGuest2");
+        Assertions.assertTrue(reservations.isEmpty());
+    }
+
+    @Test
+    public void cancelReservationNullUsername() {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", null, "");
+
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.cancel(reservation1));
+    }
+
+    @Test
+    public void cancelReservationEmptyUsername() {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "", "");
+
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.cancel(reservation1));
+    }
+
+    @Test
+    public void cancelReservationEmptyRooms() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+
+        Assertions.assertTrue(res.cancel(reservation1));
+    }
+
+    @Test
+    public void cancelReservationNotRealGuest() {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "notRealGuest", "");
+
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.cancel(reservation1));
+    }
+
+    @Test
+    public void modifySameReservation() throws InvalidArgumentException, SQLException {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+
+        Reservation [] reservations = {reservation1, reservation1};
+        Assertions.assertTrue(res.modify(reservations).isEmpty());
+    }
+
+    @Test
+    public void modifyFirstReservationNull()  {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+
+        Reservation [] reservations = {null, reservation1};
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.modify(reservations));
+    }
+
+    @Test
+    public void modifySecondReservationNull()  {
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(new Room(101, 1, 1, 175.25, true, Room.BedType.TWIN, Room.RoomType.SINGLE, Room.QualityLevel.ECONOMY));
+        reservation1 = new Reservation(0, rooms, "2040-05-01", "2040-05-02", "testerGuest", "");
+
+        Reservation [] reservations = {reservation1, null};
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.modify(reservations));
+    }
+
+    @Test
+    public void modifyEmptyReservations() {
+        Reservation [] reservations = {};
+        Assertions.assertThrows(InvalidArgumentException.class, () -> res.modify(reservations));
     }
 }
