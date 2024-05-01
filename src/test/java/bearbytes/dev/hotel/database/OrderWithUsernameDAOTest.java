@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OrderWithUsernameDAOTest {
     static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
@@ -52,8 +53,8 @@ public class OrderWithUsernameDAOTest {
         List<OrderWithUsername> orders = null;
 
         try {
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
-            orders = new ArrayList<>(orderDAO.getOrders("\"Jake\""));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
+            orders = new ArrayList<>(orderDAO.getOrders("\"TestRobot\""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -70,13 +71,13 @@ public class OrderWithUsernameDAOTest {
         List<OrderWithUsername> orders = null;
 
         try {
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
-            orders = new ArrayList<>(orderDAO.getOrders("\"Jake\""));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
+            orders = new ArrayList<>(orderDAO.getOrders("\"TestRobot\""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        assertEquals("Jake", orders.get(0).getUsername(), "Username should be identical");
+        assertEquals("TestRobot", orders.get(0).getUsername(), "Username should be identical");
     }
 
     @Test
@@ -95,8 +96,8 @@ public class OrderWithUsernameDAOTest {
         List<OrderWithUsername> orders = null;
 
         try {
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
-            orders = new ArrayList<>(orderDAO.getOrders("\"Jake\""));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
+            orders = new ArrayList<>(orderDAO.getOrders("\"TestRobot\""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -123,22 +124,22 @@ public class OrderWithUsernameDAOTest {
             for(int i = 0; i < 3; i++)  {
                 purchasedProducts.add(new Product(i + 1, names[i], prices[i], images[i], 0));
             }
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
 
             purchasedProducts = new ArrayList<>();
             for(int i = 3; i < 7; i++)  {
                 purchasedProducts.add(new Product(i + 1, names[i], prices[i], images[i], 0));
             }
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
 
             purchasedProducts = new ArrayList<>();
             for(int i = 7; i < 8; i++)  {
                 purchasedProducts.add(new Product(i + 1, names[i], prices[i], images[i], 0));
             }
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
 
 
-            orders = new ArrayList<>(orderDAO.getOrders("\"Jake\""));
+            orders = new ArrayList<>(orderDAO.getOrders("\"TestRobot\""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -162,22 +163,22 @@ public class OrderWithUsernameDAOTest {
             for(int i = 0; i < 3; i++)  {
                 purchasedProducts.add(new Product(i + 1, names[i], prices[i], images[i], 0));
             }
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
 
             purchasedProducts = new ArrayList<>();
             for(int i = 3; i < 7; i++)  {
                 purchasedProducts.add(new Product(i + 1, names[i], prices[i], images[i], 0));
             }
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
 
             purchasedProducts = new ArrayList<>();
             for(int i = 7; i < 8; i++)  {
                 purchasedProducts.add(new Product(i + 1, names[i], prices[i], images[i], 0));
             }
-            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "Jake"));
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
 
 
-            orders = new ArrayList<>(orderDAO.getOrders("\"Jake\""));
+            orders = new ArrayList<>(orderDAO.getOrders("\"TestRobot\""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -187,8 +188,17 @@ public class OrderWithUsernameDAOTest {
         assertEquals("1, 2, 3", orderIds, "Order IDs should be unique and increment");
     }
 
+    @Test
+    void addNullOrder()  {
+        assertThrows(NullPointerException.class, () ->
+                orderDAO.addOrder(null)
+        );
+    }
 
-
+    @AfterEach
+    void resetTables()  {
+        clearDB();
+    }
 
     static Connection getDBConnection() {
         Connection dbConnection = null;
@@ -205,13 +215,6 @@ public class OrderWithUsernameDAOTest {
         }
         return dbConnection;
     }
-
-    @AfterEach
-    void resetTables()  {
-        clearDB();
-    }
-
-
 
     static void clearDB()  {
         Connection dbConnection = null;

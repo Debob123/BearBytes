@@ -22,12 +22,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/bill")
 public class BillController {
-    // An instance of an order via a Data Access Object
     private BillDAO billDAO;
     private ReservationDAO reservationDAO;
     private OrderWithUsernameDAO orderDAO;
 
-    // The Default Constructor for an OrderController: creates an orderDAO instance.
     BillController() {
         billDAO = new BillDAO();
         reservationDAO = new ReservationDAO();

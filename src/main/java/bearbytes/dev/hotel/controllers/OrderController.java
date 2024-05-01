@@ -18,7 +18,6 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/shop")
 public class OrderController {
-    // An instance of an order via a Data Access Object
     private OrderWithUsernameDAO orderDAO;
 
     // The Default Constructor for an OrderController: creates an orderDAO instance.
@@ -45,9 +44,17 @@ public class OrderController {
         return false;
     }
 
+    /**
+     * Retrieves all completed orders of a user
+     *
+     * @param username The username of guest.
+     * @return Collection of orders retrieved from database.
+     * @throws ClassNotFoundException If an Order was not found.
+     * @throws SQLException           If a database access error occurs.
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/getOrders")
-    public Collection<OrderWithUsername> add(@RequestBody String username) throws ClassNotFoundException, SQLException {
+    public Collection<OrderWithUsername> getOrders(@RequestBody String username) throws ClassNotFoundException, SQLException {
         try {
             return orderDAO.getOrders(username);
         } catch (Exception e) {

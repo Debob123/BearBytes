@@ -6,7 +6,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * This class holds all information in order to charge an account
+ * for a purchase that was made.
+ */
 public class Bill {
     private Integer billID;
     private double reservationTotal = 0.0;
@@ -64,6 +69,16 @@ public class Bill {
         return cancelationTotal;
     }
 
+    /**
+     * The Default Constructor for a Bill: stores a unique id, customer info, and
+     * payment details
+     *
+     * @param reservations List of current reservations
+     * @param orders       List of completed orders.
+     * @param username     Username of user whose bill is being generated.
+     * @param billID       The unique id of this bill.
+     * @param cancelledReservations     List of cancelled reservations
+     */
     public Bill(List<Reservation> reservations, List<Order> orders, String username, Integer billID, List<Reservation> cancelledReservations)  {
         this.billID = billID;
         this.username = username;
@@ -108,6 +123,19 @@ public class Bill {
                 ", billTotal=" + billTotal +
                 ", username='" + username + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bill bill = (Bill) o;
+        return Double.compare(reservationTotal, bill.reservationTotal) == 0 && Double.compare(shoppingTotal, bill.shoppingTotal) == 0 && Double.compare(shoppingTax, bill.shoppingTax) == 0 && Double.compare(shoppingSubTotal, bill.shoppingSubTotal) == 0 && Double.compare(cancelationTotal, bill.cancelationTotal) == 0 && Double.compare(billTotal, bill.billTotal) == 0 && Objects.equals(billID, bill.billID) && Objects.equals(username, bill.username) && Objects.equals(reservations, bill.reservations) && Objects.equals(cancelledReservations, bill.cancelledReservations) && Objects.equals(orders, bill.orders);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(billID, reservationTotal, shoppingTotal, shoppingTax, shoppingSubTotal, cancelationTotal, billTotal, username, reservations, cancelledReservations, orders);
     }
 }
 

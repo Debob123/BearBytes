@@ -10,12 +10,23 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
+/**
+ * The OrderWithUsernameDAO Class provides data access operations for Orders in the hotel.
+ * This means adding an order to the database, and getting all orders from the
+ * database.
+ */
 public class OrderWithUsernameDAO {
     private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String DB_CONNECTION = "jdbc:derby:myDB";
     private static final String DB_USER = "";
     private static final String DB_PASSWORD = "";
 
+    /**
+     * Adds an order to the hotel's database.
+     *
+     * @param order The order to add to the database.
+     * @throws SQLException If a database access error occurs.
+     */
     public void addOrder(OrderWithUsername order) throws SQLException {
         Connection dbConnection = null;
         Statement statement = null;
@@ -57,6 +68,13 @@ public class OrderWithUsernameDAO {
         }
     }
 
+    /**
+     * Gets all the orders in the hotel's database.
+     *
+     * @param username of guest whose orders are being retrieved
+     * @return A collection of all orders in the database.
+     * @throws SQLException If a database access error occurs.
+     */
     public Collection<OrderWithUsername> getOrders(String username) throws SQLException  {
         username = username.substring(1, username.length() - 1);
         List<OrderWithUsername> orders = new ArrayList<>();
@@ -120,6 +138,12 @@ public class OrderWithUsernameDAO {
         return orders;
     }
 
+    /**
+     * Gets the connection to the hotel's database.
+     *
+     * @return The connection to the database.
+     * @throws SQLException If a database access error occurs.
+     */
     private static Connection connectToDatabase () throws SQLException {
         Connection dbConnection = null;
         try {

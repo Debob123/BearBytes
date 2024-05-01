@@ -5,8 +5,6 @@ import bearbytes.dev.hotel.checkout.Order;
 import bearbytes.dev.hotel.reservation.Reservation;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +23,7 @@ public class BillDAO {
 
 
     /**
-     * Gets all the orders in the hotel's database.
+     * Generates a bill for a guest.
      *
      * @return A collection of all orders in the database.
      * @throws SQLException If a database access error occurs.
