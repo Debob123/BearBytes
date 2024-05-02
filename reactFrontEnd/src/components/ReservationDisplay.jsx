@@ -230,7 +230,9 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                 contentLabel="Modify Reservation"
             >
                 <button type="button" onClick={closeModify} className="close-btn">X</button>
-                {
+                { timeUntilReservation < 2 
+                ? <div className="center top-space"> You cannot modify within 2 days of reservation start</div> 
+                :
                 <div>
                     <h1>Modify Reservation</h1>
                     <p className={hidden + " red"}>Error modifying reservation</p>
@@ -280,7 +282,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                         </div> 
                     </div>
                     <div className="room-line"><button className="center room-add" onClick={openRooms}>Add Room</button></div>
-                    <div className="flex-row"><p>Done?</p> <button className="conf-modify"onClick={confirmModifications}>Confirm Modifications</button> </div>
+                    <div className="flex-row"><p>Done?</p> <button className="conf-modify"onClick={confirmModifications}>Confirm Modifications</button> </div> 
                     <div className={"red " + roomErrHidden}>Unable to confirm modifications because these</div>
                     <div className={"red " + roomErrHidden}>rooms are unavailable on selected dates: </div>
                     <div className={"red " + unknownErrHidden}>Unknown error occurred, please contact staff</div>

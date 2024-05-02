@@ -42,15 +42,8 @@ function ClerkMakeReservation() {
         let startingDate = new Date(start + "T00:00:00-0500");
         let endingDate = new Date(end + "T00:00:00-0500");
 
-        startingDate.setMinutes(startingDate.getMinutes() - startingDate.getTimezoneOffset());
-        endingDate.setMinutes(endingDate.getMinutes() - endingDate.getTimezoneOffset());
-
         console.log("Button Pressed!");
-
-
-
         console.log(`Start date: ${startingDate}, End date: ${endingDate}`);
-
 
 
 
