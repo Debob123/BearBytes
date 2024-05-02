@@ -110,7 +110,7 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
                     );
                     setReservations(reservations);
                 } else {
-                    setReservations(<li>Room is not occupied</li>);
+                    setReservations(<li>Room has no reservations.</li>);
                 }
                 setShowReservations(true); // Add this line
             })
