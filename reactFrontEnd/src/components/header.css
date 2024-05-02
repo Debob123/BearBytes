@@ -6,7 +6,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 4fr;
     gap: 20px;
     padding: 20px;
-    background-color: gray;
+    background-color: rgb(41, 106, 50);
     position: fixed;
     top: 0;
 }

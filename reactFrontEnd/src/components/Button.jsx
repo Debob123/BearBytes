@@ -1,13 +1,16 @@
-function Button({text="Button", color="black", fontSize=12, height, onClick=null}) {
+function Button({ text = "Button", color = "black", fontSize = 12, height, onClick = null, className = "" }) {
     const buttonStyle = {
         color: color,
         fontSize: fontSize + "px",
         borderRadius: "10px",
-        height: height 
+        height: height,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     };
 
     return (
-        <button style={buttonStyle} onClick={onClick}>
+        <button className={className} style={buttonStyle} onClick={onClick}>
             {text}
         </button>
     )
