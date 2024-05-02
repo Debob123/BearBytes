@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import singleRoom from '../images/hotelRoom1.jpg'
-import GuestHeader from "../components/GuestHeader.jsx";
 import { useNavigate } from 'react-router-dom';
 import BoxDisplay from '../components/BoxDisplay.jsx';
 import getSessionStorage from '../authentication/GetSessionStorage.js';
