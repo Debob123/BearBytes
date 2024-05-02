@@ -5,8 +5,11 @@ import bearbytes.dev.hotel.floor.Room;
 import bearbytes.dev.hotel.interfaces.IRoomDAO;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The RoomController class controls all interactions when looking at available
@@ -89,5 +92,16 @@ public class RoomController {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/status/{roomNumber}")
+    public List<Map<String, String>> getRoomStatus(@PathVariable int roomNumber) throws ClassNotFoundException {
+        try {
+            return rooms.roomStatus(roomNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // return an empty list in case of an exception
+        }
     }
 }

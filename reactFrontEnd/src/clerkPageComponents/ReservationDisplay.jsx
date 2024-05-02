@@ -231,7 +231,7 @@ function ReservationDisplay({ imgLink, reservation, reservations, setReservation
                 <button type="button" onClick={closeModify} className="close-btn">X</button>
                 {timeUntilReservation < 0  ? 
                 <div>
-                    <p>You cannot modify a reservation within 2 days of its start</p>
+                    <p>You cannot modify a reservation after its start</p>
                 </div> :
                 <div>
                     <h1>Modify Reservation</h1>

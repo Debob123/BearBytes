@@ -156,9 +156,13 @@ public class ReservationDAO implements IReservationDAO {
      *                                  data
      */
     public Collection<Integer> modify(Reservation[] reservations) throws SQLException, InvalidArgumentException {
-        if(reservations.length != 2 || reservations[0] == null || reservations[1] == null) {
+        if(reservations.length != 2 ) {
+            throw new InvalidArgumentException("There mus tbe 2 reservations in the array");
+        } else if(reservations[0] == null || reservations[1] == null) {
             throw new InvalidArgumentException("The reservations cannot be null or empty");
         }
+
+
         List<Integer> rooms = (ArrayList) checkAvailability(reservations[1]);
         if (rooms.isEmpty()) {
             remove(reservations[0]);

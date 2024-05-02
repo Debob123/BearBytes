@@ -6,7 +6,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    background-color: gray;
+    background-color: rgba(27, 66, 27, 0.979);
     position: fixed;
     left: 0;
 }
@@ -14,4 +14,28 @@
 .profile {
     padding-right: 10px;
     margin: 0;
+    border: 3px solid rgb(0, 0, 0);
+    background-color: rgba(251, 255, 0, 0.979);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 10vh;
+}
+
+.button {
+    background-color: #00ff0d;
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #e1ff00;
+    color: white;
 }

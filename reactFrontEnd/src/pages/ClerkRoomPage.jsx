@@ -1,4 +1,3 @@
-import ClerkHeader from '../clerkPageComponents/ClerkHeader';
 import ClerkRoomDisplay from '../clerkPageComponents/ClerkRoomDisplay';
 import ClerkNavigation from '../clerkPageComponents/ClerkNavigation';
 import Modal from 'react-modal';
