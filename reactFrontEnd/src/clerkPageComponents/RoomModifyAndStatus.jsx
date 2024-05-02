@@ -27,6 +27,9 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
     const [roomQuality, setRoomQuality] = useState(quality);
     const [smokingIsAllowed, setSmokingIsAllowed] = useState(smokingAllowed);
     const [isHidden, setIsHidden] = useState("hidden");
+    const [showReservations, setShowReservations] = useState(false);
+    const [reservations, setReservations] = useState([]);
+    const [reservationsModalIsOpen, setReservationsModalIsOpen] = useState(false);
 
     function modifyRoom(e) {
         e.preventDefault();
@@ -99,11 +102,23 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
             mode: 'cors',
             method: 'GET',
         })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
-                alert(data);
+                if (data.length > 0) {
+                    let reservations = data.map((reservation, index) =>
+                        <li key={index}>Occupied from {reservation.startDate} to {reservation.endDate}</li>
+                    );
+                    setReservations(reservations);
+                } else {
+                    setReservations(<li>Room is not occupied</li>);
+                }
+                setShowReservations(true); // Add this line
             })
             .catch(error => console.error('Error checking room status:', error));
+        setReservationsModalIsOpen(true);
+    }
+    function closeReservationsModal() {
+        setReservationsModalIsOpen(false);
     }
 
     return (
@@ -187,7 +202,17 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
                     <div className="center">
                         <p className={isHidden + " error-msg center"}>Failed to modify, the room number may be taken, or the room you are modifying does not exist</p>
                     </div>
+
                 </form>
+            </Modal>
+            <Modal
+                isOpen={reservationsModalIsOpen}
+                onRequestClose={closeReservationsModal}
+                style={customStyles}
+                contentLabel="Reservations Modal"
+            >
+                {/* Render the reservations inside this modal */}
+                <ul>{reservations}</ul>
             </Modal>
             <img src={imgLink} alt={type} />
             <p>Room number: {roomNum}</p>

@@ -6,7 +6,9 @@ import bearbytes.dev.hotel.interfaces.IRoomDAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -277,8 +279,9 @@ public class RoomDAO implements IRoomDAO {
     }
 
     @Override
-    public String roomStatus(int roomNumber) throws SQLException {
+    public List<Map<String, String>> roomStatus(int roomNumber) throws SQLException {
         Connection c = null;
+        List<Map<String, String>> reservations = new ArrayList<>();
         try {
             c = getDBConnection();
             String query = "SELECT APP.Reservations.startDate, APP.Reservations.endDate FROM APP.Rooms JOIN APP.Bookings ON APP.Bookings.roomNumber = APP.Rooms.roomNumber"
@@ -288,21 +291,20 @@ public class RoomDAO implements IRoomDAO {
             stmt.setInt(1, roomNumber);
             stmt.setString(2, "CANCELLED");
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String startDate = rs.getString("startDate");
-                String endDate = rs.getString("endDate");
-                return "Room is occupied from " + startDate + " to " + endDate;
-            } else {
-                return "Room is not occupied";
+            while (rs.next()) {
+                Map<String, String> reservation = new HashMap<>();
+                reservation.put("startDate", rs.getString("startDate"));
+                reservation.put("endDate", rs.getString("endDate"));
+                reservations.add(reservation);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Error occurred while checking room status";
         } finally {
             if (c != null) {
                 c.close();
             }
         }
+        return reservations;
     }
 
     /**
