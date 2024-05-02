@@ -36,7 +36,7 @@ function ShoppingPage() {
             const end = new Date(reservation.endDate);
             // CHANGE DATE TO TIME IN BETWEEN RESERVATIONS TO ACCESS SHOP
             // EXAMPLE: 
-            //const current = new Date('2024-05-02');
+            //const current = new Date('2024-05-27');
             const current = new Date();
             if((current.valueOf() >= start.valueOf()) && (current.valueOf() <= end.valueOf()))  {
                 setCurrentlyStaying(true);
@@ -60,7 +60,7 @@ function ShoppingPage() {
         <div>
             <GuestNavigation/>
             <ShopHeader />
-            {currentlyStaying == true ? 
+            {currentlyStaying ? 
                 <ProductDisplay /> :
                 <p className="not-staying-message">Must be currently staying in a room to access shop!</p>
             }

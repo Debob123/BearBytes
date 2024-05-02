@@ -38,7 +38,7 @@ function CartDisplay() {
     })
     console.log(body);
     e.preventDefault();
-    // Request validation of the guest account through API
+  
     fetch('http://localhost:8080/shop/add', {
     mode: 'cors',
     method: 'POST',

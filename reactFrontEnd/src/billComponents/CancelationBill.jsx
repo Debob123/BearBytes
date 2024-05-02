@@ -26,8 +26,8 @@ function CancelationBill({cancelledReservations, bill})  {
               </>
             ))}
             <p>Total Cancelation Fees: ${(Math.round(bill.cancelationTotal * 100) / 100).toFixed(2)}</p>
-          </> : 
-          <p>No cancelations</p>}
+          </>
+          :true}
         </div>
       </div>
   )

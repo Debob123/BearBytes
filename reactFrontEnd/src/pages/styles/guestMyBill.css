@@ -11,7 +11,7 @@
 }
 
 .bill-form  {
-  display:block;
+  display: block;
 }
 
 .pay-bill-container  {
@@ -31,4 +31,18 @@
 
 .white-space-fix  {
   width: 83%;
+}
+
+.valid-info-warning  {
+  color: red;
+  font-size: 14px;
+}
+
+.pay-button  {
+  width: 147px;
+  margin-top: 30px;
+}
+
+.text-fields  {
+  margin-top: 10px;
 }
