@@ -50,8 +50,8 @@ public class BillController {
             return billDAO.generateBill(reservations, orders, username, cancelledReservations);
 
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("bill not generated");
+            e.printStackTrace();
         }
         return null;
     }

@@ -30,15 +30,19 @@ public class BillDAO {
      */
     public Bill generateBill(List<Reservation> reservations, List<Order> orders, String username, List<Reservation> cancelledReservations) throws SQLException {
         Random rand = new Random();
+        username = username.substring(1, username.length() - 1);
         Bill bill = new Bill(reservations, orders, username, rand.nextInt(), cancelledReservations);
-        return bill;
 
-
-        /*
         Connection dbConnection = null;
         Statement statement = null;
-        String generateBillSQL = "INSERT INTO Bills (billTotal, username) VALUES("
-                               + bill.getBillTotal() + ", '" + bill.getUsername() + "')";
+        String generateBillSQL;
+
+        if(hasBill(username))  {
+            generateBillSQL = "UPDATE Bills SET billTotal = " + bill.getBillTotal() + " WHERE username = '" + bill.getUsername() + "'";
+        }
+        else {
+            generateBillSQL = "INSERT INTO Bills (billTotal, username) VALUES(" + bill.getBillTotal() + ", '" + bill.getUsername() + "')";
+        }
         try {
             dbConnection = connectToDatabase();
             statement = dbConnection.createStatement();
@@ -56,7 +60,32 @@ public class BillDAO {
             }
         }
         return bill;
-         */
+    }
+
+    public Boolean hasBill(String username) throws SQLException {
+        Connection dbConnection = null;
+        Statement statement = null;
+        String getByUsernameSQL = "SELECT * FROM Bills WHERE username = '" + username + "'";
+        try {
+            dbConnection = connectToDatabase();
+            statement = dbConnection.createStatement();
+
+            ResultSet rs = statement.executeQuery(getByUsernameSQL);
+            if(rs.next())  {
+                return true;
+            }
+            System.out.println(getByUsernameSQL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+        }
+        return false;
     }
 
     /**

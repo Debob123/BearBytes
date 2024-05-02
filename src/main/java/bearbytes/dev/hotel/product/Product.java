@@ -21,6 +21,7 @@ public class Product {
     // An image link of the product.
     private String image;
 
+    // The point value of a product.
     private Integer points;
 
 

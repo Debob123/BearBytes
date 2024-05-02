@@ -1,14 +1,9 @@
 package bearbytes.dev.hotel.controllers;
 
-import bearbytes.dev.hotel.checkout.Order;
 import bearbytes.dev.hotel.checkout.OrderWithUsername;
-import bearbytes.dev.hotel.database.OrderDAO;
 import bearbytes.dev.hotel.database.OrderWithUsernameDAO;
-import bearbytes.dev.hotel.database.ReservationDAO;
-import bearbytes.dev.hotel.product.Product;
 import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**

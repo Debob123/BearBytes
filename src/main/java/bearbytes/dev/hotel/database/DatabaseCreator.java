@@ -151,7 +151,8 @@ public class DatabaseCreator {
                 "DROP TABLE APP.Rooms",
                 "DROP TABLE APP.Products",
                 "DROP TABLE APP.Orders",
-                "DROP TABLE APP.OrderItems"
+                "DROP TABLE APP.OrderItems",
+                "DROP TABLE APP.Bills"
         };
         Connection dbConnection = null;
         Statement statement = null;
@@ -225,7 +226,7 @@ public class DatabaseCreator {
                 String createProductsTableSQL = "CREATE TABLE APP.Products("
                         + "productID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
                         + "name VARCHAR(225) NOT NULL, " + "price INTEGER NOT NULL, "
-                        + "image VARCHAR(225) NOT NULL, " + "PRIMARY KEY (productID) " + ")";
+                        + "image VARCHAR(225) NOT NULL, " + "points INTEGER, " + "PRIMARY KEY (productID) " + ")";
 
                 String createOrdersTableSQL = "CREATE TABLE APP.Orders("
                         + "orderID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
@@ -234,6 +235,11 @@ public class DatabaseCreator {
 
                 String createOrderItemsTableSQL = "CREATE TABLE APP.OrderItems("
                         + "orderID INTEGER NOT NULL, " + "productID INTEGER NOT NULL" + ")";
+
+                String createBillsTableSQL = "CREATE TABLE APP.Bills("
+                        + "billID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
+                        + "billTotal DOUBLE NOT NULL, " + "username VARCHAR(225) NOT NULL, "
+                        + "PRIMARY KEY (billID) " + ")";
 
                 statement.execute(createReservationsTableSQL);
                 statement.execute(createGuestAccountsTableSQL);
@@ -246,6 +252,7 @@ public class DatabaseCreator {
                 statement.execute(createProductsTableSQL);
                 statement.execute(createOrdersTableSQL);
                 statement.execute(createOrderItemsTableSQL);
+                statement.execute(createBillsTableSQL);
 
                 addDefaultRooms(connection);
                 addDefaultAccounts(connection);

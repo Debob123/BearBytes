@@ -25,46 +25,101 @@ public class Bill {
     private List<Reservation> cancelledReservations;
     private List<Order> orders;
 
+    /**
+     * Returns the unique id of this Bill.
+     *
+     * @return The id of this Bill.
+     */
     public Integer getBillID()  {
         return billID;
     }
 
+    /**
+     * Returns the reservations of this Bill.
+     *
+     * @return The reservations of this Bill.
+     */
     public List<Reservation> getReservations() {
         return reservations;
     }
 
+    /**
+     * Returns the orders of this Bill.
+     *
+     * @return The orders of this Bill.
+     */
     public List<Order> getOrders() {
         return orders;
     }
 
+    /**
+     * Returns the reservation total of this Bill.
+     *
+     * @return The reservation total of this Bill.
+     */
     public double getReservationTotal() {
         return reservationTotal;
     }
 
+    /**
+     * Returns the shopping total of this Bill.
+     *
+     * @return The shopping total of this Bill.
+     */
     public double getShoppingTotal() {
         return shoppingTotal;
     }
 
+    /**
+     * Returns the shopping tax of this Bill.
+     *
+     * @return The shopping tax of this Bill.
+     */
     public double getShoppingTax() {
         return shoppingTax;
     }
 
+    /**
+     * Returns the shopping subtotal of this Bill.
+     *
+     * @return The shopping subtotal of this Bill.
+     */
     public double getShoppingSubTotal() {
         return shoppingSubTotal;
     }
 
+    /**
+     * Returns the bill total of this Bill.
+     *
+     * @return The bill total of this Bill.
+     */
     public double getBillTotal() {
         return billTotal;
     }
 
+    /**
+     * Returns the username of guest associated with this Bill.
+     *
+     * @return The username of guest associated with this Bill.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Returns the cancelled reservations of this Bill.
+     *
+     * @return The cancelled reservations of this Bill.
+     */
     public List<Reservation> getCancelledReservations() {
         return cancelledReservations;
     }
 
+    /**
+     * Returns the cancellation total of this Bill.
+     *
+     * @return The cancellation total of this Bill.
+     */
     public double getCancelationTotal() {
         return cancelationTotal;
     }
@@ -108,7 +163,6 @@ public class Bill {
         for(Reservation reservation : cancelledReservations)  {
             cancelationTotal += reservation.getCancellationFee();
         }
-
 
         billTotal = shoppingTotal + reservationTotal + cancelationTotal;
     }
