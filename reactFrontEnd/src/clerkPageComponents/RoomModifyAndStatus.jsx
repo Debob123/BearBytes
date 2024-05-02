@@ -182,7 +182,7 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
             <p>Room type: {type}</p>
             <p>Bed size: {bedSize}</p>
             <p>Beds: {numBeds}</p>
-            <p>Daily rate: {cost}</p>
+            <p>Daily rate: ${Number(cost).toFixed(2)}</p>
             <p>Smoking allowed: {smokingAllowed ? "Yes" : "No"}</p>
             <div className='clerk-room-btns'>
                 <button onClick={openModal}>Modify</button> 
