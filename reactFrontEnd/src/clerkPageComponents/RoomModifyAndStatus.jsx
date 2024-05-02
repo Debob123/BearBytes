@@ -4,19 +4,19 @@ import './roomModifyAndStatus.css'
 
 const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
     },
 };
-  
+
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root');
 
-function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAllowed, roomNum, quality, floorNum, rooms, setRooms}) {
+function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAllowed, roomNum, quality, floorNum, rooms, setRooms }) {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [number, setNumber] = useState(roomNum);
     const [floor, setFloor] = useState(floorNum);
@@ -38,7 +38,7 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
             "number": number,
             "numBeds": numberBeds,
             "floor": floor,
-           "dailyRate": rate,
+            "dailyRate": rate,
             "smokingAllowed": smokingIsAllowed,
             "bedSize": bedSizes,
             "type": roomType,
@@ -58,40 +58,52 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
             modifiedRoom
         ]
         fetch('http://localhost:8080/room/modify', {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(modifyRooms)
+            mode: 'cors',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(modifyRooms)
         })
-        .then(response => response.json())
-        .then(data => {
-        if(data) {
-            let index = rooms.findIndex(r => r.number === roomNum);
-            const newRooms = [
-                ...rooms.slice(0, index), // Elements before the one to delete
-                ...rooms.slice(index + 1) // Elements after the one to delete
-            ];
-            newRooms.push(modifiedRoom);
-            newRooms.sort((a,b) => a.number - b.number);
-            setRooms(newRooms);
-            {closeModal()}
-        } else {
-            setIsHidden('');
-            console.log("Woops");
-        }
-        })
-        .catch(error => console.error('Error creating room array:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    let index = rooms.findIndex(r => r.number === roomNum);
+                    const newRooms = [
+                        ...rooms.slice(0, index), // Elements before the one to delete
+                        ...rooms.slice(index + 1) // Elements after the one to delete
+                    ];
+                    newRooms.push(modifiedRoom);
+                    newRooms.sort((a, b) => a.number - b.number);
+                    setRooms(newRooms);
+                    { closeModal() }
+                } else {
+                    setIsHidden('');
+                    console.log("Woops");
+                }
+            })
+            .catch(error => console.error('Error creating room array:', error));
     }
 
     function openModal() {
         setIsHidden('hidden');
         setIsOpen(true);
     }
-    
+
     function closeModal() {
         setIsOpen(false);
+    }
+
+    function checkStatus() {
+        fetch(`http://localhost:8080/room/status/${number}`, {
+            mode: 'cors',
+            method: 'GET',
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+            })
+            .catch(error => console.error('Error checking room status:', error));
     }
 
     return (
@@ -107,41 +119,41 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
                 <form className="form-container">
                     <label htmlFor="roomNum">Room Number: </label>
                     <input type="tel"
-                           id="roomNum"
-                           name="roomNum" 
-                           defaultValue={number} 
-                           onChange={(e) => setNumber(e.target.value)} 
-                           placeholder="111" 
-                           required
-                           pattern="^[0-9\b]+$"/>
+                        id="roomNum"
+                        name="roomNum"
+                        defaultValue={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                        placeholder="111"
+                        required
+                        pattern="^[0-9\b]+$" />
                     <label htmlFor="floor">Floor: </label>
                     <input type="tel"
-                           id="floor"
-                           name="floor" 
-                           defaultValue={floor} 
-                           onChange={(e) => setFloor(e.target.value)} 
-                           placeholder="1-3" 
-                           pattern="[1-3]"
-                           required
-                           />
+                        id="floor"
+                        name="floor"
+                        defaultValue={floor}
+                        onChange={(e) => setFloor(e.target.value)}
+                        placeholder="1-3"
+                        pattern="[1-3]"
+                        required
+                    />
                     <label htmlFor="numBeds">Beds: </label>
                     <input type="tel"
-                           id="numBeds"
-                           name="numBeds" 
-                           defaultValue={numBeds} 
-                           onChange={(e) => setNumberBeds(e.target.value)} 
-                           placeholder="1" 
-                           required
-                           pattern="^[0-9\b]+$"/>
+                        id="numBeds"
+                        name="numBeds"
+                        defaultValue={numBeds}
+                        onChange={(e) => setNumberBeds(e.target.value)}
+                        placeholder="1"
+                        required
+                        pattern="^[0-9\b]+$" />
                     <label htmlFor="rate">Daily Rate: </label>
                     <input type="tel"
-                           id="rate"
-                           name="rate" 
-                           defaultValue={rate} 
-                           onChange={(e) => setRate(e.target.value)} 
-                           placeholder="175.50" 
-                           required
-                           pattern="^[0-9]*[.,]?[0-9]*$"/>
+                        id="rate"
+                        name="rate"
+                        defaultValue={rate}
+                        onChange={(e) => setRate(e.target.value)}
+                        placeholder="175.50"
+                        required
+                        pattern="^[0-9]*[.,]?[0-9]*$" />
                     <label htmlFor="bedSize">Bed Size: </label>
                     <select id="bedSize" defaultValue={bedSize} onChange={(e) => setBedSizes(e.target.value)}>
                         <option value="TWIN">Twin</option>
@@ -167,11 +179,11 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
                     </select>
                     <label>Smoking Allowed: </label>
                     <input type="checkbox"
-                           value={smokingAllowed} 
-                           onChange={(e) => setSmokingIsAllowed(e.target.checked)}/>
+                        value={smokingAllowed}
+                        onChange={(e) => setSmokingIsAllowed(e.target.checked)} />
                     <button className="center-button"
-                            onClick={modifyRoom}>
-                            submit</button>
+                        onClick={modifyRoom}>
+                        submit</button>
                     <div className="center">
                         <p className={isHidden + " error-msg center"}>Failed to modify, the room number may be taken, or the room you are modifying does not exist</p>
                     </div>
@@ -185,8 +197,8 @@ function RoomModifyAndStatus({ imgLink, type, cost, numBeds, bedSize, smokingAll
             <p>Daily rate: {cost}</p>
             <p>Smoking allowed: {smokingAllowed ? "Yes" : "No"}</p>
             <div className='clerk-room-btns'>
-                <button onClick={openModal}>Modify</button> 
-                <button>Status</button> 
+                <button onClick={openModal}>Modify</button>
+                <button onClick={checkStatus}>Status</button>
             </div>
         </div>
     );

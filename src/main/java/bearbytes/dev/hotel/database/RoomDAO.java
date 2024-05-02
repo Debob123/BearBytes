@@ -276,6 +276,35 @@ public class RoomDAO implements IRoomDAO {
         return new Room(roomNum, numBeds, floor, dailyRate, smokingAllowed, bedSize, roomType, quality);
     }
 
+    @Override
+    public String roomStatus(int roomNumber) throws SQLException {
+        Connection c = null;
+        try {
+            c = getDBConnection();
+            String query = "SELECT APP.Reservations.startDate, APP.Reservations.endDate FROM APP.Rooms JOIN APP.Bookings ON APP.Bookings.roomNumber = APP.Rooms.roomNumber"
+                    + " JOIN APP.Reservations ON APP.Bookings.reservationID = APP.Reservations.reservationID "
+                    + "WHERE APP.Rooms.roomNumber = ? AND APP.Reservations.status != ?";
+            PreparedStatement stmt = c.prepareStatement(query);
+            stmt.setInt(1, roomNumber);
+            stmt.setString(2, "CANCELLED");
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String startDate = rs.getString("startDate");
+                String endDate = rs.getString("endDate");
+                return "Room is occupied from " + startDate + " to " + endDate;
+            } else {
+                return "Room is not occupied";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error occurred while checking room status";
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+    }
+
     /**
      * Creates a connection to the hotel's database.
      * 

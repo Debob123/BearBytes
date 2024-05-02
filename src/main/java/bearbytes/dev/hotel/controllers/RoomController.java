@@ -5,6 +5,7 @@ import bearbytes.dev.hotel.floor.Room;
 import bearbytes.dev.hotel.interfaces.IRoomDAO;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -89,5 +90,16 @@ public class RoomController {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/status/{roomNumber}")
+    public String getRoomStatus(@PathVariable int roomNumber) throws ClassNotFoundException {
+        try {
+            return rooms.roomStatus(roomNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error occurred while checking room status";
+        }
     }
 }
