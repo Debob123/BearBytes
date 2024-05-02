@@ -33,10 +33,10 @@ function ManagerNavigation() {
     return (
         <div className="nav">
             <p className="profile">{user ? "Welcome " + user.username : "Error loading profile"}!</p>
-            <Button text="Edit Profile" onClick={profileRedirect} height="4vh" />
-            <Button text="Register Clerk" onClick={registerClerkRedirect} height="4vh" />
-            <Button text="Register Manager" onClick={registerManagerRedirect} height="4vh" />
-            <Button text="Log Out" onClick={logOut} height="4vh" />
+            <Button className="button" text="Edit Profile" onClick={profileRedirect} height="4vh" />
+            <Button className="button" text="Register Clerk" onClick={registerClerkRedirect} height="4vh" />
+            <Button className="button" text="Register Manager" onClick={registerManagerRedirect} height="4vh" />
+            <Button className="button" text="Log Out" onClick={logOut} height="4vh" />
         </div>
     )
 }
