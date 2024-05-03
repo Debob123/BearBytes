@@ -158,13 +158,6 @@ function CheckInAndOut({ imgLink, reservation, reservations, setReservations}) {
                 }
             })
             .catch(error => console.error('Error deleting reservation: ', error));
-
-            /*//Update status of each room to the selected status
-            const modifiedRes = {...newReservation};
-            modifiedRes.rooms.forEach(room => {
-                room.status = status;
-            })
-            setNewReservation(modifiedRes);*/
         } else {
             setDateErrHidden('');
         }

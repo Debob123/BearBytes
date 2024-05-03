@@ -27,6 +27,8 @@ import ClerkConfirmReservation from './pages/ClerkConfirmReservation';
 import ChangeGuestPassword from "./pages/ChangeGuestPassword";
 import ClerkCheckInAndOut from "./pages/ClerkCheckInAndOut";
 import ClerkProfilePage from "./pages/ClerkProfilePage";
+import ClerkMyBillPage from './clerkPageComponents/ClerkMyBillPage';
+import ClerkPayBillPage from './clerkPageComponents/ClerkPayBillPage';
 
 function App() {
   return (
@@ -58,6 +60,8 @@ function App() {
         <Route path="/clerkMakeReservation" element={<ClerkMakeReservation />} />
         <Route path="/clerkConfirmReservation" element={<ClerkConfirmReservation />} />
         <Route path="/clerkCheckInAndOut" element={<ClerkCheckInAndOut />} />
+        <Route path="/clerkBill" element={<ClerkMyBillPage />} />
+        <Route path="/clerkBill/paybill" element={<ClerkPayBillPage />} />
       </Routes>
     </Router>
   );

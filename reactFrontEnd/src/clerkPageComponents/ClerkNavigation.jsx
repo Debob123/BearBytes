@@ -24,7 +24,7 @@ function ClerkNavigation() {
     }
 
     const billingRedirect = () => {
-
+        navigate("/clerkBill");
     }
 
     const makeReservationRedirect = () => {

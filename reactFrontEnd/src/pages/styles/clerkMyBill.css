@@ -1,0 +1,51 @@
+.your-bill-text  {
+    text-align: center;
+    
+  }
+  
+  .sign-in-text  {
+    text-align: center;
+    padding: 20px;
+    font-size: 50px;
+    width: 83%;
+  }
+  
+  .bill-form  {
+    display:block;
+  }
+  
+  .pay-bill-container  {
+    font-size: 20px;
+    max-height: fit-content;
+    max-width: fit-content;
+    margin-inline: auto;
+    margin-top: 100px;
+    border-style: solid;
+    padding: 20px;
+  }
+  
+  .my-bill-container  {
+    margin-left: 10vw;
+    width: 83%;
+  }
+  
+  .white-space-fix  {
+    width: 83%;
+  }
+  
+  .pay-bill-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    position: relative;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-100%);
+    text-align: center;
+}
+
+  .error-message{
+    white-space: pre-wrap;
+    transform: translateX(39%);
+    color: red;
+  }
