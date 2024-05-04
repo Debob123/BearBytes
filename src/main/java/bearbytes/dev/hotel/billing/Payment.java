@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * The Payment class stores all information of a sale.
  */
+@Deprecated
 public class Payment {
     // The unique id of this Payment.
     private int paymentId;

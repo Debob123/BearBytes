@@ -30,7 +30,7 @@ function GuestMyBillPage() {
       setWarning(true);
     }
 
-    if(exp == null || exp.length != 5 || !(regex.test(exp)))  {
+    if(exp == null || exp.length != 5)  {
       setWarning(true);
     }
 

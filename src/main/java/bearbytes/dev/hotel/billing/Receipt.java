@@ -7,6 +7,7 @@ import java.util.List;
  * The Receipt class acts as a receipt, keeping track of the objects purchased
  * as well as the cost and date the purchase was made on.
  */
+@Deprecated
 public class Receipt {
     // The unique id of this receipt.
     private int receiptId;

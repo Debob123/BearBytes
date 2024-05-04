@@ -8,9 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -80,6 +82,29 @@ public class OrderWithUsernameDAOTest {
         assertEquals("TestRobot", orders.get(0).getUsername(), "Username should be identical");
     }
 
+
+    @Test
+    void correctDateInTableTest()  {
+        List<Product> purchasedProducts = new ArrayList<>();
+        purchasedProducts.add(new Product(1, "", 0.00, "", 0));
+        purchasedProducts.add(new Product(2, "", 0.00, "", 0));
+
+        List<OrderWithUsername> orders = null;
+
+        try {
+            orderDAO.addOrder(new OrderWithUsername(1, "2024-04-29", purchasedProducts, "TestRobot"));
+            orders = new ArrayList<>(orderDAO.getOrders("\"TestRobot\""));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = dateFormat.format(date);
+
+        assertEquals(strDate, orders.get(0).getPurchaseDate(), "Dates should be identical");
+    }
+
     @Test
     void correctProductsInTableTest()  {
         String[] names = { "Tropical Shirt", "Shark Necklace", "Locally Made Vases", "Beach Hat",
@@ -107,6 +132,8 @@ public class OrderWithUsernameDAOTest {
 
         assertEquals(purchasedProducts.toString(), orderedProducts.toString(), "Products should be identical");
     }
+
+
 
     @Test
     void addMultipleOrders()  {
