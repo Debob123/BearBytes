@@ -21,8 +21,8 @@ public class ReservationTests {
     @BeforeAll
     public static void init() throws SQLException {
         AccountDAO acc = new AccountDAO();
-        acc.addGuest(new Guest("testerGuest", "password", "guest2", null, null, null));
-        acc.addGuest(new Guest("testerGuest2", "password", "guest1", null, null, null));
+        acc.addGuest(new Guest("testerGuest", "password", "guest2", "", null, null));
+        acc.addGuest(new Guest("testerGuest2", "password", "guest1", "", null, null));
     }
 
     @AfterEach

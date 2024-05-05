@@ -294,7 +294,7 @@ function CheckInAndOut({ imgLink, reservation, reservations, setReservations}) {
                                     <span className="grid-item">{room.dailyRate}</span>
                                     <select
                                         id={`status-${reservation.reservationStatus}`}
-                                        value={reservation.reservationStatus}
+                                        defaultValue={reservation.reservationStatus}
                                         onChange={(e) => setStatus(e.target.value)}
                                     >
                                         <option value="Reserved">Reserved</option>
